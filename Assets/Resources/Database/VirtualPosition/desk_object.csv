@@ -1,0 +1,12 @@
+﻿name,parent,length,height,width,origin_type,origin_descriptor,prefab_type,prefab_special,comment
+monitor_screen,monitor_origin,0.7,0.36,0.01,EDGE,LDB,CUBE,none,Front side monitor screen of DELL monitor with EDGE origin and left-down-back position
+echodot_btnPower,echodot_btnLeft,0.01,0.0005,0.01,PLANECENTER,D,CYLINDER,none,Echodot power button on the left with PLANECENTER origin and down position
+echodot_btnNoMic,echodot_btnRight,0.01,0.0005,0.01,PLANECENTER,D,CYLINDER,none,Echodot power button on the right with PLANECENTER origin and down position
+echodot_btnSoundUp,echodot_btnDown,0.01,0.0005,0.01,PLANECENTER,D,CYLINDER,none,Echodot power button on the bottom with PLANECENTER origin and down position
+echodot_btnSoundDown,echodot_btnUp,0.01,0.0005,0.01,PLANECENTER,D,CYLINDER,none,Echodot power button on the top with PLANECENTER origin and down position
+cord_input1_obj,cord_input1,0.027,0.001,0.027,EDGE,LUB,CUBE,none,Cord input 1
+cord_input2_obj,cord_input2,0.027,0.001,0.027,EDGE,LUB,CUBE,none,Cord input 2
+cord_input3_obj,cord_input3,0.027,0.001,0.027,EDGE,LUB,CUBE,none,Cord input 3
+cord_input4_obj,cord_input4,0.027,0.001,0.027,EDGE,LUB,CUBE,none,Cord input 4
+cord_input5_obj,cord_input5,0.027,0.001,0.027,EDGE,LUB,CUBE,none,Cord input 5
+bulb_smartLight,bulb_peekBulb,0.055,0.025,0.055,PLANECENTER,D,CYLINDER,none,Smart light
