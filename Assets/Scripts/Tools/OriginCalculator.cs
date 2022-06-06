@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class OriginCalculator
 {
     public static MyObject.MyObject_LHW Calculate(MyObject.MyObject_LHW myObject_LHW, string type, string descriptor)
@@ -84,5 +86,14 @@ public class OriginCalculator
         { return new MyObject.MyObject_LHW(0, 0, -w / 2); }
 
         return new MyObject.MyObject_LHW(l, h, w);
+    }
+
+    public static Vector3 CalculateAbnormalOrigin(string desc_on_comment)
+    {
+        string[] strSplit = desc_on_comment.Split(";");
+        float X = float.Parse(strSplit[0]);
+        float Y = float.Parse(strSplit[1]);
+        float Z = float.Parse(strSplit[2]);
+        return new Vector3(X, Y, Z);
     }
 }

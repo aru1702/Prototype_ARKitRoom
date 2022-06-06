@@ -9,6 +9,7 @@ public class MyObject
     public string origin_descriptor { get; set; }
     public string prefab_type { get; set; }
     public string prefab_special { get; set; }
+    public bool static_object { get; set; }
     public string comment { get; set; }
 
     public struct OriginType
@@ -55,7 +56,7 @@ public class MyObject
         public MyObject_LHW Zero() { return new MyObject_LHW(0, 0, 0); }
     }
 
-    public MyObject(string name, string parent, float length, float height, float width, string origin_type, string origin_descriptor, string prefab_type, string prefab_special, string comment = "")
+    public MyObject(string name, string parent, float length, float height, float width, string origin_type, string origin_descriptor, string prefab_type, string prefab_special, bool static_object = false, string comment = "")
     {
         this.name = name;
         this.parent = parent;
@@ -66,6 +67,7 @@ public class MyObject
         this.origin_descriptor = origin_descriptor;
         this.prefab_type = prefab_type;
         this.prefab_special = prefab_special;
+        this.static_object = static_object;
         this.comment = comment;
     }
 
@@ -80,6 +82,7 @@ public class MyObject
         prefab_special = "none";
         origin_type = OriginType.DIMENSIONCENTER;
         origin_descriptor = "none";
+        static_object = false;
         comment = "";
     }
 
@@ -90,6 +93,7 @@ public class MyObject
                             "Dimension (L,H,W): " + length + "," + height + "," + width + "," + "\n" +
                             "Origin: " + origin_type + " with " + origin_descriptor + "\n" +
                             "Prefab: " + prefab_type + " which if special: " + prefab_special + "\n" +
+                            "Static object? " + static_object + "\n" +
                             "Comment: " + comment;
         return returnStr;
     }

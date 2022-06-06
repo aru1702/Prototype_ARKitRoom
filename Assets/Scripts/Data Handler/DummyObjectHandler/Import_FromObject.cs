@@ -23,8 +23,9 @@ public class Import_FromObject
             // 1: parent
             // 2,3,4: l,h,w
             // 5, 6: origin type, descriptor
-            // 7, 8: prefab type, specila
-            // 9: comment
+            // 7, 8: prefab type, special
+            // 9: static?
+            // 10: comment
 
             MyObject origin = new(
                     csvData[0],                 // name
@@ -34,7 +35,8 @@ public class Import_FromObject
                     float.Parse(csvData[4]),    // w
                     csvData[5], csvData[6],     // origin
                     csvData[7], csvData[8],     // prefab
-                    csvData[9]);                // comment
+                    bool.Parse(csvData[9]),     // static?
+                    csvData[10]);               // comment
 
             _myObjects.Add(origin);
         }

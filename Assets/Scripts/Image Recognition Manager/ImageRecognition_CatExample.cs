@@ -44,6 +44,13 @@ public class ImageRecognition_CatExample : MonoBehaviour
             .GetComponent<UnityEngine.XR.ARFoundation.Samples.WorldMap_CatExample>()
             .enabled = false;
 
+        // check if cat image recognition has turned on
+        bool imageRecog_enable = m_ARSessionOrigin.GetComponent<ARTrackedImageManager>().enabled;
+        if (!imageRecog_enable)
+        {
+            m_ARSessionOrigin.GetComponent<ARTrackedImageManager>().enabled = true;
+        }
+
         CanvasCat.SetActive(true);
     }
 

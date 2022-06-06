@@ -15,6 +15,9 @@ public class LoadObject_CatExample : MonoBehaviour
     [SerializeField]
     GameObject originPrefabInstantiate;
 
+    [SerializeField]
+    GameObject specialPrefabList;
+
     Vector3 pos, rot;
     Quaternion rotQ;
 
@@ -151,51 +154,84 @@ public class LoadObject_CatExample : MonoBehaviour
             if (prefabtype == MyObject.PrefabType.CUBE) { gameObject = GameObject.CreatePrimitive(PrimitiveType.Cube); }
             else if (prefabtype == MyObject.PrefabType.SPHERE) { gameObject = GameObject.CreatePrimitive(PrimitiveType.Sphere); }
             else if (prefabtype == MyObject.PrefabType.CYLINDER) { gameObject = GameObject.CreatePrimitive(PrimitiveType.Cylinder); }
-            else if (prefabtype == MyObject.PrefabType.SPECIAL) { gameObject = CreateSpecialPrefab(new GameObject(), item.prefab_special); }
+            else if (prefabtype == MyObject.PrefabType.SPECIAL) { gameObject = CreateSpecialPrefab(item.prefab_special); }
             else { gameObject = new GameObject(); }
 
-            // set gameobject name
-            gameObject.name = item.name;
-
-            // set gameobject parent
-            foreach (var parent in _parents)
+            // check if game object is not null
+            if (gameObject == null)
             {
-                if (parent.name == item.parent)
+                Debug.Log("No game object created, skip the data!");
+            }
+            else
+            {
+
+                // set gameobject name
+                gameObject.name = item.name;
+
+                // set gameobject parent
+                foreach (var parent in _parents)
                 {
-                    gameObject.transform.parent = parent.transform;
-                    break;
+                    if (parent.name == item.parent)
+                    {
+                        gameObject.transform.parent = parent.transform;
+                        break;
+                    }
+                }
+
+                // calculate myObject dimension to its given origin position
+                MyObject.MyObject_LHW tempLHW = new(item.length, item.height, item.width);
+                tempLHW = OriginCalculator.Calculate(tempLHW, item.origin_type, item.origin_descriptor);
+                Vector3 newOrigin = new(tempLHW.L, tempLHW.H, tempLHW.W);
+
+                // if only the object with special prefab, some abnormality
+                // we still put the correct position on item.comment
+                // we put their dimension as exact (1,1,1), not describe as 1 meter each
+                if (prefabtype == MyObject.PrefabType.SPECIAL)
+                {
+                    newOrigin = OriginCalculator.CalculateAbnormalOrigin(item.comment);
+                }
+
+                // assign orientation using the csv data transformation
+                gameObject.transform.localPosition = newOrigin;
+                gameObject.transform.localRotation = Quaternion.identity;
+                gameObject.transform.localScale = new Vector3(item.length, item.height, item.width);
+
+                // insert into parents
+                if (!CheckIfParentsExists(_parents, item.name))
+                {
+                    _parents.Add(gameObject);
+                }
+
+                // render with normal rendering if not static prefab
+
+                if (!item.static_object)
+                {
+                    // add into global config --> thingslist
+                    GlobalConfig.MyObjectList.Add(gameObject);
+
+                    // assign ColorManager
+                    gameObject.AddComponent<ColorManager>();
+
+                    // assign DataManager
+                    gameObject.AddComponent<DataManager>();
+
+                    // START PLAYING COLOR DATA
+                    gameObject.GetComponent<DataManager>().testingOnly = true;
+                    gameObject.GetComponent<DataManager>().Test_AssignHiLoValue();
+                    StartCoroutine(Loop(gameObject));
+                }
+                else
+                {
+                    // assign StaticPrefabManager
+                    gameObject.AddComponent<StaticPrefabManager>();
+
+                    // if not special static
+                    if (item.prefab_type != MyObject.PrefabType.SPECIAL)
+                    {
+                        gameObject.GetComponent<StaticPrefabManager>().AssignMaterial();
+                    }
                 }
             }
-
-            // calculate myObject origin
-            MyObject.MyObject_LHW tempLHW = new MyObject.MyObject_LHW(item.length, item.height, item.width);
-            tempLHW = OriginCalculator.Calculate(tempLHW, item.origin_type, item.origin_descriptor);
-            Vector3 newOrigin = new(tempLHW.L, tempLHW.H, tempLHW.W);
-
-            // assign orientation using the csv data transformation
-            gameObject.transform.localPosition = newOrigin;
-            gameObject.transform.localRotation = Quaternion.identity;
-            gameObject.transform.localScale = new Vector3(item.length, item.height, item.width);
-
-            // insert into parents
-            if (!CheckIfParentsExists(_parents, item.name))
-            {
-                _parents.Add(gameObject);
-            }
-
-            // add into global config --> thingslist
-            GlobalConfig.MyObjectList.Add(gameObject);
-
-            // assign ColorManager
-            gameObject.AddComponent<ColorManager>();
-
-            // assign DataManager
-            gameObject.AddComponent<DataManager>();
-
-            // START PLAYING COLOR DATA
-            gameObject.GetComponent<DataManager>().testingOnly = true;
-            gameObject.GetComponent<DataManager>().Test_AssignHiLoValue();
-            StartCoroutine(Loop(gameObject));
         }
     }
 
@@ -228,8 +264,26 @@ public class LoadObject_CatExample : MonoBehaviour
         }
     }
 
-    private GameObject CreateSpecialPrefab(GameObject gameObject, string prefab_special_path)
+    private GameObject CreateSpecialPrefab(string prefab_special_path)
     {
+        try
+        {
+            int prefab_number = int.Parse(prefab_special_path);
+            //Debug.Log(prefab_number);
+            GameObject prefab = specialPrefabList.GetComponent<SpecialPrefab_CatExample>().GetPrefab(prefab_number);
+            //Debug.Log(prefab.name);
+            GameObject prefab_obj = Instantiate(prefab);
+            //Debug.Log(prefab_obj.name);
+            return prefab_obj;
+        }
+        catch (System.Exception ex)
+        {
+            // it's normal prefab
+            // ... dunno
+
+            Debug.LogError(ex);
+        }
+
         return gameObject;
     }
 

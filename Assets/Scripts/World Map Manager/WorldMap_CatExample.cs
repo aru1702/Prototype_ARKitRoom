@@ -24,6 +24,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
     {
         // my modification
         const string myWorldMapName = "catExample_session.worldmap";
+        const string myOriginPathName = "catExample_origin.csv";
 
         [Tooltip("The ARSession component controlling the session from which to generate ARWorldMaps.")]
         [SerializeField]
@@ -109,6 +110,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         public void OnSaveButton()
         {
 #if UNITY_IOS
+            SaveOriginData();
             StartCoroutine(Save());
 #endif
         }
@@ -120,10 +122,12 @@ namespace UnityEngine.XR.ARFoundation.Samples
         public void OnLoadButton()
         {
 #if UNITY_IOS
+            LoadOriginData();
             StartCoroutine(Load());
 
-            // deactive image target button
+            // deactive image target and load button
             SetActive(imageTargetButton, false);
+            SetActive(loadButton, false);
 #endif
         }
 
@@ -359,10 +363,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
             // this because we don't need imageTarget as reference anymore
             Debug.Log("Map loaded!");
 
-            GlobalConfig.ITT_VtriPos = Vector3.zero;
-            GlobalConfig.ITT_EAngleRot = Vector3.zero;
-            GlobalConfig.ITT_QuatRot = Quaternion.identity;
-
             LoadObjectManager
                     .GetComponent<LoadObject_CatExample>()
                     .enabled = true;
@@ -392,11 +392,79 @@ namespace UnityEngine.XR.ARFoundation.Samples
         }
 #endif
 
+        /**
+         * Save previous image tracked into csv
+         */
+        void SaveOriginData()
+        {
+            // create long string
+            string strLong = "";
+            strLong += GlobalConfig.ITT_VtriPos.x + ",";        // 0
+            strLong += GlobalConfig.ITT_VtriPos.y + ",";        // 1
+            strLong += GlobalConfig.ITT_VtriPos.z + ",";        // 2
+            strLong += GlobalConfig.ITT_EAngleRot.x + ",";
+            strLong += GlobalConfig.ITT_EAngleRot.y + ",";
+            strLong += GlobalConfig.ITT_EAngleRot.z + ",";
+            strLong += GlobalConfig.ITT_QuatRot.x + ",";
+            strLong += GlobalConfig.ITT_QuatRot.y + ",";
+            strLong += GlobalConfig.ITT_QuatRot.z + ",";
+            strLong += GlobalConfig.ITT_QuatRot.w;              // 9
+
+            Debug.Log(strLong);
+
+            // call export
+            ExportCSV.exportData(originPath, strLong);
+        }
+
+        /**
+         * Load previous saved image tracked from csv
+         */
+        void LoadOriginData()
+        {
+            // load csv
+            List<string> origindata = ImportCSV.getDataPersistentPath(originPath);
+
+            // attach into each var
+            Vector3 pos = new(float.Parse(origindata[0]),
+                                float.Parse(origindata[1]),
+                                float.Parse(origindata[2]));
+
+            Vector3 eRot = new(float.Parse(origindata[3]),
+                                float.Parse(origindata[4]),
+                                float.Parse(origindata[5]));
+
+            Quaternion rot = new(float.Parse(origindata[6]),
+                                float.Parse(origindata[7]),
+                                float.Parse(origindata[8]),
+                                float.Parse(origindata[9]));
+
+            GlobalConfig.ITT_VtriPos = pos;
+            GlobalConfig.ITT_EAngleRot = eRot;
+            GlobalConfig.ITT_QuatRot = rot;
+
+            Debug.Log("after load:");
+            Debug.Log(pos.ToString());
+            Debug.Log(eRot.ToString());
+            Debug.Log(rot.ToString());
+
+            GameObject origin = new GameObject("tempOrigin");
+            GlobalConfig.TempOriginGO = origin;
+            origin.transform.SetPositionAndRotation(pos, rot);
+        }
+
         string path
         {
             get
             {
                 return Path.Combine(Application.persistentDataPath, myWorldMapName);
+            }
+        }
+
+        string originPath
+        {
+            get
+            {
+                return Path.Combine(Application.persistentDataPath, myOriginPathName);
             }
         }
 
