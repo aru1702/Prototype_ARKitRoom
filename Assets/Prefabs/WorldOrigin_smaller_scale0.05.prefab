@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8669019141398123033}
   - component: {fileID: 8669019141398123032}
   m_Layer: 0
-  m_Name: WorldOrigin_smaller
+  m_Name: WorldOrigin_smaller_scale0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

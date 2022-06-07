@@ -45,15 +45,71 @@ public class LoadObject_CatExample : MonoBehaviour
 
     private void RenderMyOriginData(Vector3 markerPos, Vector3 markerRot)
     {
+        // create root
+        GameObject root = new("root");
+
         // import MyOrigin data from csv
         List<MyOrigin> myOrigins = Import_FromOrigin.GetMyOriginsList();
 
         // do foreach in csv data
         foreach (var item in myOrigins)
         {
+            // check if name contains of imagetarget
+            string[] strSplit = item.name.Split("_");   // delimiter always "_"
+            string firstStr = strSplit[0];              // contained name always in [0]
+
             // if it's the root
-            if (item.parent == "none")
+            if (firstStr == "imagetarget")
             {
+                // NEW MECHANIC: 2022-06-07
+                // See also: Test_InverseImageToOrigin.cs - MyMethod()
+
+                // ================== //
+                // 1. create our root based on imagetarget
+                root.transform.SetParent(GlobalConfig.TempOriginGO.transform, false);
+
+
+                // ================== //
+                // 2. make dummy object to inverse the transformation
+                GameObject dummy = new();
+
+                // rotate with our root to image target ROTATION data
+                dummy = GlobalConfig.RotateOneByOne(dummy, item.euler_rotation);
+
+                // get its inverse of rotation
+                Quaternion imageTarget_rotinv = Quaternion.Inverse(dummy.transform.rotation);
+
+                // apply to our root
+                root.transform.localRotation = imageTarget_rotinv;
+
+
+                // ================== //
+                // 3. calculate our position with calculating the localToWorldMatrix
+
+                // make our dummy to use the inverse rotation too
+                dummy.transform.rotation = imageTarget_rotinv;
+
+                // get the M4x4 matrix of from local to world of our dummy after rotation
+                Matrix4x4 mat4 = dummy.transform.localToWorldMatrix;
+
+                // vector multiplication with our root to image target POSITION DATA
+                Vector3 vec3 = mat4 * item.position;
+
+                // apply to our root, but inverse it (-)
+                root.transform.localPosition = -vec3;
+
+
+                // ================== //
+                // 4. make our root become ROOT now
+                root.transform.SetParent(null);
+                //imageTarget.transform.SetParent(ourRoot.transform);
+
+                // destroy the dummy object
+                Destroy(dummy);
+
+
+                // OLD MECHANIC
+            /**
                 GameObject gameObject = new(item.name);
 
                 Debug.Log("root 0:");
@@ -88,19 +144,20 @@ public class LoadObject_CatExample : MonoBehaviour
                 Debug.Log(gameObject.transform.localPosition.ToString());
                 Debug.Log(gameObject.transform.localEulerAngles.ToString());
                 Debug.Log(gameObject.transform.eulerAngles.ToString());
+            */
 
                 // insert into parents so assigning parent will likely easier
-                if (!CheckIfParentsExists(_parents, item.name)) { _parents.Add(gameObject); }
+                if (!CheckIfParentsExists(_parents, root.name)) { _parents.Add(root); }
 
                 // add into global config --> MyObjectList
-                GlobalConfig.MyObjectList.Add(gameObject);
+                GlobalConfig.MyObjectList.Add(root);
 
                 // put into GlobalConfig as root parent
-                GlobalConfig.PlaySpaceMyOrigin = item;
-                GlobalConfig.PlaySpaceOriginGO = gameObject;
+                //GlobalConfig.PlaySpaceMyOrigin = item;
+                GlobalConfig.PlaySpaceOriginGO = root;
 
                 // create anchor prefab
-                if (createAnchor) { CreateWorldAnchor(gameObject); }
+                if (createAnchor) { CreateWorldAnchor(root); }
             }
 
             // if it's under root
@@ -148,13 +205,13 @@ public class LoadObject_CatExample : MonoBehaviour
         {
             // initialize gameobject
             GameObject gameObject;
-            string prefabtype = item.prefab_type;
+            string prefabtype = item.virtualObject.type;
 
             // choose gameobject type
             if (prefabtype == MyObject.PrefabType.CUBE) { gameObject = GameObject.CreatePrimitive(PrimitiveType.Cube); }
             else if (prefabtype == MyObject.PrefabType.SPHERE) { gameObject = GameObject.CreatePrimitive(PrimitiveType.Sphere); }
             else if (prefabtype == MyObject.PrefabType.CYLINDER) { gameObject = GameObject.CreatePrimitive(PrimitiveType.Cylinder); }
-            else if (prefabtype == MyObject.PrefabType.SPECIAL) { gameObject = CreateSpecialPrefab(item.prefab_special); }
+            else if (prefabtype == MyObject.PrefabType.SPECIAL) { gameObject = CreateSpecialPrefab(item.virtualObject); }
             else { gameObject = new GameObject(); }
 
             // check if game object is not null
@@ -171,7 +228,7 @@ public class LoadObject_CatExample : MonoBehaviour
                 // set gameobject parent
                 foreach (var parent in _parents)
                 {
-                    if (parent.name == item.parent)
+                    if (parent.name == item.coordinate_system)
                     {
                         gameObject.transform.parent = parent.transform;
                         break;
@@ -180,7 +237,7 @@ public class LoadObject_CatExample : MonoBehaviour
 
                 // calculate myObject dimension to its given origin position
                 MyObject.MyObject_LHW tempLHW = new(item.length, item.height, item.width);
-                tempLHW = OriginCalculator.Calculate(tempLHW, item.origin_type, item.origin_descriptor);
+                tempLHW = OriginCalculator.Calculate(tempLHW, item.origin.type, item.origin.descriptor);
                 Vector3 newOrigin = new(tempLHW.L, tempLHW.H, tempLHW.W);
 
                 // if only the object with special prefab, some abnormality
@@ -188,7 +245,7 @@ public class LoadObject_CatExample : MonoBehaviour
                 // we put their dimension as exact (1,1,1), not describe as 1 meter each
                 if (prefabtype == MyObject.PrefabType.SPECIAL)
                 {
-                    newOrigin = OriginCalculator.CalculateAbnormalOrigin(item.comment);
+                    newOrigin = OriginCalculator.CalculateAbnormalOrigin(item.virtualObject.special.position);
                 }
 
                 // assign orientation using the csv data transformation
@@ -202,9 +259,8 @@ public class LoadObject_CatExample : MonoBehaviour
                     _parents.Add(gameObject);
                 }
 
-                // render with normal rendering if not static prefab
-
-                if (!item.static_object)
+                // render normal colorize if it's IoT device
+                if (item.iotDevice_true)
                 {
                     // add into global config --> thingslist
                     GlobalConfig.MyObjectList.Add(gameObject);
@@ -223,12 +279,12 @@ public class LoadObject_CatExample : MonoBehaviour
                 else
                 {
                     // assign StaticPrefabManager
-                    gameObject.AddComponent<StaticPrefabManager>();
+                    gameObject.AddComponent<NonIoTDeviceManager>();
 
                     // if not special static
-                    if (item.prefab_type != MyObject.PrefabType.SPECIAL)
+                    if (item.virtualObject.type != MyObject.PrefabType.SPECIAL)
                     {
-                        gameObject.GetComponent<StaticPrefabManager>().AssignMaterial();
+                        gameObject.GetComponent<NonIoTDeviceManager>().AssignMaterial();
                     }
                 }
             }
@@ -264,21 +320,21 @@ public class LoadObject_CatExample : MonoBehaviour
         }
     }
 
-    private GameObject CreateSpecialPrefab(string prefab_special_path)
+    private GameObject CreateSpecialPrefab(MyObject.VirtualObject virtualObject)
     {
+        // if only it is special prefab, already defined on Editor the number of custom prefab
+        // that inside the array of SpecialPrefab_CatExample
         try
         {
-            int prefab_number = int.Parse(prefab_special_path);
-            //Debug.Log(prefab_number);
+            int prefab_number = int.Parse(virtualObject.special.parameter);
             GameObject prefab = specialPrefabList.GetComponent<SpecialPrefab_CatExample>().GetPrefab(prefab_number);
-            //Debug.Log(prefab.name);
             GameObject prefab_obj = Instantiate(prefab);
-            //Debug.Log(prefab_obj.name);
             return prefab_obj;
         }
         catch (System.Exception ex)
         {
             // it's normal prefab
+            // maybe with Resource path, etc.
             // ... dunno
 
             Debug.LogError(ex);

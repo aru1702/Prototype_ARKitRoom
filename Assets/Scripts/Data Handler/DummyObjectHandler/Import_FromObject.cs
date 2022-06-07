@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/**
+ * UPDATE: 2022-06-07
+ * - change data structure of MyObject
+ */
 public class Import_FromObject
 {
     // constant string which data being kept
@@ -28,15 +32,15 @@ public class Import_FromObject
             // 10: comment
 
             MyObject origin = new(
-                    csvData[0],                 // name
-                    csvData[1],                 // parent
-                    float.Parse(csvData[2]),    // l
-                    float.Parse(csvData[3]),    // h
-                    float.Parse(csvData[4]),    // w
-                    csvData[5], csvData[6],     // origin
-                    csvData[7], csvData[8],     // prefab
-                    bool.Parse(csvData[9]),     // static?
-                    csvData[10]);               // comment
+                    csvData[0],                             // name
+                    csvData[1],                             // parent
+                    float.Parse(csvData[2]),                // l
+                    float.Parse(csvData[3]),                // h
+                    float.Parse(csvData[4]),                // w
+                    csvData[5], csvData[6],                 // origin
+                    csvData[7], csvData[8], csvData[9],     // virtual object
+                    bool.Parse(csvData[10]),                // iot?
+                    csvData[11]);                           // comment
 
             _myObjects.Add(origin);
         }

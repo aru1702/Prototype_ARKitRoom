@@ -11,7 +11,7 @@ using UnityEngine;
  * Also this class should be assigned to each object.
  */
 
-public class StaticPrefabManager : MonoBehaviour
+public class NonIoTDeviceManager : MonoBehaviour
 {
     private string _materialPath = "Materials/Fade_prefabs_0";
     private bool _materialChange = false;

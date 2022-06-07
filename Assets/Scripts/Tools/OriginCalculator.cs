@@ -88,12 +88,17 @@ public class OriginCalculator
         return new MyObject.MyObject_LHW(l, h, w);
     }
 
-    public static Vector3 CalculateAbnormalOrigin(string desc_on_comment)
+    public static Vector3 CalculateAbnormalOriginString(string desc_on_comment, string delimiter = ";")
     {
-        string[] strSplit = desc_on_comment.Split(";");
+        string[] strSplit = desc_on_comment.Split(delimiter);
         float X = float.Parse(strSplit[0]);
         float Y = float.Parse(strSplit[1]);
         float Z = float.Parse(strSplit[2]);
         return new Vector3(X, Y, Z);
+    }
+
+    public static Vector3 CalculateAbnormalOrigin(Vector3 special_position)
+    {
+        return special_position;
     }
 }
