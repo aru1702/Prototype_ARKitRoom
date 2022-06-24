@@ -18,8 +18,13 @@ public class LoadObject_CatExample : MonoBehaviour
     [SerializeField]
     GameObject specialPrefabList;
 
+    [SerializeField]
+    bool dontUseZBuffer = false;
+
     Vector3 pos, rot;
     Quaternion rotQ;
+
+    GameObject originChild;
 
     void OnEnable()
     {
@@ -45,9 +50,6 @@ public class LoadObject_CatExample : MonoBehaviour
 
     private void RenderMyOriginData(Vector3 markerPos, Vector3 markerRot)
     {
-        // create root
-        GameObject root = new("root");
-
         // import MyOrigin data from csv
         List<MyOrigin> myOrigins = Import_FromOrigin.GetMyOriginsList();
 
@@ -66,6 +68,7 @@ public class LoadObject_CatExample : MonoBehaviour
 
                 // ================== //
                 // 1. create our root based on imagetarget
+                GameObject root = new("root");
                 root.transform.SetParent(GlobalConfig.TempOriginGO.transform, false);
 
 
@@ -104,9 +107,15 @@ public class LoadObject_CatExample : MonoBehaviour
                 root.transform.SetParent(null);
                 //imageTarget.transform.SetParent(ourRoot.transform);
 
+                // ================== //
+                // 5. finishing
+
                 // destroy the dummy object
                 Destroy(dummy);
 
+                // Instantiate the root to become origin child
+                originChild = Instantiate(root, GlobalConfig.TempOriginGO.transform, true);
+                originChild.name = "originChild";
 
                 // OLD MECHANIC
             /**
@@ -163,34 +172,35 @@ public class LoadObject_CatExample : MonoBehaviour
             // if it's under root
             else
             {
-                GameObject gameObject = new(item.name);
+                GameObject childGameObject = new(item.name);
 
                 // assign to each parents
                 foreach (var parent in _parents)
                 {
                     if (parent.name == item.parent)
                     {
-                        gameObject.transform.parent = parent.transform;
+                        childGameObject.transform.parent = parent.transform;
                         break;
                     }
                 }
 
                 // assign the orientation
-                gameObject.transform.localPosition = item.position;
-                gameObject.transform.localRotation = Quaternion.identity;
-                gameObject.transform.Rotate(item.euler_rotation);
+                childGameObject.transform.localPosition = item.position;
+                childGameObject.transform.localRotation = Quaternion.identity;
+                childGameObject.transform.Rotate(item.euler_rotation);
+                //GlobalConfig.RotateOneByOne(childGameObject, item.euler_rotation);
 
                 // insert into parents
                 if (!CheckIfParentsExists(_parents, item.name))
                 {
-                    _parents.Add(gameObject);
+                    _parents.Add(childGameObject);
                 }
 
                 // add into global config --> thingslist
-                GlobalConfig.MyObjectList.Add(gameObject);
+                GlobalConfig.MyObjectList.Add(childGameObject);
 
                 // create anchor prefab
-                if (createAnchor) { CreateWorldAnchor(gameObject); }
+                if (createAnchor) { CreateWorldAnchor(childGameObject); }
             }
         }
     }
@@ -204,18 +214,18 @@ public class LoadObject_CatExample : MonoBehaviour
         foreach (var item in myObjects)
         {
             // initialize gameobject
-            GameObject gameObject;
+            GameObject newGameObject;
             string prefabtype = item.virtualObject.type;
 
             // choose gameobject type
-            if (prefabtype == MyObject.PrefabType.CUBE) { gameObject = GameObject.CreatePrimitive(PrimitiveType.Cube); }
-            else if (prefabtype == MyObject.PrefabType.SPHERE) { gameObject = GameObject.CreatePrimitive(PrimitiveType.Sphere); }
-            else if (prefabtype == MyObject.PrefabType.CYLINDER) { gameObject = GameObject.CreatePrimitive(PrimitiveType.Cylinder); }
-            else if (prefabtype == MyObject.PrefabType.SPECIAL) { gameObject = CreateSpecialPrefab(item.virtualObject); }
-            else { gameObject = new GameObject(); }
+            if (prefabtype == MyObject.PrefabType.CUBE) { newGameObject = GameObject.CreatePrimitive(PrimitiveType.Cube); }
+            else if (prefabtype == MyObject.PrefabType.SPHERE) { newGameObject = GameObject.CreatePrimitive(PrimitiveType.Sphere); }
+            else if (prefabtype == MyObject.PrefabType.CYLINDER) { newGameObject = GameObject.CreatePrimitive(PrimitiveType.Cylinder); }
+            else if (prefabtype == MyObject.PrefabType.SPECIAL) { newGameObject = CreateSpecialPrefab(item.virtualObject); }
+            else { newGameObject = new GameObject(); }
 
             // check if game object is not null
-            if (gameObject == null)
+            if (newGameObject == null)
             {
                 Debug.Log("No game object created, skip the data!");
             }
@@ -223,14 +233,14 @@ public class LoadObject_CatExample : MonoBehaviour
             {
 
                 // set gameobject name
-                gameObject.name = item.name;
+                newGameObject.name = item.name;
 
                 // set gameobject parent
                 foreach (var parent in _parents)
                 {
                     if (parent.name == item.coordinate_system)
                     {
-                        gameObject.transform.parent = parent.transform;
+                        newGameObject.transform.parent = parent.transform;
                         break;
                     }
                 }
@@ -249,42 +259,51 @@ public class LoadObject_CatExample : MonoBehaviour
                 }
 
                 // assign orientation using the csv data transformation
-                gameObject.transform.localPosition = newOrigin;
-                gameObject.transform.localRotation = Quaternion.identity;
-                gameObject.transform.localScale = new Vector3(item.length, item.height, item.width);
+                newGameObject.transform.localPosition = newOrigin;
+                newGameObject.transform.localRotation = Quaternion.identity;
+                newGameObject.transform.localScale = new Vector3(item.length, item.height, item.width);
 
                 // insert into parents
                 if (!CheckIfParentsExists(_parents, item.name))
                 {
-                    _parents.Add(gameObject);
+                    _parents.Add(newGameObject);
                 }
 
                 // render normal colorize if it's IoT device
                 if (item.iotDevice_true)
                 {
                     // add into global config --> thingslist
-                    GlobalConfig.MyObjectList.Add(gameObject);
+                    GlobalConfig.MyObjectList.Add(newGameObject);
 
                     // assign ColorManager
-                    gameObject.AddComponent<ColorManager>();
+                    newGameObject.AddComponent<ColorManager>();
 
                     // assign DataManager
-                    gameObject.AddComponent<DataManager>();
+                    newGameObject.AddComponent<DataManager>();
 
                     // START PLAYING COLOR DATA
-                    gameObject.GetComponent<DataManager>().testingOnly = true;
-                    gameObject.GetComponent<DataManager>().Test_AssignHiLoValue();
-                    StartCoroutine(Loop(gameObject));
+                    newGameObject.GetComponent<DataManager>().testingOnly = true;
+                    newGameObject.GetComponent<DataManager>().Test_AssignHiLoValue();
+                    StartCoroutine(Loop(newGameObject));
                 }
                 else
                 {
-                    // assign StaticPrefabManager
-                    gameObject.AddComponent<NonIoTDeviceManager>();
-
-                    // if not special static
-                    if (item.virtualObject.type != MyObject.PrefabType.SPECIAL)
+                    // testing z buffer ACTIVE/NO ACTIVE
+                    if (!dontUseZBuffer)
                     {
-                        gameObject.GetComponent<NonIoTDeviceManager>().AssignMaterial();
+                        // assign StaticPrefabManager
+                        newGameObject.AddComponent<NonIoTDeviceManager>();
+
+                        // if not special static
+                        if (item.virtualObject.type != MyObject.PrefabType.SPECIAL)
+                        {
+                            newGameObject.GetComponent<NonIoTDeviceManager>().AssignMaterial();
+                        }
+                        else
+                        {
+                            // check for every part that has renderer or mesh renderer
+                            SetAllChildIntoZBuffer(newGameObject);
+                        }
                     }
                 }
             }
@@ -343,14 +362,45 @@ public class LoadObject_CatExample : MonoBehaviour
         return gameObject;
     }
 
+    /**
+     * <summary>This only when image target is active</summary>
+     */
     private void UpdateWorldCoordinate(Vector3 markerPos, Vector3 markerRot)
     {
+        // OLD MECHANIC
         //GlobalConfig.PlaySpaceOriginGO.transform.position = markerPos + GlobalConfig.PlaySpaceMyOrigin.position;
         //GlobalConfig.PlaySpaceOriginGO.transform.rotation = Quaternion.identity;
         //GlobalConfig.PlaySpaceOriginGO.transform.Rotate(markerRot + GlobalConfig.PlaySpaceMyOrigin.euler_rotation);
         //GlobalConfig.OurWorldOrigin_MyOrigin_GameObject.transform.localScale = GlobalConfig.OurWorldOrigin_Things.scale.GetScale();
 
-        GlobalConfig.TempOriginGO.transform.SetPositionAndRotation(pos, rotQ);
+        // NEW MECHANIC
+        // task:
+        // - if worldmap used, nothing has change since no reference updated at this time
+        //
+        // - if imageTarget used, get image target position as reference point
+        // - re calculate the root with NEW MECHANIC
+        // - since NEW MECHANIC always create new GO (dummy object for reference)
+        //   - does it really cost?
+        //   - e.g., in every frames per seconds (30 fps), 30 times create and recalculate
+        // - we need another technique for this
+        //
+        // Idea is:
+        // - 1: get the image target pos, rot (which always updated when detected)
+        // - 2: tell this script, or system, that there is an update of point of reference
+        //
+        // - why don't do the same technique?
+        //   - origin object from imageTarget still active (not destroyed) (A)
+        //   - Instantiate our root gameobject, put as child of origin object (B)
+        //   - change pos, rot of root based on (B) localtoworldcoordinate
+
+        // transform our root based on originChild
+        Vector3 tempPos = originChild.transform.position;
+        Quaternion tempRot = originChild.transform.rotation;
+        GlobalConfig.PlaySpaceOriginGO.transform.SetPositionAndRotation(tempPos, tempRot);
+
+        Debug.Log(string.Format("In loadObject\n\nPos: {0}\nRot: {1}",
+                            originChild.transform.parent.transform.position,
+                            originChild.transform.parent.transform.rotation));
     }
 
     private void UpdatingColorManager(GameObject gameObject, float value)
@@ -379,6 +429,32 @@ public class LoadObject_CatExample : MonoBehaviour
 
         // update color data
         UpdatingColorManager(gameObject, next_value);
+    }
+
+    void SetAllChildIntoZBuffer(GameObject prefab_gameObject)
+    {
+        // check if gameobject has renderer
+        if (NonIoTDeviceManager.CheckIfHasRenderer(prefab_gameObject))
+        {
+            prefab_gameObject.GetComponent<NonIoTDeviceManager>().AssignMaterial();
+        }
+
+        int child = prefab_gameObject.transform.childCount;
+        for (int i = 0; i < child; i++)
+        {
+            GameObject childGameObject = prefab_gameObject.transform.GetChild(i).gameObject;
+
+            // do recursive call
+            if (childGameObject.transform.childCount > 0)
+                SetAllChildIntoZBuffer(childGameObject);
+
+            // check if child has renderer
+            if (NonIoTDeviceManager.CheckIfHasRenderer(childGameObject))
+            {
+                childGameObject.AddComponent<NonIoTDeviceManager>();
+                childGameObject.GetComponent<NonIoTDeviceManager>().AssignMaterial();
+            }
+        }
     }
 
     //////////////////////////////

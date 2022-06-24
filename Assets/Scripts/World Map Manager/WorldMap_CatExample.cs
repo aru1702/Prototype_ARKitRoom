@@ -383,6 +383,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     .GetComponent<LoadObject_CatExample>()
                     .enabled = true;
 
+            SetActive(saveButton, true);
+
             GlobalConfig.AlreadyRender = true;
         }
 
@@ -545,12 +547,12 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 SetActive(saveButton, false);
             }
 
-            // now image target is no no, and save and load button is OK
+            // now image target is no no, and save is OK
             else
             {
                 SetActive(imageTargetButton, false);
                 SetActive(saveButton, true);
-                SetActive(loadButton, true);
+                SetActive(loadButton, false);
             }
 
             // ar loc debug

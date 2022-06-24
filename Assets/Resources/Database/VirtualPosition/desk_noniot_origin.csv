@@ -1,0 +1,35 @@
+﻿name,parent,pos_x,pos_y,pos_z,rot_x,rot_y,rot_z,comment
+imagetarget_catExample,root,0.116,0,0.1075,0,-90,0,Image target that used for positioning our root
+monitor_origin,root,-0.02,0.14,0.395,0,-21,0,Tip left bottom of monitor and not include the stand
+echodot_origin,root,0.525,0,0.54,0,0,0,Center of Amazon Echo Dot on the bottom
+cord_origin,root,1.265,0,0.62,0,0,0,Tip left bottom of power cord
+bulb_origin,root,0.9,0.52,0.62,0,0,0,Center of smart bulb house on the top
+echodot_btnLeft,echodot_origin,-0.025,0.04,0,0,0,0,Center down of left button
+echodot_btnUp,echodot_origin,0,0.04,0.025,0,0,0,Center down of up button
+echodot_btnRight,echodot_origin,0.025,0.04,0,0,0,0,Center down of right button
+echodot_btnDown,echodot_origin,0,0.04,-0.025,0,0,0,Center down of down button
+cord_input1,cord_origin,0.094,0.0325,0.01,0,0,0,Cord input on the most left
+cord_input2,cord_origin,0.134,0.0325,0.01,0,0,0,Cord input second on the left
+cord_input3,cord_origin,0.174,0.0325,0.01,0,0,0,Cord input on the center
+cord_input4,cord_origin,0.214,0.0325,0.01,0,0,0,Cord input second on the right
+cord_input5,cord_origin,0.254,0.0325,0.01,0,0,0,Cord input on the most right
+bulb_peekBulb,bulb_origin,0,-0.14,0,0,0,0,Light bulb on the center the most bottom part
+noniot__box,root,0.795,0,0.455,0,0,0,none
+noniot__monitor,root,0.59,0.505,0.575,0,-21,0,none
+noniot__dolls,root,0.61,0,0.57,0,0,0,none
+noniot__doll_1,noniot__dolls,0,0,0,0,0,0,none
+noniot__doll_2,noniot__dolls,0.11,0,0,0,0,0,none
+noniot__doll_3,noniot__dolls,0.25,0.055,0,0,0,0,none
+noniot__doll_4,noniot__dolls,0.39,0,0,0,0,0,none
+noniot__doll_5,noniot__dolls,0.5,0,0,0,0,0,none
+noniot__bulbhouse,root,0.9,0.52,0.62,0,0,0,none
+noniot__box2,root,0.81,0,0.6,0,0,0,none
+noniot__macbook,root,0.455,0.005,0.035,0,0,0,none
+noniot__table_aldy,root,0,-0.715,0,0,0,0,Test big table
+noniot__chair_aldy,root,0.59,-0.715,-0.2,0,90,0,Chair with 20cm distance from table origin
+noniot__airpurifier,root,1.55,-0.715,-0.93,0,90,0,Air purifier with CUBE
+noniot__whiteboard_sm,root,1.99,-0.715,-0.93,0,90,0,Sm whiteboard with prefab
+noniot__table_bi,root,1.6,-0.715,0,0,0,0,Bi san table
+noniot__chair_bi,root,2.19,-0.715,-0.2,0,90,0,Bi san chair with 20cm distance from table origin
+noniot__table_yoneyama,root,1.6,-0.715,0,0,0,0,Bi san table
+noniot__chair_bi,root,2.19,-0.715,-0.2,0,90,0,Bi san chair with 20cm distance from table origin

@@ -11,12 +11,51 @@ cord_input4_obj,cord_input4,0.027,0.001,0.027,EDGE,LUB,CUBE,none,none,TRUE,Cord 
 cord_input5_obj,cord_input5,0.027,0.001,0.027,EDGE,LUB,CUBE,none,none,TRUE,Cord input 5
 bulb_smartLight,bulb_peekBulb,0.055,0.025,0.055,PLANECENTER,D,CYLINDER,none,none,TRUE,Smart light
 noniot__box_obj,noniot__box,0.24,0.11,0.14,EDGE,LDB,CUBE,none,none,FALSE,none
-noniot__monitor_obj,noniot__monitor,1,1,1,PLANECENTER,D,SPECIAL,0,-0.32;-0.5;0.12,FALSE,"Since special virtual object always use (1,1,1) as scaling"
+noniot__monitor_obj,noniot__monitor,1,1,1,EDGE,LDB,SPECIAL,0,-0.024;0;0.06,FALSE,"Since special virtual object always use (1,1,1) as scaling"
 noniot__doll_1_obj,noniot__doll_1,0.1,0.16,0.1,EDGE,LDB,CUBE,none,none,FALSE,none
 noniot__doll_2_obj,noniot__doll_2,0.1,0.16,0.1,EDGE,LDB,CUBE,none,none,FALSE,none
 noniot__doll_3_obj,noniot__doll_3,0.1,0.16,0.1,EDGE,LDB,CUBE,none,none,FALSE,none
 noniot__doll_4_obj,noniot__doll_4,0.1,0.16,0.1,EDGE,LDB,CUBE,none,none,FALSE,none
 static_doll_5_obj,noniot__doll_5,0.1,0.16,0.1,EDGE,LDB,CUBE,none,none,FALSE,none
-noniot__bulbhouse_obj,noniot__bulbhouse,1,1,1,PLANECENTER,U,SPECIAL,1,0;-0.145;0,FALSE,"Since special virtual object always use (1,1,1) as scaling"
+noniot__bulbhouse_obj,noniot__bulbhouse,1,1,1,PLANECENTER,U,SPECIAL,1,0;0;0,FALSE,"Since special virtual object always use (1,1,1) as scaling"
 noniot__box2_obj,noniot__box2,0.21,0.055,0.08,EDGE,LDB,CUBE,none,none,FALSE,none
 noniot__macbook_obj,noniot__macbook,1,1,1,EDGE,LDB,SPECIAL,2,0;0;0,FALSE,"Since special virtual object always use (1,1,1) as scaling"
+noniot__table_obj,noniot__table_aldy,1,1,1,EDGE,LDB,SPECIAL,3,0;0;0,FALSE,"Since special virtual object always use (1,1,1) as scaling"
+noniot__chair_obj,noniot__chair_aldy,1,1,1,PLANECENTER,D,SPECIAL,4,0;0;0,FALSE,"Since special virtual object always use (1,1,1) as scaling"
+noniot__airpurifier_obj,noniot__airpurifier,0.38,0.605,0.21,EDGE,LDB,CUBE,none,none,FALSE,CUBE prefab for air purifier
+noniot__whiteboard_sm_obj,noniot__whiteboard_sm,1,1,1,EDGE,LDB,SPECIAL,5,0;0;0,FALSE,"Since special virtual object always use (1,1,1) as scaling"
+noniot__table_bi_obj,noniot__table_bi,1,1,1,EDGE,LDB,SPECIAL,3,0;0;0,FALSE,"Since special virtual object always use (1,1,1) as scaling"
+noniot__chair_bi_obj,noniot__chair_bi,1,1,1,PLANECENTER,D,SPECIAL,4,0;0;0,FALSE,"Since special virtual object always use (1,1,1) as scaling"
+noniot__table_yoneyama_obj,noniot__table_yoneyama,1,1,1,EDGE,LDB,SPECIAL,3,0;0;0,FALSE,"Since special virtual object always use (1,1,1) as scaling"
+noniot__chair_yoneyama_obj,noniot__chair_yoneyama,1,1,1,PLANECENTER,D,SPECIAL,4,0;0;0,FALSE,"Since special virtual object always use (1,1,1) as scaling"
+noniot__table_nagata_obj,noniot__table_nagata,1,1,1,EDGE,LDB,SPECIAL,3,0;0;0,FALSE,"Since special virtual object always use (1,1,1) as scaling"
+noniot__chair_nagata_obj,noniot__chair_nagata,1,1,1,PLANECENTER,D,SPECIAL,4,0;0;0,FALSE,"Since special virtual object always use (1,1,1) as scaling"
+noniot__table_asada_obj,noniot__table_asada,1,1,1,EDGE,LDB,SPECIAL,3,0;0;0,FALSE,"Since special virtual object always use (1,1,1) as scaling"
+noniot__chair_asada_obj,noniot__chair_asada,1,1,1,PLANECENTER,D,SPECIAL,4,0;0;0,FALSE,"Since special virtual object always use (1,1,1) as scaling"
+noniot__table_milano_obj,noniot__table_milano,1,1,1,EDGE,LDB,SPECIAL,3,0;0;0,FALSE,"Since special virtual object always use (1,1,1) as scaling"
+noniot__chair_milano_obj,noniot__chair_milano,1,1,1,PLANECENTER,D,SPECIAL,4,0;0;0,FALSE,"Since special virtual object always use (1,1,1) as scaling"
+noniot__yoneyama_monitor_obj,noniot__yoneyama_monitor,1,1,1,EDGE,LDB,SPECIAL,0,-0.024;0;0.06,FALSE,"Since special virtual object always use (1,1,1) as scaling"
+yoneyama_monitor_screen,yoneyama_monitor_origin,0.65,0.36,0.01,EDGE,LDB,CUBE,none,none,TRUE,Front side monitor screen of DELL monitor with EDGE origin and left-down-back position
+noniot__bi_desktable_obj,noniot__bi_desktable,1,1,1,EDGE,LDB,SPECIAL,6,0;0;0,FALSE,"Since special virtual object always use (1,1,1) as scaling"
+noniot__bi_monitor_obj,noniot__bi_monitor,1,1,1,EDGE,LDB,SPECIAL,0,-0.024;0;0.06,FALSE,"Since special virtual object always use (1,1,1) as scaling"
+bi_monitor_screen,bi_monitor_origin,0.65,0.36,0.01,EDGE,LDB,CUBE,none,none,TRUE,Front side monitor screen of DELL monitor with EDGE origin and left-down-back position
+bi_cord_input1_obj,bi_cord_input1,0.025,0.001,0.03,EDGE,LUB,CUBE,none,none,TRUE,Cord input 1
+bi_cord_input2_obj,bi_cord_input2,0.025,0.001,0.03,EDGE,LUB,CUBE,none,none,TRUE,Cord input 2
+bi_cord_input3_obj,bi_cord_input3,0.025,0.001,0.03,EDGE,LUB,CUBE,none,none,TRUE,Cord input 3
+bi_cord_input4_obj,bi_cord_input4,0.025,0.001,0.03,EDGE,LUB,CUBE,none,none,TRUE,Cord input 4
+bi_cord_input5_obj,bi_cord_input5,0.025,0.001,0.03,EDGE,LUB,CUBE,none,none,TRUE,Cord input 5
+bi_cord_input6_obj,bi_cord_input6,0.025,0.001,0.03,EDGE,LUB,CUBE,none,none,TRUE,Cord input 6
+bi_cord_input7_obj,bi_cord_input7,0.025,0.001,0.03,EDGE,LUB,CUBE,none,none,TRUE,Cord input 7
+noniot__nagata_monitor_obj,noniot__nagata_monitor,1,1,1,EDGE,LDB,SPECIAL,0,-0.024;0;0.06,FALSE,"Since special virtual object always use (1,1,1) as scaling"
+nagata_monitor_screen,nagata_monitor_origin,0.65,0.36,0.01,EDGE,LDB,CUBE,none,none,TRUE,Front side monitor screen of DELL monitor with EDGE origin and left-down-back position
+noniot__asada_desktable_obj,noniot__asada_desktable,1,1,1,EDGE,LDB,SPECIAL,6,0;0;0,FALSE,"Since special virtual object always use (1,1,1) as scaling"
+noniot__asada_monitor_1_obj,noniot__asada_monitor_1,1,1,1,EDGE,LDB,SPECIAL,0,-0.024;0;0.06,FALSE,"Since special virtual object always use (1,1,1) as scaling"
+asada_monitor_1_screen,asada_monitor_1_origin,0.65,0.36,0.01,EDGE,LDB,CUBE,none,none,TRUE,Front side monitor screen of DELL monitor with EDGE origin and left-down-back position
+noniot__asada_monitor_2_obj,noniot__asada_monitor_2,1,1,1,EDGE,LDB,SPECIAL,0,-0.024;0;0.06,FALSE,"Since special virtual object always use (1,1,1) as scaling"
+asada_monitor_2_screen,asada_monitor_2_origin,0.65,0.36,0.01,EDGE,LDB,CUBE,none,none,TRUE,Front side monitor screen of DELL monitor with EDGE origin and left-down-back position
+asada_computer_usb_1_obj,asada_computer_usb_1,0.015,0.001,0.008,PLANECENTER,U,CUBE,none,none,TRUE,Usb input 1
+asada_computer_usb_2_obj,asada_computer_usb_2,0.015,0.001,0.008,PLANECENTER,U,CUBE,none,none,TRUE,Usb input 2
+asada_computer_usb_3_obj,asada_computer_usb_3,0.015,0.001,0.008,PLANECENTER,U,CUBE,none,none,TRUE,Usb input 3
+asada_computer_usb_4_obj,asada_computer_usb_4,0.015,0.001,0.008,PLANECENTER,U,CUBE,none,none,TRUE,Usb input 4
+asada_computer_headphone_1_obj,asada_computer_headphone_1,0.005,0.0005,0.005,PLANECENTER,U,CYLINDER,none,none,TRUE,Headphone jack input 1
+asada_computer_headphone_2_obj,asada_computer_headphone_2,0.005,0.0005,0.005,PLANECENTER,U,CYLINDER,none,none,TRUE,Headphone jack input 2

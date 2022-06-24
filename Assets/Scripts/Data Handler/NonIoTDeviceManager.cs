@@ -26,4 +26,12 @@ public class NonIoTDeviceManager : MonoBehaviour
             _materialChange = true;
         }
     }
+
+    public static bool CheckIfHasRenderer(GameObject gameObject)
+    {
+        if (gameObject.GetComponent<Renderer>() == null) return false;
+        if (gameObject.GetComponent<MeshRenderer>() == null) return false;
+
+        return true;
+    }
 }

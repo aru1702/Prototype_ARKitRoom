@@ -87,6 +87,10 @@ public class ImageRecognition_CatExample : MonoBehaviour
                 if (trackedImage.referenceImage.name != _imgSource_name) { return; }
                 else
                 {
+                    // wait for 3 seconds
+                    //HoldStillText.SetActive(true);
+                    //StartCoroutine(CountDown());
+
                     // check if first time rendering already done
                     if (!GlobalConfig.AlreadyRender)
                     {
@@ -158,10 +162,23 @@ public class ImageRecognition_CatExample : MonoBehaviour
                         GlobalConfig.ITT_EAngleRot = trackedImage.transform.eulerAngles;
                         GlobalConfig.ITT_QuatRot = trackedImage.transform.rotation;
 
+                        GlobalConfig.TempOriginGO.transform.SetPositionAndRotation(
+                            GlobalConfig.ITT_VtriPos,
+                            GlobalConfig.ITT_QuatRot);
+
+                        Debug.Log(string.Format("In imageRecog\n\nPos: {0}\nRot: {1}",
+                            GlobalConfig.ITT_VtriPos,
+                            GlobalConfig.ITT_QuatRot));
+
                         break;
                     }
                 }
             }
         }
+    }
+
+    IEnumerator CountDown()
+    {
+        yield return new WaitForSeconds(3);
     }
 }

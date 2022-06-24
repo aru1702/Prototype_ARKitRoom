@@ -155,8 +155,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
         // some gameobject to observed --> coordinate text
         [SerializeField]
         GameObject ARCamera;
-        [SerializeField]
-        GameObject Parent, Child, Grandchild;
+        //[SerializeField]
+        //GameObject Parent, Child, Grandchild;
 
         string worldmapPath = "test_mysession.worldmap";
 
@@ -344,7 +344,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 #if UNITY_IOS
             SetText(mappingStatusText, string.Format("Mapping Status: {0}", sessionSubsystem.worldMappingStatus));
 #endif
-
+            /*
             // get gameobjects coordinate in Update() --> every frame
             string vtri_ARCamera = ARCamera.transform.position.ToString();
             string quat_ARCamera = ARCamera.transform.rotation.ToString();
@@ -374,8 +374,44 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 vtri_Child, quat_Child, vtri_GC, quat_GC);
 
             SetText(coordinateText, debugLog);
+            */
         }
 
         List<string> m_LogMessages;
+
+        void SaveAnchor()
+        {
+            GameObject testGO = GetComponent<Test_WM_CheckAllObject>().TestGameObject;
+            string trackableId = testGO.GetComponent<ARAnchor>().trackableId.ToString();
+            PlayerPrefs.SetString("tId", trackableId);
+            PlayerPrefs.Save();
+        }
+
+        void LoadAnchor()
+        {
+            string trackableId = PlayerPrefs.GetString("tId", "none");
+            if (trackableId == "none")
+            {
+                Debug.LogError("No data or wrong key!");
+                return;
+            }
+
+            TrackableId id = new(trackableId);
+            ARSessionOrigin sessionOrigin = GetComponent<Test_WM_CheckAllObject>().ARSessionOrigin;
+            ARAnchor anchor = sessionOrigin.GetComponent<ARAnchorManager>().GetAnchor(id);
+            if (anchor == null)
+            {
+                Debug.LogError("Cannot get anchor!");
+                return;
+            }
+
+            GameObject testGO = GetComponent<Test_WM_CheckAllObject>().TestGameObject;
+            if (testGO.GetComponent<ARAnchor>() != null)
+            {
+                Destroy(testGO.GetComponent<ARAnchor>());
+            }
+
+            testGO.AddComponent<ARAnchor>();
+        }
     }
 }
