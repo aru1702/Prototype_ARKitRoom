@@ -5,7 +5,11 @@ using UnityEngine;
 
 public class ExportCSV : MonoBehaviour
 {
-    [Tooltip("One line saved with long string")]
+    /// <summary>
+    /// One line saved with long string, must already delimited with (,)
+    /// </summary>
+    /// <param name="path"></param>
+    /// <param name="dataArray"></param>
     public static void exportData(string path, string dataArray)
     {
         // get path
@@ -17,8 +21,12 @@ public class ExportCSV : MonoBehaviour
         writer.Close();
     }
 
-    [Tooltip("One line saved with array")]
-    public static void exportData(string path, string[] dataArray)
+    /// <summary>
+    /// One line saved with array, default delimiter is (,)
+    /// </summary>
+    /// <param name="path"></param>
+    /// <param name="dataArray"></param>
+    public static void exportData(string path, string[] dataArray, string delimiter = ",")
     {
         // get path
         StreamWriter writer = new(path);
@@ -32,7 +40,7 @@ public class ExportCSV : MonoBehaviour
             // add comma
             if (i < dataArray.Length - 1)
             {
-                strLong += ",";
+                strLong += delimiter;
             }
         }
 
@@ -42,8 +50,12 @@ public class ExportCSV : MonoBehaviour
         writer.Close();
     }
 
-    [Tooltip("Many line saved")]
-    public static void exportData(string path, List<string[]> dataMany)
+    /// <summary>
+    /// Many lines save for List of string, default delimiter is (,)
+    /// </summary>
+    /// <param name="path"></param>
+    /// <param name="dataMany"></param>
+    public static void exportData(string path, List<string[]> dataMany, string delimiter = ",")
     {
         // get path
         StreamWriter writer = new(path);
@@ -59,7 +71,7 @@ public class ExportCSV : MonoBehaviour
                 // add comma
                 if (j < i.Length - 1)
                 {
-                    strLong += ",";
+                    strLong += delimiter;
                 }
             }
 

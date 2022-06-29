@@ -35,9 +35,16 @@ public class PlaneTagging : MonoBehaviour
         m_TextMesh.characterSize = 0.05f;
         m_TextMesh.color = Color.black;
 
-        // Setup transparent?
+        // Setup transparent? (if only no mats assigned, or missing mats)
         var transparent_mats = Resources.Load<Material>(materialPath);
-        if (transparent_mats) GetComponent<Renderer>().material = transparent_mats;
+        if (m_PlaneMeshRenderer.materials.Length <= 0)
+        {
+            if (transparent_mats) GetComponent<Renderer>().material = transparent_mats;
+        }
+        else if (!m_PlaneMeshRenderer.materials[0])
+        {
+            if (transparent_mats) GetComponent<Renderer>().material = transparent_mats;
+        }
     }
 
     void Update()
@@ -56,12 +63,20 @@ public class PlaneTagging : MonoBehaviour
         if (!m_TextMesh)
         {
             m_TextMesh = m_TextObj.AddComponent<TextMesh>();
-            m_TextMesh.characterSize = 0.05f;
+            m_TextMesh.characterSize = 0.065f; // change from 0.05 to 0.065
             m_TextMesh.color = Color.black;
         }
 
         // Update text
-        m_TextMesh.text = m_ARPlane.classification.ToString();
+        m_TextMesh.text =
+            string.Format(
+                    "{0}\n" +
+                    "Pos (cm): {1}\n" +
+                    "Rot (Q): {2}"
+                    , m_ARPlane.classification.ToString()
+                    , GlobalConfig.Vector3inCm(m_ARPlane.transform.position)
+                    , m_ARPlane.transform.rotation.ToString()
+                ); 
 
         if (!m_TextObj) m_TextObj = new GameObject();
 

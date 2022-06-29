@@ -6,9 +6,8 @@ using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARKit;
 using UnityEngine.XR.ARSubsystems;
-using UnityEngine.UI;
 
-public class WorldMapScanner : MonoBehaviour
+public class MappingScanner : MonoBehaviour
 {
     [SerializeField]
     ARSessionOrigin m_Origin;
@@ -21,7 +20,10 @@ public class WorldMapScanner : MonoBehaviour
     string mappingStatus = "None";
 
     [SerializeField]
-    Text m_TrackingStatus;
+    GameObject m_MappingConfigurationUI;
+
+    [SerializeField]
+    GameObject m_ARCamera;
 
     [SerializeField]
     [Tooltip("A line renderer used to outline the ARPlanes in a scene.\n For an already configured menu, right-click on the Scene Inspector > XR > ARDebugMenu.")]
@@ -71,8 +73,10 @@ public class WorldMapScanner : MonoBehaviour
         set => m_PlanePrefab = value;
     }
 
-    [SerializeField]
-    bool enablePointCloudPrefab, enablePlanePrefab = false;
+    //[SerializeField]
+    //bool enablePointCloudPrefab, enablePlanePrefab = false;
+
+    bool showPointCloud, showPlane;
 
     GameObject m_PlaneVisualizers;
     int m_NumParticles;
@@ -103,8 +107,8 @@ public class WorldMapScanner : MonoBehaviour
         //}
 
         var planeManager = m_Origin.GetComponent<ARPlaneManager>();
-        if (enablePlanePrefab)
-        {
+        //if (enablePlanePrefab)
+        //{
             var m_ARPlaneManager = m_Origin.GetComponent<ARPlaneManager>();
             if (!m_ARPlaneManager) return;
 
@@ -117,10 +121,10 @@ public class WorldMapScanner : MonoBehaviour
 
             //DisplayPlane(true);
             planeManager.planesChanged += OnPlaneChanged;
-        }
+        //}
 
         var pointCloudManager = m_Origin.GetComponent<ARPointCloudManager>();
-        if (m_PointCloudParticleSystem && pointCloudManager && enablePointCloudPrefab)
+        if (m_PointCloudParticleSystem && pointCloudManager)// && enablePointCloudPrefab)
         {
             // Debug.Log("point cloud particle system OK, point cloud manager OK");
 
@@ -159,6 +163,8 @@ public class WorldMapScanner : MonoBehaviour
                 break;
             }
         }
+
+        DisplayPlane(showPlane);
     }
 
     //void OnPlaneChanged(ARPlanesChangedEventArgs eventArgs)
@@ -258,7 +264,7 @@ public class WorldMapScanner : MonoBehaviour
             RemovePoints(pointCloud);
         }
 
-        RenderPoints();
+        if (showPointCloud) RenderPoints();
     }
 
     void CreateOrUpdatePoints(ARPointCloud pointCloud)
@@ -387,6 +393,9 @@ public class WorldMapScanner : MonoBehaviour
 
         //m_PlaneVisualizers.SetActive(true);
         //m_PointCloudParticleSystem.GetComponent<Renderer>().enabled = true;
+
+        SliderShowPlane();
+        SliderShowPointCloud();
     }
 
     void OnDisable()
@@ -427,18 +436,38 @@ public class WorldMapScanner : MonoBehaviour
         mappingStatus = sessionSubsystem.worldMappingStatus.ToString();
 #endif
 
+        // get ARCamera
+        Vector3 arCam_Pos = new();
+        Quaternion arCam_Rot = new();
+
+        if (m_ARCamera)
+        {
+            arCam_Pos = m_ARCamera.transform.position;
+            arCam_Rot = m_ARCamera.transform.rotation;
+        }
+
         // UpdateTrackingStatus
-        m_TrackingStatus.text =
-            string.Format(
-                    "Detected trackable plane:\n" +
-                    "{0} planes\n\n" +
+        if (!m_MappingConfigurationUI) return;
+        m_MappingConfigurationUI
+            .GetComponent<MappingConfigurationUI_CatExample>()
+            .MappingStatusText =
+                string.Format(
+                        "Detected trackable plane:\n" +
+                        "{0} planes\n\n" +
 
-                    "Detected trackable feature point:\n" +
-                    "{1} points\n\n" +
+                        "Detected trackable feature point:\n" +
+                        "{1} points\n\n" +
 
-                    "FPS: {2}\n" +
-                    "Mapping status: {3}"
-                , countPlane, countPoint, fps, mappingStatus);
+                        "FPS: {2}\n" +
+                        "Mapping status: {3}\n\n\n" +
+
+
+                        "AR Camera status:\n" +
+                        "Pos (cm):\n{4}\n\n" +
+                        "Rot (Q):\n{5}"
+                    , countPlane, countPoint, fps, mappingStatus
+                    , GlobalConfig.Vector3inCm(arCam_Pos)
+                    , arCam_Rot.ToString());
     }
 
     void LateUpdate()
@@ -478,6 +507,34 @@ public class WorldMapScanner : MonoBehaviour
             {
                 item.SetActive(false);
             }
+        }
+    }
+
+    public void SliderShowPlane()
+    {
+        if (m_MappingConfigurationUI
+            .GetComponent<MappingConfigurationUI_CatExample>()
+            .GetDisplayPlaneSlider())
+        {
+            showPlane = true;
+        }
+        else
+        {
+            showPlane = false;
+        }
+    }
+
+    public void SliderShowPointCloud()
+    {
+        if (m_MappingConfigurationUI
+            .GetComponent<MappingConfigurationUI_CatExample>()
+            .GetDisplayPointCloudSlider())
+        {
+            showPointCloud = true;
+        }
+        else
+        {
+            showPointCloud = false;
         }
     }
 }

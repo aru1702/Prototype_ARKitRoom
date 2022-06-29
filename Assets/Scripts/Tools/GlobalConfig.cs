@@ -39,4 +39,39 @@ public class GlobalConfig : MonoBehaviour
         gameObject.transform.Rotate(Vector3.forward, eulerAngles.z);
         return gameObject;
     }
+
+    /// <summary>
+    /// Returns Vector3 string from meters scale into centimenters
+    /// with 0.01 scale (0.1 milimeters)
+    /// </summary>
+    /// <param name="vector3"></param>
+    /// <returns></returns>
+    public static string Vector3inCm(Vector3 vector3)
+    {
+        float x = vector3.x * 100;
+        float y = vector3.y * 100;
+        float z = vector3.z * 100;
+
+        return string.Format(
+                "({0}, {1}, {2})",
+                x.ToString("0.00"), y.ToString("0.00"), z.ToString("0.00")
+            );
+    }
+
+    /// <summary>
+    /// This method return string which better for naming format (yyyy-mm-dd-hh-mm-ss)
+    /// </summary>
+    /// <returns></returns>
+    public static string GetNowDateandTime()
+    {
+        string y = System.DateTime.Now.Year.ToString();
+        string mo = System.DateTime.Now.Month.ToString();
+        string d = System.DateTime.Now.Day.ToString();
+
+        string h = System.DateTime.Now.Hour.ToString();
+        string mi = System.DateTime.Now.Minute.ToString();
+        string s = System.DateTime.Now.Second.ToString();
+
+        return y + "-" + mo + "-" + d + "-" + h + "-" + mi + "-" + s;
+    }
 }
