@@ -17,6 +17,9 @@ public class ImageRecognition_CatExample_2 : MonoBehaviour
     [SerializeField]
     GameObject m_OriginPrefab;
 
+    [SerializeField]
+    GameObject m_LoadObjectManager;
+
     /**
      * Default methods
      */
@@ -99,6 +102,8 @@ public class ImageRecognition_CatExample_2 : MonoBehaviour
 
                         // deactive canvas
                         CanvasCat.SetActive(false);
+
+                        if (m_LoadObjectManager) m_LoadObjectManager.SetActive(true);
 
                         break;
                     }

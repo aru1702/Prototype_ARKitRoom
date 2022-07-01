@@ -51,4 +51,35 @@ public class Import_FromObject
         if (_myObjects.Count <= 0) { Import(); }
         return _myObjects;
     }
+
+    public static List<MyObject> ConvertFromListString(List<string[]> list_string)
+    {
+        // put into class
+        foreach (var csvData in list_string)
+        {
+            // based on the csv format
+            // 0: name
+            // 1: parent
+            // 2,3,4: l,h,w
+            // 5, 6: origin type, descriptor
+            // 7, 8: prefab type, special
+            // 9: static?
+            // 10: comment
+
+            MyObject origin = new(
+                    csvData[0],                             // name
+                    csvData[1],                             // parent
+                    float.Parse(csvData[2]),                // l
+                    float.Parse(csvData[3]),                // h
+                    float.Parse(csvData[4]),                // w
+                    csvData[5], csvData[6],                 // origin
+                    csvData[7], csvData[8], csvData[9],     // virtual object
+                    bool.Parse(csvData[10]),                // iot?
+                    csvData[11]);                           // comment
+
+            _myObjects.Add(origin);
+        }
+
+        return _myObjects;
+    }
 }

@@ -13,16 +13,26 @@ using UnityEngine;
 
 public class NonIoTDeviceManager : MonoBehaviour
 {
-    private string _materialPath = "Materials/Fade_prefabs_0";
-    private bool _materialChange = false;
+    [SerializeField]
+    Material m_ZBufferMaterial;
+
+    string _materialPath = "Materials/ZDepthBuffer_Transparent";
+    bool _materialChange = false;
 
     public void AssignMaterial()
     {
         // change cube mats --> transparent
         if (!_materialChange)
         {
-            Material zBlock_mats = Resources.Load<Material>(_materialPath);
-            GetComponent<Renderer>().material = zBlock_mats;
+            if (m_ZBufferMaterial)
+            {
+                GetComponent<Renderer>().material = m_ZBufferMaterial;
+            }
+            else
+            {
+                Material zBlock_mats = Resources.Load<Material>(_materialPath);
+                GetComponent<Renderer>().material = zBlock_mats;
+            }
             _materialChange = true;
         }
     }

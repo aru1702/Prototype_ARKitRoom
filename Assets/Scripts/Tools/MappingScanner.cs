@@ -164,7 +164,7 @@ public class MappingScanner : MonoBehaviour
             }
         }
 
-        DisplayPlane(showPlane);
+        //DisplayPlane(showPlane);
     }
 
     //void OnPlaneChanged(ARPlanesChangedEventArgs eventArgs)

@@ -1,10 +1,9 @@
 fileFormatVersion: 2
-guid: a8bdf12a00921457c8a18357bc2303ce
+guid: 19e44e5888849450882bfbb2461513d5
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences:
-  - m_ZBufferMaterial: {fileID: 2100000, guid: 3f0a31b8b612a4061b68cd12a2d762b2, type: 2}
+  defaultReferences: []
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

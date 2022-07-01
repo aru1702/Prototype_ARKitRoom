@@ -60,4 +60,16 @@ public class MappingConfigurationUI_CatExample : MonoBehaviour
         if ((int)m_DisplayPlane.value == 1) return true;
         else return false;
     }
+
+    [SerializeField]
+    Button m_Visualize3DObject;
+
+    [SerializeField]
+    GameObject m_ImageRecognitionManager;
+
+    public void Visualize3DObject()
+    {
+        m_Visualize3DObject.gameObject.SetActive(false);
+        if (m_ImageRecognitionManager) m_ImageRecognitionManager.SetActive(true);
+    }
 }
