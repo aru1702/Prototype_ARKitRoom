@@ -36,8 +36,8 @@ public class MainMenu : MonoBehaviour
     public void UserRoleButtonPressed()
     {
         if (CheckIfMapAvailable())
-            //LoadScene("NewARScene");
-            Debug.Log("Enter AR system");
+            LoadScene("NewARScene");
+            //Debug.Log("Enter AR system");
         else
         {
             m_errorText.gameObject.SetActive(true);

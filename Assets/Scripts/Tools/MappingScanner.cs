@@ -76,6 +76,18 @@ public class MappingScanner : MonoBehaviour
     //[SerializeField]
     //bool enablePointCloudPrefab, enablePlanePrefab = false;
 
+    /// <summary>
+    /// On editor, enable this will render the point cloud with red cross object
+    /// Disable this still active the point cloud system, only no rendering
+    /// </summary>
+    [SerializeField]
+    bool m_RenderPointCloud = true;
+    public bool RenderPointCloud
+    {
+        get { return m_RenderPointCloud; }
+        set { m_RenderPointCloud = value; }
+    }
+
     bool showPointCloud, showPlane;
 
     GameObject m_PlaneVisualizers;
@@ -264,7 +276,7 @@ public class MappingScanner : MonoBehaviour
             RemovePoints(pointCloud);
         }
 
-        if (showPointCloud) RenderPoints();
+        if (showPointCloud && m_RenderPointCloud) RenderPoints();
     }
 
     void CreateOrUpdatePoints(ARPointCloud pointCloud)

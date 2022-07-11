@@ -7,19 +7,13 @@ using UnityEngine.Networking;
 /// - In next project, I want to make this fetch data from online
 /// - We use Google Drive as simple remote storage
 /// - If success, then online sharing is capable
-public class LoadObject_CatExample_2 : MonoBehaviour
+public class LoadObject_CatExample_2__NewARScene : MonoBehaviour
 {
     List<GameObject> _parents = new();
     List<GameObject> _objects = new();
 
     [SerializeField, TextArea(2,5)]
     string m_MyOriginURL, m_MyObjectURL;
-
-    //string front_url = "https://docs.google.com/spreadsheets/d/e/";
-    //string back_url = "/pub?gid=0&single=true&output=csv";
-
-    //string myorigin_id = "2PACX-1vSro1d6_-qq849bGCdHpk1G3GJFEbN3HVTebeU9YyGRzeoscFmJkDapQ0ShaFdJ9y5njwW84FWOwBE0";
-    //string myobject_id = "2PACX-1vTycxJw3OJkgI2xyqWdGIkRaSsNkknLJdYUcswSWOqeF5Gfde7pLrShwgxWxHAWxsuXrnL8GWW1DMS9";
 
     [SerializeField]
     float _alpha = 0.3f;
@@ -106,7 +100,7 @@ public class LoadObject_CatExample_2 : MonoBehaviour
             // do foreach in csv data
             foreach (var item in myOrigins)
             {
-                Debug.Log("Origin data: " + item.name + " " + item.position.ToString());
+                //Debug.Log("Origin data: " + item.name + " " + item.position.ToString());
 
                 // check if name contains of imagetarget
                 string[] strSplit = item.name.Split("_");   // delimiter always "_"
@@ -361,15 +355,6 @@ public class LoadObject_CatExample_2 : MonoBehaviour
                         newGameObject.GetComponent<DataManager>().testingOnly = true;
                         newGameObject.GetComponent<DataManager>().Test_AssignHiLoValue();
                         //StartCoroutine(Test_Loop__PlayingColor(newGameObject));
-
-                        if (newGameObject.name.Split()[0] == "sample")
-                        {
-                            UpdatingColorManager(newGameObject, 100.0f);
-                        }
-                        else
-                        {
-                            UpdatingColorManager(newGameObject, 40.0f);
-                        }
                     }
                     else
                     {
@@ -482,10 +467,14 @@ public class LoadObject_CatExample_2 : MonoBehaviour
         //   - change pos, rot of root based on (B) localtoworldcoordinate
 
         // transform our root based on originChild
-        if (!originChild) return;
-        Vector3 tempPos = originChild.transform.position;
-        Quaternion tempRot = originChild.transform.rotation;
-        GlobalConfig.PlaySpaceOriginGO.transform.SetPositionAndRotation(tempPos, tempRot);
+
+        // UPDATE 2022-07-08
+        // - do not update root based on image position
+        // - let them be by the SLAM system
+        //if (!originChild) return;
+        //Vector3 tempPos = originChild.transform.position;
+        //Quaternion tempRot = originChild.transform.rotation;
+        //GlobalConfig.PlaySpaceOriginGO.transform.SetPositionAndRotation(tempPos, tempRot);
 
         //Debug.Log(string.Format("In loadObject\n\nPos: {0}\nRot: {1}",
         //                    originChild.transform.parent.transform.position,

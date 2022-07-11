@@ -255,3 +255,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ARCamera: {fileID: 0}
+  m_EnableTextOnPlane: 0
+  m_EnableMultiColorPlane: 0

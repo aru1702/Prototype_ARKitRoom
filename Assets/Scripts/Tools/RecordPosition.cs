@@ -23,6 +23,8 @@ public class RecordPosition : MonoBehaviour
     List<string[]> recordedCamera_Pos = new();
     List<string[]> recordedLoadObject_Pos = new();
     bool cameraPos_hasHeader, loadObject_hasHeader = false;
+    bool hasCamReference = false;
+    Quaternion camRefRotation;
 
     private void Start()
     {
@@ -97,6 +99,19 @@ public class RecordPosition : MonoBehaviour
 
         if (allObjects.Count <= 0) return;
 
+        // camera reference should directing to the same angle
+        // otherwise object-camera pos will different each camera direction
+        // this is very serious that affecting the data when record the position
+        if (!hasCamReference)
+        {
+            hasCamReference = true;
+            camRefRotation = m_ARCamera.transform.rotation;
+        }
+
+        // use of camRefRotation to make new gameobject as reference
+        GameObject tempGo = new();
+        tempGo.transform.SetPositionAndRotation(m_ARCamera.transform.position, camRefRotation);
+
         foreach (var obj in allObjects)
         {
             //Vector3 obj_pos_v3 = obj.transform.position;
@@ -111,8 +126,11 @@ public class RecordPosition : MonoBehaviour
             //Vector3 pos = newGO.transform.position;
             //Quaternion rot = newGO.transform.rotation;
 
+            // use tempGo as reference, not AR Camera anymore
+            // by this AR Camera can freely direct to any angle
+            // without affecting as camera angle reference to all myObject
             Matrix4x4 fromObjToCamera =
-                m_ARCamera.transform.worldToLocalMatrix *
+                tempGo.transform.worldToLocalMatrix *
                 obj.transform.localToWorldMatrix;
 
             Vector3 newPos = fromObjToCamera.GetPosition();

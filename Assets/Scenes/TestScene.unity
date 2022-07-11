@@ -424,7 +424,7 @@ GameObject:
   - component: {fileID: 511309633}
   - component: {fileID: 511309632}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Virtual Obj
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -780,6 +780,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1213575499}
   - component: {fileID: 1213575500}
+  - component: {fileID: 1213575501}
+  - component: {fileID: 1213575502}
   m_Layer: 0
   m_Name: Dummy Camera
   m_TagString: Untagged
@@ -811,13 +813,44 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1213575498}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b430b2a8d716545b396e38ea449363e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_DummyCamera: {fileID: 1213575498}
   m_CubeObject: {fileID: 511309631}
+  m_DebugText: {fileID: 1483719494}
+--- !u!114 &1213575501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1213575498}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d78d6f38beb9746189c673e68d5ecc6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ARCamera: {fileID: 1213575498}
+  m_VirtualObject: {fileID: 511309631}
+  m_PanelText: {fileID: 1483719494}
+--- !u!114 &1213575502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1213575498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82304811c8e544eddbcad48937eb895c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Camera: {fileID: 519917417}
+  m_TargetedGameObject: {fileID: 511309631}
+  m_TargetedGameObject2: {fileID: 1213575498}
   m_DebugText: {fileID: 1483719494}
 --- !u!1 &1240762915
 GameObject:
@@ -843,7 +876,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1240762915}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8de71036befa54f8fbb73a219bf7bca3, type: 3}
   m_Name: 
