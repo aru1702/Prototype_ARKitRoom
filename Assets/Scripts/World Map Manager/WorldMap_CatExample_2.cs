@@ -15,6 +15,7 @@ public class WorldMap_CatExample_2 : MonoBehaviour
     // my modification
     const string myWorldMapName = "catExample_session.worldmap";
     const string myOriginPathName = "catExample_origin.csv";
+    float startTime;
 
     [Tooltip("The ARSession component controlling the session from which to generate ARWorldMaps.")]
     [SerializeField]
@@ -91,14 +92,16 @@ public class WorldMap_CatExample_2 : MonoBehaviour
     IEnumerator Save()
     {
         // open panel
-        UIManager.GetComponent<UIManager_CatExample>().OpenPanel();
         Text MapStatusText = UIManager.GetComponent<UIManager_CatExample>().MapStatus;
+
         SetText(MapStatusText, "Saving map, please wait...");
+        UIManager.GetComponent<UIManager_CatExample>().OpenPanel();
 
         var sessionSubsystem = (ARKitSessionSubsystem)m_ARSession.subsystem;
         if (sessionSubsystem == null)
         {
             SetText(MapStatusText, "No session subsystem available. Could not save.");
+            UIManager.GetComponent<UIManager_CatExample>().OpenPanel();
             yield break;
         }
 
@@ -111,6 +114,7 @@ public class WorldMap_CatExample_2 : MonoBehaviour
         {
             string errStr = string.Format("Session serialization failed with status {0}", request.status);
             SetText(MapStatusText, errStr);
+            UIManager.GetComponent<UIManager_CatExample>().OpenPanel();
             yield break;
         }
 
@@ -123,7 +127,11 @@ public class WorldMap_CatExample_2 : MonoBehaviour
         // It saves the AR Session Origin, which means our AR origin (0,0,0)
         Debug.Log("Map saved!");
 
-        SetText(MapStatusText, "Map saved!");
+        float endTime = Time.time;
+        float time_spend = System.Math.Abs(endTime - startTime);
+
+        SetText(MapStatusText, "Map tracked for " + time_spend.ToString("0.00") + " secs., and saved successfully!");
+        UIManager.GetComponent<UIManager_CatExample>().OpenPanel();
     }
 
     /**
@@ -180,16 +188,20 @@ public class WorldMap_CatExample_2 : MonoBehaviour
       */
     IEnumerator Load()
     {
+        float start_time = Time.time;
+
         // open panel
-        UIManager.GetComponent<UIManager_CatExample>().OpenPanel();
         Text MapStatusText = UIManager.GetComponent<UIManager_CatExample>().MapStatus;
+
         SetText(MapStatusText, "Loading map, please wait...");
+        UIManager.GetComponent<UIManager_CatExample>().OpenPanel();
 
         // if only no session subsystem
         var sessionSubsystem = (ARKitSessionSubsystem)m_ARSession.subsystem;
         if (sessionSubsystem == null)
         {
             SetText(MapStatusText, "No session subsystem available. Could not load.");
+            UIManager.GetComponent<UIManager_CatExample>().OpenPanel();
             yield break;
         }
 
@@ -205,6 +217,7 @@ public class WorldMap_CatExample_2 : MonoBehaviour
             {
                 string errStr = string.Format("File {0} does not exist.", path);
                 SetText(MapStatusText, errStr);
+                UIManager.GetComponent<UIManager_CatExample>().OpenPanel();
                 yield break;
             }
         }
@@ -243,6 +256,7 @@ public class WorldMap_CatExample_2 : MonoBehaviour
         else
         {
             SetText(MapStatusText, "Data is not a valid ARWorldMap.");
+            UIManager.GetComponent<UIManager_CatExample>().OpenPanel();
             yield break;
         }
 
@@ -255,7 +269,11 @@ public class WorldMap_CatExample_2 : MonoBehaviour
         // this because we don't need imageTarget as reference anymore
         Debug.Log("Map loaded!");
 
-        SetText(MapStatusText, "Map loaded!");
+        float end_time = Time.time;
+        float time_spend = System.Math.Abs(end_time - start_time);
+
+        SetText(MapStatusText, "Map loaded for " + time_spend.ToString("0.00") + " secs.!");
+        UIManager.GetComponent<UIManager_CatExample>().OpenPanel();
     }
 
     /**
@@ -295,11 +313,39 @@ public class WorldMap_CatExample_2 : MonoBehaviour
         origin.transform.SetPositionAndRotation(pos, rot);
     }
 
+    string GetPath()
+    {
+        int maps_number = GlobalConfig.MapsSelection;
+        if (maps_number > 0)
+        {
+            string new_map_filename = "catExample_session_" + maps_number + ".worldmap";
+            return Path.Combine(Application.persistentDataPath, new_map_filename);
+        }
+        else
+        {
+            return Path.Combine(Application.persistentDataPath, myWorldMapName);
+        }
+    }
+
     string path
     {
         get
         {
-            return Path.Combine(Application.persistentDataPath, myWorldMapName);
+            return GetPath();
+        }
+    }
+
+    string GetOriginPath()
+    {
+        int maps_number = GlobalConfig.MapsSelection;
+        if (maps_number > 0)
+        {
+            string new_origin_filename = "catExample_origin_" + maps_number + ".csv";
+            return Path.Combine(Application.persistentDataPath, new_origin_filename);
+        }
+        else
+        {
+            return Path.Combine(Application.persistentDataPath, myOriginPathName);
         }
     }
 
@@ -307,7 +353,7 @@ public class WorldMap_CatExample_2 : MonoBehaviour
     {
         get
         {
-            return Path.Combine(Application.persistentDataPath, myOriginPathName);
+            return GetOriginPath();
         }
     }
 
@@ -347,6 +393,7 @@ public class WorldMap_CatExample_2 : MonoBehaviour
     void OnEnable()
     {
         Debug.Log("WorldMap active");
+        startTime = Time.time;
     }
 
     void Update()

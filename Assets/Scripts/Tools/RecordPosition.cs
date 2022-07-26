@@ -20,6 +20,12 @@ public class RecordPosition : MonoBehaviour
     [SerializeField]
     GameObject m_LoadObjectManager;
 
+    [SerializeField]
+    GameObject m_MappingScannerForPointCloud;
+
+    [SerializeField]
+    bool m_SavePointCloud = false;
+
     List<string[]> recordedCamera_Pos = new();
     List<string[]> recordedLoadObject_Pos = new();
     bool cameraPos_hasHeader, loadObject_hasHeader = false;
@@ -30,6 +36,17 @@ public class RecordPosition : MonoBehaviour
     {
         m_Laps.text = "1";
         m_RecordedValue.text = "0";
+    }
+
+    void SaveSuccess()
+    {
+        m_UIManager
+            .GetComponent<UIManager_CatExample>()
+            .MapStatus.text = "Recorded position saved successfully!";
+
+        m_UIManager
+            .GetComponent<UIManager_CatExample>()
+            .OpenPanel();
     }
 
     public void CameraPos_Record()
@@ -58,18 +75,14 @@ public class RecordPosition : MonoBehaviour
 
     public void CameraPos_Save()
     {
+        if (recordedCamera_Pos.Count <= 0) return;
+
         string time = GlobalConfig.GetNowDateandTime();
-        string fileName = time + "_recordedCamera_Pos.csv";
+        string map = GlobalConfig.MapsSelection.ToString();
+        string fileName = time + "_recordedCamera_Pos__Maps_" + map + ".csv";
         string path = Path.Combine(Application.persistentDataPath, fileName);
         ExportCSV.exportData(path, recordedCamera_Pos);
-
-        m_UIManager
-            .GetComponent<UIManager_CatExample>()
-            .MapStatus.text = "Recorded position saved successfully!";
-
-        m_UIManager
-            .GetComponent<UIManager_CatExample>()
-            .OpenPanel();
+        SaveSuccess();
     }
 
     void CameraPos_AddHeader()
@@ -84,8 +97,7 @@ public class RecordPosition : MonoBehaviour
         cameraPos_hasHeader = true;
     }
 
-    //////////
-    ///
+    /////////////////////////////////////////////////////////
 
     public void LoadObject_Record()
     {
@@ -162,18 +174,14 @@ public class RecordPosition : MonoBehaviour
     {
         if (!m_LoadObjectManager.activeSelf) return;
 
+        if (recordedLoadObject_Pos.Count <= 0) return;
+
         string time = GlobalConfig.GetNowDateandTime();
-        string fileName = time + "_recordedLoadObject_Pos.csv";
+        string map = GlobalConfig.MapsSelection.ToString();
+        string fileName = time + "_recordedLoadObject_Pos__Maps_" + map + ".csv";        
         string path = Path.Combine(Application.persistentDataPath, fileName);
         ExportCSV.exportData(path, recordedLoadObject_Pos);
-
-        //m_UIManager
-        //    .GetComponent<UIManager_CatExample>()
-        //    .MapStatus.text = "Recorded position saved successfully!";
-
-        //m_UIManager
-        //    .GetComponent<UIManager_CatExample>()
-        //    .OpenPanel();
+        SaveSuccess();
     }
 
     void LoadObject_AddHeader()
@@ -186,5 +194,69 @@ public class RecordPosition : MonoBehaviour
         };
         recordedLoadObject_Pos.Add(header);
         loadObject_hasHeader = true;
+    }
+
+    /////////////////////////////////////////////////////////
+
+    public void PointClouds_Save()
+    {
+        // do nothing if function deactivated
+        if (!m_SavePointCloud) return;
+
+        // create new list
+        List<string[]> pointClouds_Pos = new();
+
+        // insert the header
+        string[] header = new[]
+        {
+            "identifier", "pos x", "pos y", "pos z", "status"
+        };
+        pointClouds_Pos.Add(header);
+
+        // import data from MappingScanner
+        List<Vector3> pointClouds = m_MappingScannerForPointCloud
+            .GetComponent<MappingScanner>()
+            .GetPointCloudsVector3s();
+        List<ulong> pointCloudUlongs = m_MappingScannerForPointCloud
+            .GetComponent<MappingScanner>()
+            .GetPointCloudsUlongs();
+
+        // insert data into list
+        for (int i = 0; i < pointClouds.Count; i++)
+        {
+            // use try catch to prevent code stopped
+            try
+            {
+                string[] data = new[]
+                {
+                    pointCloudUlongs[i].ToString(),
+                    pointClouds[i].x.ToString(),
+                    pointClouds[i].y.ToString(),
+                    pointClouds[i].z.ToString(),
+                    "success"
+                };
+                pointClouds_Pos.Add(data);
+            }
+            catch (System.Exception ex)
+            {
+                string[] data = new[]
+                {
+                    "",
+                    "",
+                    "",
+                    "",
+                    ex.ToString()
+                };
+                pointClouds_Pos.Add(data);
+            }
+        }
+
+        // save data into csv
+        string time = GlobalConfig.GetNowDateandTime();
+        string map = GlobalConfig.MapsSelection.ToString();
+        string fileName = time + "_pointClouds_Pos__Maps_" + map + ".csv";
+        string path = Path.Combine(Application.persistentDataPath, fileName);
+        ExportCSV.exportData(path, pointClouds_Pos);
+        SaveSuccess();
     }
 }

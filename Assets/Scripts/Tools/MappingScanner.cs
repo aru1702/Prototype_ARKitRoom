@@ -100,6 +100,10 @@ public class MappingScanner : MonoBehaviour
     Dictionary<ARPlane, LineRenderer> m_PlaneLineRenderers = new Dictionary<ARPlane, LineRenderer>();
     Dictionary<ulong, Vector3> m_Points = new Dictionary<ulong, Vector3>();
     ParticleSystem.Particle[] m_Particles;
+    List<ulong> m_Points_Keys = new();
+
+    ARPointCloudManager m_ARPointCloudManager;
+    ARPlaneManager m_ARPlaneManager;
 
     void Configure()
     {
@@ -294,7 +298,17 @@ public class MappingScanner : MonoBehaviour
             var identifiers = pointCloud.identifiers.Value;
             for (int i = 0; i < positions.Length; ++i)
             {
-                m_Points[identifiers[i]] = positions[i];
+                //m_Points[identifiers[i]] = positions[i];
+
+                try
+                {
+                    m_Points.Add(identifiers[i], positions[i]);
+                    m_Points_Keys.Add(identifiers[i]);
+                }
+                catch (System.ArgumentException)
+                {
+                    // point key already exists
+                }
             }
         }
     }
@@ -314,6 +328,7 @@ public class MappingScanner : MonoBehaviour
             for (int i = 0; i < positions.Length; ++i)
             {
                 m_Points.Remove(identifiers[i]);
+                m_Points_Keys.Remove(identifiers[i]);
             }
 
             countPoint = m_Points.Count;
@@ -408,6 +423,9 @@ public class MappingScanner : MonoBehaviour
 
         SliderShowPlane();
         SliderShowPointCloud();
+
+        m_ARPointCloudManager = m_Origin.GetComponent<ARPointCloudManager>();
+        m_ARPlaneManager = m_Origin.GetComponent<ARPlaneManager>();
     }
 
     void OnDisable()
@@ -460,24 +478,32 @@ public class MappingScanner : MonoBehaviour
 
         // UpdateTrackingStatus
         if (!m_MappingConfigurationUI) return;
+        string detectedPlanes, detectedFeaturePoints = ""; 
+
+        if (!m_ARPlaneManager.enabled) detectedPlanes = "This feature is disabled.";
+        else detectedPlanes = countPlane + " planes";
+
+        if (!m_ARPointCloudManager.enabled) detectedFeaturePoints = "This feature is disabled.";
+        else detectedFeaturePoints = countPoint + " points";
+
         m_MappingConfigurationUI
             .GetComponent<MappingConfigurationUI_CatExample>()
             .MappingStatusText =
                 string.Format(
                         "Detected trackable plane:\n" +
-                        "{0} planes\n\n" +
+                        detectedPlanes + "\n\n" +
 
                         "Detected trackable feature point:\n" +
-                        "{1} points\n\n" +
+                        detectedFeaturePoints + "\n\n" +
 
-                        "FPS: {2}\n" +
-                        "Mapping status: {3}\n\n\n" +
+                        "FPS: {0}\n" +
+                        "Mapping status: {1}\n\n\n" +
 
 
                         "AR Camera status:\n" +
-                        "Pos (cm):\n{4}\n\n" +
-                        "Rot (Q):\n{5}"
-                    , countPlane, countPoint, fps, mappingStatus
+                        "Pos (cm):\n{2}\n\n" +
+                        "Rot (Q):\n{3}"
+                    , fps, mappingStatus
                     , GlobalConfig.Vector3inCm(arCam_Pos)
                     , arCam_Rot.ToString());
     }
@@ -548,5 +574,26 @@ public class MappingScanner : MonoBehaviour
         {
             showPointCloud = false;
         }
+    }
+
+    public List<Vector3> GetPointCloudsVector3s()
+    {
+        List<Vector3> pointClouds = new();
+        foreach (var item in m_Points_Keys)
+        {
+            Vector3 point = m_Points[item];
+            pointClouds.Add(point);
+        }
+        return pointClouds;
+    }
+
+    public List<ulong> GetPointCloudsUlongs()
+    {
+        return m_Points_Keys;
+    }
+
+    public Dictionary<ulong, Vector3> GetPointClouds()
+    {
+        return m_Points;
     }
 }

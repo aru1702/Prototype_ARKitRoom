@@ -21,6 +21,7 @@ public class UIManager_CatExample : MonoBehaviour
 
     public void OpenPanel()
     {
+        Debug.Log("open panel");
         panel.SetActive(true);
     }
 

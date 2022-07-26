@@ -378,9 +378,19 @@ public class LoadObject_CatExample_2__NewARScene : MonoBehaviour
                     }
                 }
             }
+
+            SetStartTime();
         }
 
         www.Dispose();
+    }
+
+    /// <summary>
+    /// Only set the time after load all object
+    /// </summary>
+    void SetStartTime()
+    {
+        GlobalConfig.AFTER_LOAD_START_TIME = Time.time;
     }
 
     private bool CheckIfParentsExists(List<GameObject> parentsList, string parentName)
@@ -437,7 +447,7 @@ public class LoadObject_CatExample_2__NewARScene : MonoBehaviour
 
     /**
      * <summary>This only when image target is active</summary>
-     */
+     */ 
     private void UpdateWorldCoordinate(Vector3 markerPos, Vector3 markerRot)
     {
         // OLD MECHANIC

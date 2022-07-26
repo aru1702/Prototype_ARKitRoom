@@ -61,7 +61,7 @@ public class GlobalConfig : MonoBehaviour
     /// <summary>
     /// This method return string which better for naming format (yyyy-mm-dd-hh-mm-ss)
     /// </summary>
-    /// <returns></returns>
+    /// <returns>String in (yyyy-mm-dd-hh-mm-ss) format</returns>
     public static string GetNowDateandTime()
     {
         string y = System.DateTime.Now.Year.ToString();
@@ -74,4 +74,17 @@ public class GlobalConfig : MonoBehaviour
 
         return y + "-" + mo + "-" + d + "-" + h + "-" + mi + "-" + s;
     }
+
+    static int MAPS_NUMBER = 0; // zero is default
+
+    /// <summary>
+    /// To select the map based on number, 0 is default map.
+    /// </summary>
+    public static int MapsSelection
+    {
+        get { return MAPS_NUMBER; }
+        set { MAPS_NUMBER = value; }
+    }
+
+    public static float AFTER_LOAD_START_TIME = 0.0f;
 }

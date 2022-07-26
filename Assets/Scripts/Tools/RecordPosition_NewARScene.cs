@@ -117,7 +117,8 @@ public class RecordPosition_NewARScene : MonoBehaviour
         if (!m_LoadObjectManager.activeSelf) return;
 
         string time = GlobalConfig.GetNowDateandTime();
-        string fileName = time + "_recordedPoints_Pos.csv";
+        string map = GlobalConfig.MapsSelection.ToString();
+        string fileName = time + "_recordedPoints_Pos__Maps_" + map + ".csv";
         string path = Path.Combine(Application.persistentDataPath, fileName);
         ExportCSV.exportData(path, recordedPoints_Pos);
 

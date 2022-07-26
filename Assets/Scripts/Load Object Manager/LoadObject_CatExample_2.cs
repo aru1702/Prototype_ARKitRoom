@@ -362,14 +362,14 @@ public class LoadObject_CatExample_2 : MonoBehaviour
                         newGameObject.GetComponent<DataManager>().Test_AssignHiLoValue();
                         //StartCoroutine(Test_Loop__PlayingColor(newGameObject));
 
-                        if (newGameObject.name.Split()[0] == "sample")
-                        {
-                            UpdatingColorManager(newGameObject, 100.0f);
-                        }
-                        else
-                        {
-                            UpdatingColorManager(newGameObject, 40.0f);
-                        }
+                        //if (newGameObject.name.Split()[0] == "sample")
+                        //{
+                        //    UpdatingColorManager(newGameObject, 100.0f);
+                        //}
+                        //else
+                        //{
+                        //    UpdatingColorManager(newGameObject, 40.0f);
+                        //}
                     }
                     else
                     {

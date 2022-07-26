@@ -76,10 +76,17 @@ public class WorldMap_CatExample_2__NewARScene : MonoBehaviour
       */
     IEnumerator Load()
     {
+        float start_time = Time.time;
+        int map = GlobalConfig.MapsSelection;
+
         // open panel
-        m_UIManager.GetComponent<UIManager_CatExample>().OpenPanel();
         Text MapStatusText = m_UIManager.GetComponent<UIManager_CatExample>().MapStatus;
-        SetText(MapStatusText, "Loading map, please wait...");
+
+        string text = "Loading map, please wait...";
+        if (map > 0) text = "Loading map " + map + ", please wait...";
+
+        SetText(MapStatusText, text);
+        m_UIManager.GetComponent<UIManager_CatExample>().OpenPanel();
 
         // if only no session subsystem
         var sessionSubsystem = (ARKitSessionSubsystem)m_ARSession.subsystem;
@@ -116,11 +123,27 @@ public class WorldMap_CatExample_2__NewARScene : MonoBehaviour
         var bytesRemaining = file.Length;
         var binaryReader = new BinaryReader(file);
         var allBytes = new List<byte>();
+
+        float filesize_start = file.Length;
+
         while (bytesRemaining > 0)
         {
             var bytes = binaryReader.ReadBytes(bytesPerFrame);
             allBytes.AddRange(bytes);
             bytesRemaining -= bytesPerFrame;
+
+            float filesize_curr = bytesRemaining;
+            float filesize_perc = (1 - filesize_curr / filesize_start) * 100;
+
+            if (filesize_perc > 100) filesize_perc = 100;
+
+            string perc = filesize_perc.ToString("0.00");
+
+            text = "Loading map -- " + perc + "%";
+            if (map > 0) text = "Loading map " + map + " -- " + perc + "%";
+
+            SetText(MapStatusText, text);
+
             yield return null;
         }
 
@@ -151,10 +174,21 @@ public class WorldMap_CatExample_2__NewARScene : MonoBehaviour
         // this because we don't need imageTarget as reference anymore
         Debug.Log("Map loaded!");
 
-        SetText(MapStatusText, "Map loaded!");
+        float end_time = Time.time;
+        float time_spend = System.Math.Abs(end_time - start_time);
+
+        text = "Map loaded for " + time_spend.ToString("0.00") + " secs.!";
+        if (map > 0) text = "Map " + map + " successfully loaded for " + time_spend.ToString("0.00") + " secs.!";
+
+        SetText(MapStatusText, text);
+
+        SetText(MapStatusText, text);
+        m_UIManager.GetComponent<UIManager_CatExample>().OpenPanel();
 
         if (hasMarkerData) ActiveLoadObjectManager();
-        else SetText(MapStatusText, "Map loaded, but no origin data found! Try to contact your administrator first.");
+        else SetText(MapStatusText, "Map loaded for " + time_spend.ToString("0.00") + " secs., " +
+            "but no origin data found! " +
+            "We cannot proceed to show the AR experience.");
     }
 
     /**
@@ -176,6 +210,7 @@ public class WorldMap_CatExample_2__NewARScene : MonoBehaviour
         if (origindata.Count <= 0)
         {
             Debug.LogError("No marker data!");
+
             hasMarkerData = false;
             return;
         }
@@ -211,11 +246,39 @@ public class WorldMap_CatExample_2__NewARScene : MonoBehaviour
             .enabled = true;
     }
 
+    string GetPath()
+    {
+        int maps_number = GlobalConfig.MapsSelection;
+        if (maps_number > 0)
+        {
+            string new_map_filename = "catExample_session_" + maps_number + ".worldmap";
+            return Path.Combine(Application.persistentDataPath, new_map_filename);
+        }
+        else
+        {
+            return Path.Combine(Application.persistentDataPath, myWorldMapName);
+        }
+    }
+
     string path
     {
         get
         {
-            return Path.Combine(Application.persistentDataPath, myWorldMapName);
+            return GetPath();
+        }
+    }
+
+    string GetOriginPath()
+    {
+        int maps_number = GlobalConfig.MapsSelection;
+        if (maps_number > 0)
+        {
+            string new_origin_filename = "catExample_origin_" + maps_number + ".csv";
+            return Path.Combine(Application.persistentDataPath, new_origin_filename);
+        }
+        else
+        {
+            return Path.Combine(Application.persistentDataPath, myOriginPathName);
         }
     }
 
@@ -223,7 +286,7 @@ public class WorldMap_CatExample_2__NewARScene : MonoBehaviour
     {
         get
         {
-            return Path.Combine(Application.persistentDataPath, myOriginPathName);
+            return GetOriginPath();
         }
     }
 
