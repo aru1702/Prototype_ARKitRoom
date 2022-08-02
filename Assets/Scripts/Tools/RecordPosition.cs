@@ -3,6 +3,14 @@ using System.IO;
 using UnityEngine.UI;
 using UnityEngine;
 
+/// <summary>
+/// This script now has 3 function:
+/// - record camera position (record and save)
+/// - record load object based on camera positin (record and save)
+/// - point cloud ulong (save)
+///
+/// If record data is zero
+/// </summary>
 public class RecordPosition : MonoBehaviour
 {
     [SerializeField]
@@ -23,8 +31,12 @@ public class RecordPosition : MonoBehaviour
     [SerializeField]
     GameObject m_MappingScannerForPointCloud;
 
+    /// <summary>
+    /// Option to enable recording camPos, loadObjPos
+    /// Option to enable save the point cloud (because it has large data)
+    /// </summary>
     [SerializeField]
-    bool m_SavePointCloud = false;
+    bool m_RecordCamPos, m_RecordLoadObjPos, m_SavePointCloud;
 
     List<string[]> recordedCamera_Pos = new();
     List<string[]> recordedLoadObject_Pos = new();
@@ -32,24 +44,62 @@ public class RecordPosition : MonoBehaviour
     bool hasCamReference = false;
     Quaternion camRefRotation;
 
-    private void Start()
+    /// <summary>
+    /// Laps from 1, and recorded value from 0
+    /// </summary>
+    void Start()
     {
         m_Laps.text = "1";
         m_RecordedValue.text = "0";
     }
 
-    void SaveSuccess()
+    /// <summary>
+    /// To record camera and loadObject data
+    /// </summary>
+    public void RecordData()
     {
+        if (m_RecordCamPos) CameraPos_Record();
+        if (m_RecordLoadObjPos) LoadObject_Record();
+    }
+
+    /// <summary>
+    /// To save camera, loadObject, and pointCloud data
+    /// </summary>
+    public void SaveData()
+    {
+        try
+        {
+            CameraPos_Save();
+            LoadObject_Save();
+            if (m_SavePointCloud) PointClouds_Save();
+            SaveSuccess(true);
+        }
+        catch (System.Exception ex)
+        {
+            SaveSuccess(false, ex.ToString());
+        }
+    }
+
+    void SaveSuccess(bool value, string args = "")
+    {
+        string text;
+        if (value) text = "Recorded position saved successfully!";
+        else text = "Failed to save recorded position! Reason: " + args;
+
         m_UIManager
             .GetComponent<UIManager_CatExample>()
-            .MapStatus.text = "Recorded position saved successfully!";
+            .MapStatus.text = text;
 
         m_UIManager
             .GetComponent<UIManager_CatExample>()
             .OpenPanel();
     }
 
-    public void CameraPos_Record()
+    /////////////////////////////////////////////////////////
+    /// Now we enter the camera position record and save
+    /////////////////////////////////////////////////////////
+
+    void CameraPos_Record()
     {
         Vector3 pos = m_ARCamera.transform.position;
         Quaternion rot = m_ARCamera.transform.rotation;
@@ -70,10 +120,11 @@ public class RecordPosition : MonoBehaviour
         };
         recordedCamera_Pos.Add(data);
 
+        // because in string[] there is header, so must (-1)
         m_RecordedValue.text = (recordedCamera_Pos.Count-1).ToString();
     }
 
-    public void CameraPos_Save()
+    void CameraPos_Save()
     {
         if (recordedCamera_Pos.Count <= 0) return;
 
@@ -82,7 +133,6 @@ public class RecordPosition : MonoBehaviour
         string fileName = time + "_recordedCamera_Pos__Maps_" + map + ".csv";
         string path = Path.Combine(Application.persistentDataPath, fileName);
         ExportCSV.exportData(path, recordedCamera_Pos);
-        SaveSuccess();
     }
 
     void CameraPos_AddHeader()
@@ -98,8 +148,10 @@ public class RecordPosition : MonoBehaviour
     }
 
     /////////////////////////////////////////////////////////
+    /// Now we enter the load object record and save
+    /////////////////////////////////////////////////////////
 
-    public void LoadObject_Record()
+    void LoadObject_Record()
     {
         if (!loadObject_hasHeader) LoadObject_AddHeader();
 
@@ -167,10 +219,11 @@ public class RecordPosition : MonoBehaviour
             recordedLoadObject_Pos.Add(data);
         }
 
-        //m_RecordedValue.text = (recordedPosition.Count - 1).ToString();
+        // because in string[] there is header, so must (-1)
+        m_RecordedValue.text = (recordedLoadObject_Pos.Count - 1).ToString();
     }
 
-    public void LoadObject_Save()
+    void LoadObject_Save()
     {
         if (!m_LoadObjectManager.activeSelf) return;
 
@@ -181,7 +234,6 @@ public class RecordPosition : MonoBehaviour
         string fileName = time + "_recordedLoadObject_Pos__Maps_" + map + ".csv";        
         string path = Path.Combine(Application.persistentDataPath, fileName);
         ExportCSV.exportData(path, recordedLoadObject_Pos);
-        SaveSuccess();
     }
 
     void LoadObject_AddHeader()
@@ -197,12 +249,11 @@ public class RecordPosition : MonoBehaviour
     }
 
     /////////////////////////////////////////////////////////
+    /// Now we enter the point cloud save
+    /////////////////////////////////////////////////////////
 
-    public void PointClouds_Save()
+    void PointClouds_Save()
     {
-        // do nothing if function deactivated
-        if (!m_SavePointCloud) return;
-
         // create new list
         List<string[]> pointClouds_Pos = new();
 
@@ -257,6 +308,5 @@ public class RecordPosition : MonoBehaviour
         string fileName = time + "_pointClouds_Pos__Maps_" + map + ".csv";
         string path = Path.Combine(Application.persistentDataPath, fileName);
         ExportCSV.exportData(path, pointClouds_Pos);
-        SaveSuccess();
     }
 }

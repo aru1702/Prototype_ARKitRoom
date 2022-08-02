@@ -12,13 +12,16 @@ public class ImageRecognition_CatExample_2 : MonoBehaviour
     ARSessionOrigin m_ARSessionOrigin;
 
     [SerializeField]
-    GameObject CanvasCat;
+    GameObject CanvasCat, m_TransferSLAMOriginBtn;
 
     [SerializeField]
     GameObject m_OriginPrefab;
 
     [SerializeField]
     GameObject m_LoadObjectManager;
+
+    [SerializeField]
+    bool m_TransferSLAMOrigin = false;
 
     /**
      * Default methods
@@ -103,6 +106,10 @@ public class ImageRecognition_CatExample_2 : MonoBehaviour
                         // deactive canvas
                         CanvasCat.SetActive(false);
 
+                        // show btn
+                        m_TransferSLAMOriginBtn.SetActive(true);
+
+                        // activate LoadObjectManager
                         if (m_LoadObjectManager) m_LoadObjectManager.SetActive(true);
 
                         break;
@@ -128,5 +135,23 @@ public class ImageRecognition_CatExample_2 : MonoBehaviour
     public void HideCanvas()
     {
         CanvasCat.SetActive(false);
+    }
+
+    public void TransferSLAMOrigin()
+    {
+        // hide button
+        m_TransferSLAMOriginBtn.SetActive(false);
+
+        // transfer SLAM origin into cat
+        GameObject self = gameObject;   // this means get the attached-by-script gameobject 
+        self.AddComponent<ImageRecognition_CatExample_2__TransferSLAMOrigin>();
+        self.GetComponent<ImageRecognition_CatExample_2__TransferSLAMOrigin>()
+            .transferSLAMOrigin = m_TransferSLAMOrigin;
+        self.GetComponent<ImageRecognition_CatExample_2__TransferSLAMOrigin>()
+            .desireOriginGameObject = GlobalConfig.TempOriginGO;
+        self.GetComponent<ImageRecognition_CatExample_2__TransferSLAMOrigin>()
+            .arSessionOrigin = m_ARSessionOrigin;
+        self.GetComponent<ImageRecognition_CatExample_2__TransferSLAMOrigin>()
+            .TransferNow();
     }
 }

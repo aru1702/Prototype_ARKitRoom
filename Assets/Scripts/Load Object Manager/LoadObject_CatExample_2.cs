@@ -106,7 +106,7 @@ public class LoadObject_CatExample_2 : MonoBehaviour
             // do foreach in csv data
             foreach (var item in myOrigins)
             {
-                Debug.Log("Origin data: " + item.name + " " + item.position.ToString());
+                //Debug.Log("Origin data: " + item.name + " " + item.position.ToString());
 
                 // check if name contains of imagetarget
                 string[] strSplit = item.name.Split("_");   // delimiter always "_"

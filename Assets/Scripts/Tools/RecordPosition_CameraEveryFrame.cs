@@ -18,26 +18,53 @@ public class RecordPosition_CameraEveryFrame : MonoBehaviour
     [SerializeField]
     float m_CreateTrailPerSecond = 1.0f;
 
+    [SerializeField]
+    bool m_enableCameraRecord, m_enableCameraTrailCreate;
+
     List<GameObject> SLAM_Trails = new();
 
     List<string[]> recordedCamera_Pos = new();
-    bool cameraPos_hasHeader = false;
+    bool cameraPos_hasHeader = false;   
 
+    /// <summary>
+    /// Laps from 1, and start tracking camera position on world space per period
+    /// </summary>
     void Start()
     {
         m_Laps.text = "1";
         StartCoroutine(TickPerPeriod());
     }
 
+    /// <summary>
+    /// Save all recorded data:
+    /// - recorded camera position per period (s) which already into string
+    /// - new gameObject resemble as camera tracks per period (s)
+    /// </summary>
+    public void SaveData()
+    {
+        CameraPos_Save();
+        Trails_Save();
+        // in here no UIManager to show already save
+        //  because this function also being called simultanously
+        //  with RecordPosition script's function
+    }
+
+    /// <summary>
+    /// This is the function to record data per period automatically
+    /// </summary>
     IEnumerator TickPerPeriod()
     {
         while(true)
         {
             yield return new WaitForSeconds(m_CreateTrailPerSecond);
-            CameraPos_Record();
-            CreateNewTrails();
+            if (m_enableCameraRecord) CameraPos_Record();
+            if (m_enableCameraTrailCreate) CreateNewTrails();
         }
     }
+
+    /////////////////////////////////////////////////////////
+    /// Now we enter the camera position record and save
+    /////////////////////////////////////////////////////////
 
     void CameraPos_Record()
     {
@@ -67,7 +94,7 @@ public class RecordPosition_CameraEveryFrame : MonoBehaviour
         recordedCamera_Pos.Add(data);
     }
 
-    public void CameraPos_Save()
+    void CameraPos_Save()
     {
         string time = GlobalConfig.GetNowDateandTime();
         string map = GlobalConfig.MapsSelection.ToString();
@@ -88,6 +115,10 @@ public class RecordPosition_CameraEveryFrame : MonoBehaviour
         cameraPos_hasHeader = true;
     }
 
+    /////////////////////////////////////////////////////////
+    /// Now we enter the camera tracks creation and save
+    /////////////////////////////////////////////////////////
+
     void CreateNewTrails()
     {
         GameObject newGO = new();
@@ -98,7 +129,7 @@ public class RecordPosition_CameraEveryFrame : MonoBehaviour
         SLAM_Trails.Add(newGO);
     }
 
-    public void Trails_Save()
+    void Trails_Save()
     {
         string[] header = new[] {
                 "timestamp",
@@ -141,5 +172,10 @@ public class RecordPosition_CameraEveryFrame : MonoBehaviour
         string fileName = time + "_recordedSLAMAdjusted_Pos__Maps_" + map + ".csv";
         string path = Path.Combine(Application.persistentDataPath, fileName);
         ExportCSV.exportData(path, recordedSLAMAdjusted_Pos);
+    }
+
+    public List<GameObject> GetCameraTracks()
+    {
+        return SLAM_Trails;
     }
 }

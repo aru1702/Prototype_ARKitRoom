@@ -87,4 +87,6 @@ public class GlobalConfig : MonoBehaviour
     }
 
     public static float AFTER_LOAD_START_TIME = 0.0f;
+
+    public static bool TEST_MODE = false;
 }
