@@ -181,6 +181,7 @@ public class MappingScanner : MonoBehaviour
         }
 
         //DisplayPlane(showPlane);
+        bool a = showPlane;
     }
 
     //void OnPlaneChanged(ARPlanesChangedEventArgs eventArgs)

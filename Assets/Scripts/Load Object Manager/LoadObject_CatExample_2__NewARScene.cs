@@ -35,6 +35,9 @@ public class LoadObject_CatExample_2__NewARScene : MonoBehaviour
 
     GameObject originChild;
 
+    [SerializeField]
+    GameObject m_ShowTextAboveLocation;
+
     void OnEnable()
     {
         Debug.Log("LoadObj active");
@@ -162,6 +165,8 @@ public class LoadObject_CatExample_2__NewARScene : MonoBehaviour
                     // Instantiate the root to become origin child
                     originChild = Instantiate(root, GlobalConfig.TempOriginGO.transform, true);
                     originChild.name = "originChild";
+
+                    GlobalConfig.PlaySpaceOriginGO = root;
 
                     // OLD MECHANIC
                     /**
@@ -355,6 +360,12 @@ public class LoadObject_CatExample_2__NewARScene : MonoBehaviour
                         newGameObject.GetComponent<DataManager>().testingOnly = true;
                         newGameObject.GetComponent<DataManager>().Test_AssignHiLoValue();
                         //StartCoroutine(Test_Loop__PlayingColor(newGameObject));
+
+                        /// TEST LOCATION ABOVE GAME
+                        ///
+                        //m_ShowTextAboveLocation
+                        //    .GetComponent<Test_ShowLocationAboveObject>()
+                        //    .AddGameObject(newGameObject.transform.parent.gameObject);
                     }
                     else
                     {
@@ -548,6 +559,11 @@ public class LoadObject_CatExample_2__NewARScene : MonoBehaviour
     public List<GameObject> GetMyObjects()
     {
         return _objects;
+    }
+
+    public List<GameObject> GetMyParents()
+    {
+        return _parents;
     }
 
     //////////////////////////////

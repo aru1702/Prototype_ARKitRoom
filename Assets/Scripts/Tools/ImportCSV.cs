@@ -42,6 +42,28 @@ public class ImportCSV
         return data;
     }
 
+    public static List<string[]> getDataOutsource(string path, bool skipFirstLine = false, string splitStr = ",")
+    {
+        if (path == "")
+        {
+            throw new Exception("should be pass csv path.");
+        }
+
+        List<string[]> data = new();
+
+        bool hasSkipHeader = true;
+        if (skipFirstLine) hasSkipHeader = false;
+
+        var csv = File.ReadAllLines(path);
+        foreach (var csvLine in csv)
+        {
+            var oneline = csvLine.Split(splitStr);
+            if (hasSkipHeader) { data.Add(oneline); } else { hasSkipHeader = true; }
+        }
+
+        return data;
+    }
+
     /// <summary>
     /// Read csv file single line with delimited, used for import the recognizable image position
     /// </summary>
@@ -49,7 +71,7 @@ public class ImportCSV
     /// <param name="skipFirstLine">Skip header, default is false</param>
     /// <param name="splitStr">Delimiter option</param>
     /// <returns></returns>
-    public static List<string> getDataPersistentPath(string path, bool skipFirstLine = false, string splitStr = ",")
+    public static List<string> getDataPersistentPath(string path, string splitStr = ",")
     {
         if (path == "")
         {
@@ -93,6 +115,4 @@ public class ImportCSV
 
         return data;
     }
-
-
 }

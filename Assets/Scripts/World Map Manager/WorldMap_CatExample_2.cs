@@ -10,6 +10,10 @@ using UnityEngine.XR.ARSubsystems;
 using UnityEngine.XR.ARKit;
 #endif
 
+/// <summary>
+/// This script implements in MappingConfiguration
+/// with load map button
+/// </summary>
 public class WorldMap_CatExample_2 : MonoBehaviour
 {
     // my modification
@@ -130,7 +134,12 @@ public class WorldMap_CatExample_2 : MonoBehaviour
         float endTime = Time.time;
         float time_spend = System.Math.Abs(endTime - startTime);
 
-        SetText(MapStatusText, "Map tracked for " + time_spend.ToString("0.00") + " secs., and saved successfully!");
+        int map = GlobalConfig.SAVE_INTO_MAP;
+        string time = time_spend.ToString("0.00");
+        string text = "Map tracked for " + time + " secs., and saved successfully!";
+        if (map > 0) text = "Map tracked for " + time + " secs., and saved into " + map + " successfully!";
+
+        SetText(MapStatusText, text);
         UIManager.GetComponent<UIManager_CatExample>().OpenPanel();
     }
 
@@ -146,13 +155,13 @@ public class WorldMap_CatExample_2 : MonoBehaviour
         var data = worldMap.Serialize(Allocator.Temp);
         Log(string.Format("ARWorldMap has {0} bytes.", data.Length));
 
-        var file = File.Open(path, FileMode.Create);
+        var file = File.Open(savepath, FileMode.Create);
         var writer = new BinaryWriter(file);
         writer.Write(data.ToArray());
         writer.Close();
         data.Dispose();
         worldMap.Dispose();
-        Log(string.Format("ARWorldMap written to {0}", path));
+        Log(string.Format("ARWorldMap written to {0}", savepath));
     }
 #endif
 
@@ -177,7 +186,7 @@ public class WorldMap_CatExample_2 : MonoBehaviour
         Debug.Log(strLong);
 
         // call export
-        ExportCSV.exportData(originPath, strLong);
+        ExportCSV.exportData(originSavePath, strLong);
     }
 
     /**
@@ -188,12 +197,20 @@ public class WorldMap_CatExample_2 : MonoBehaviour
       */
     IEnumerator Load()
     {
+        // start time of load map (to calculate how much time spent)
         float start_time = Time.time;
+
+        // remove load map btn
+        SetActive(m_LoadButton, false);
 
         // open panel
         Text MapStatusText = UIManager.GetComponent<UIManager_CatExample>().MapStatus;
 
-        SetText(MapStatusText, "Loading map, please wait...");
+        int map = GlobalConfig.LOAD_MAP;
+        string text = "Loading map, please wait...";
+        if (map > 0) text = "Loading map " + map + ", please wait...";
+
+        SetText(MapStatusText, text);
         UIManager.GetComponent<UIManager_CatExample>().OpenPanel();
 
         // if only no session subsystem
@@ -233,11 +250,26 @@ public class WorldMap_CatExample_2 : MonoBehaviour
         var bytesRemaining = file.Length;
         var binaryReader = new BinaryReader(file);
         var allBytes = new List<byte>();
+        float filesize_start = file.Length;
+
         while (bytesRemaining > 0)
         {
             var bytes = binaryReader.ReadBytes(bytesPerFrame);
             allBytes.AddRange(bytes);
             bytesRemaining -= bytesPerFrame;
+
+            float filesize_curr = bytesRemaining;
+            float filesize_perc = (1 - filesize_curr / filesize_start) * 100;
+
+            if (filesize_perc > 100) filesize_perc = 100;
+
+            string perc = filesize_perc.ToString("0.00");
+
+            text = "Loading map -- " + perc + "%";
+            if (map > 0) text = "Loading map " + map + " -- " + perc + "%";
+
+            SetText(MapStatusText, text);
+
             yield return null;
         }
 
@@ -272,7 +304,8 @@ public class WorldMap_CatExample_2 : MonoBehaviour
         float end_time = Time.time;
         float time_spend = System.Math.Abs(end_time - start_time);
 
-        SetText(MapStatusText, "Map loaded for " + time_spend.ToString("0.00") + " secs.!");
+        SetText(MapStatusText, "Map loaded for " + time_spend.ToString("0.00") + " secs.!" +
+            "\n(currently will not showing any IoT object)");
         UIManager.GetComponent<UIManager_CatExample>().OpenPanel();
     }
 
@@ -313,6 +346,10 @@ public class WorldMap_CatExample_2 : MonoBehaviour
         origin.transform.SetPositionAndRotation(pos, rot);
     }
 
+    /// <summary>
+    /// Get worldmap file path
+    /// </summary>
+    /// <returns>String of worldmap file path</returns>
     string GetPath()
     {
         int maps_number = GlobalConfig.MapsSelection;
@@ -335,6 +372,36 @@ public class WorldMap_CatExample_2 : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Get worldmap file path for SAVE
+    /// </summary>
+    /// <returns>String of worldmap file path</returns>
+    string GetSavePath()
+    {
+        int maps_number = GlobalConfig.SAVE_INTO_MAP;
+        if (maps_number > 0)
+        {
+            string new_map_filename = "catExample_session_" + maps_number + ".worldmap";
+            return Path.Combine(Application.persistentDataPath, new_map_filename);
+        }
+        else
+        {
+            return Path.Combine(Application.persistentDataPath, myWorldMapName);
+        }
+    }
+
+    string savepath
+    {
+        get
+        {
+            return GetSavePath();
+        }
+    }
+
+    /// <summary>
+    /// Get csv file path
+    /// </summary>
+    /// <returns>String of csv file path</returns>
     string GetOriginPath()
     {
         int maps_number = GlobalConfig.MapsSelection;
@@ -354,6 +421,32 @@ public class WorldMap_CatExample_2 : MonoBehaviour
         get
         {
             return GetOriginPath();
+        }
+    }
+
+    /// <summary>
+    /// Get csv file path for SAVE
+    /// </summary>
+    /// <returns>String of csv file path</returns>
+    string GetOriginSavePath()
+    {
+        int maps_number = GlobalConfig.SAVE_INTO_MAP;
+        if (maps_number > 0)
+        {
+            string new_origin_filename = "catExample_origin_" + maps_number + ".csv";
+            return Path.Combine(Application.persistentDataPath, new_origin_filename);
+        }
+        else
+        {
+            return Path.Combine(Application.persistentDataPath, myOriginPathName);
+        }
+    }
+
+    string originSavePath
+    {
+        get
+        {
+            return GetOriginSavePath();
         }
     }
 

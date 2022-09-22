@@ -89,4 +89,14 @@ public class GlobalConfig : MonoBehaviour
     public static float AFTER_LOAD_START_TIME = 0.0f;
 
     public static bool TEST_MODE = false;
+
+    // These have similarity with MapsSelection MAPS_NUMBER
+    // But now can differentially save and load different map number
+    public static int SAVE_INTO_MAP = 0;
+    public static int LOAD_MAP = 0;
+
+
+    public static GameObject DESK_RAYCAST_OBJ;
+    public static GameObject WORLD_CALIBRATION_OBJ;
+    public static bool WORLD_CALIBRATION_ONOFF = false;
 }

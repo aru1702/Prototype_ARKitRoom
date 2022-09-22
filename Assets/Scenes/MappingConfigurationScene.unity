@@ -1171,6 +1171,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1352895499}
+        m_TargetAssemblyTypeName: RecordPosition_SaveAndLoad, Assembly-CSharp
+        m_MethodName: SaveData
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &308834010
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1454,6 +1466,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1352895497}
         m_TargetAssemblyTypeName: Test_CameraTracksToMarker_AsSLAMPosition, Assembly-CSharp
         m_MethodName: MainNewSave
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1352895499}
+        m_TargetAssemblyTypeName: RecordPosition_SaveAndLoad, Assembly-CSharp
+        m_MethodName: SaveData
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3381,6 +3405,7 @@ GameObject:
   - component: {fileID: 1352895496}
   - component: {fileID: 1352895497}
   - component: {fileID: 1352895498}
+  - component: {fileID: 1352895499}
   m_Layer: 0
   m_Name: Record Position
   m_TagString: Untagged
@@ -3475,6 +3500,22 @@ MonoBehaviour:
   m_DesiredInstantiatePrefab: {fileID: 0}
   m_ShowHideCameraTracksText: {fileID: 806286519}
   m_PrefabSizeInMeter: 0.03
+--- !u!114 &1352895499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1352895493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfb75504aafef4adda32424d1ac19494, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RecordPositionCameraEveryFrame: {fileID: 1352895493}
+  m_LoadObjectManager: {fileID: 1546836196}
+  m_ActiveSaveAndLoadCameraTrail: 1
+  m_ActiveLoadAfterLoadObject: 0
 --- !u!1 &1405528555
 GameObject:
   m_ObjectHideFlags: 0
@@ -5260,6 +5301,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1474192384}
         m_TargetAssemblyTypeName: ImageRecognition_CatExample_2, Assembly-CSharp
         m_MethodName: HideCanvas
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1352895499}
+        m_TargetAssemblyTypeName: RecordPosition_SaveAndLoad, Assembly-CSharp
+        m_MethodName: LoadData
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

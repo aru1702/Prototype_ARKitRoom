@@ -23,19 +23,22 @@ public class RecordPosition_NewARScene : MonoBehaviour
     InputField m_Laps;
 
     [SerializeField]
-    GameObject m_LoadObjectManager, m_RaycastManager;
+    GameObject m_LoadObjectManager, m_RaycastManager, m_CalibrationManager;
 
     /// <summary>
     /// Option to enable recording 2D position, raycastPos
     /// </summary>
     [SerializeField]
-    bool m_Record2DPos, m_RecordRaycastPos;
+    bool m_Record2DPos, m_RecordRaycastPos, m_RecordCalibration;
 
     List<string[]> recordedPoints_Pos = new();
     bool points_hasHeader = false;
 
     List<string[]> raycastObject_Pos = new();
     bool raycasts_hasHeader = false;
+
+    List<string[]> calibrationObj_Pos = new();
+    bool calibrationObj_hasHeader = false; bool calibrationFirstTime = false;
 
     /// <summary>
     /// Laps from 1, and recorded value from 0
@@ -53,6 +56,7 @@ public class RecordPosition_NewARScene : MonoBehaviour
     {
         if (m_Record2DPos) Points_Record();
         if (m_RecordRaycastPos) Raycasts_Record();
+        if (m_RecordCalibration) Calibration_Record();
     }
 
     /// <summary>
@@ -64,6 +68,8 @@ public class RecordPosition_NewARScene : MonoBehaviour
         {
             Points_Save();
             Raycasts_Save();
+            Calibration_Save();
+
             SaveSuccess(true);
         }
         catch (System.Exception ex)
@@ -182,7 +188,7 @@ public class RecordPosition_NewARScene : MonoBehaviour
     }
 
     /////////////////////////////////////////////////////////
-    /// Now we enter the 2D object position record and save
+    /// Now we enter the raycast record and save
     /////////////////////////////////////////////////////////
 
     void Raycasts_AddHeader()
@@ -248,5 +254,149 @@ public class RecordPosition_NewARScene : MonoBehaviour
         string fileName = time + "_NewARScene_raycastObject_Pos__Maps_" + map + ".csv";
         string path = Path.Combine(Application.persistentDataPath, fileName);
         ExportCSV.exportData(path, raycastObject_Pos);
+    }
+
+    /////////////////////////////////////////////////////////
+    /// Now we enter the calibration record and save
+    /////////////////////////////////////////////////////////
+
+    void Calibration_AddHeader()
+    {
+        string[] header = new[] {                       // total: 10 objects
+            "timestamp", "name",                        // 0, 1
+            "pos_x", "pos_y", "pos_z",                  // 2, 3, 4
+            "rotE_x", "rotE_y", "rotE_z",               // 5, 6, 7
+            "rotQ_x", "rotQ_y", "rotQ_z", "rotQ_w",     // 8, 9, 10, 11
+            "count"                                     // 12    
+        };
+        calibrationObj_Pos.Add(header);
+        calibrationObj_hasHeader = true;
+    }
+
+    void Calibration_Record()
+    {
+        if (GlobalConfig.WORLD_CALIBRATION_OBJ == null) return;
+        if (!m_LoadObjectManager.activeSelf) return;
+
+        int count = int.Parse(m_RecordedValue.text);
+        count++;
+
+        if (!calibrationObj_hasHeader)
+        {
+            Calibration_AddHeader();
+        }
+
+        // get original data
+        /////////////////////
+        if (!calibrationFirstTime)
+        {
+            List<GameObject> allLoadObjects = m_LoadObjectManager
+                .GetComponent<LoadObject_CatExample_2__NewARScene>()
+                .GetMyObjects();
+
+            if (allLoadObjects.Count <= 0) return;
+
+            foreach (var item in allLoadObjects)
+            {
+                string[] data = new[]
+                {
+                    GlobalConfig.GetNowDateandTime(),
+                    item.name,
+
+                    item.transform.position.x.ToString(),
+                    item.transform.position.y.ToString(),
+                    item.transform.position.z.ToString(),
+
+                    item.transform.eulerAngles.x.ToString(),
+                    item.transform.eulerAngles.y.ToString(),
+                    item.transform.eulerAngles.z.ToString(),
+
+                    item.transform.rotation.x.ToString(),
+                    item.transform.rotation.y.ToString(),
+                    item.transform.rotation.z.ToString(),
+                    item.transform.rotation.w.ToString(),
+
+                    count.ToString()
+                };
+                calibrationObj_Pos.Add(data);
+            }
+
+            calibrationFirstTime = true;
+        }
+
+        // get camera data
+        //////////////////
+        if(m_ARCamera != null)
+        {
+            GameObject cam = m_ARCamera.gameObject;
+            string[] data = new[]
+            {
+                    GlobalConfig.GetNowDateandTime(),
+                    cam.name,
+
+                    cam.transform.position.x.ToString(),
+                    cam.transform.position.y.ToString(),
+                    cam.transform.position.z.ToString(),
+
+                    cam.transform.eulerAngles.x.ToString(),
+                    cam.transform.eulerAngles.y.ToString(),
+                    cam.transform.eulerAngles.z.ToString(),
+
+                    cam.transform.rotation.x.ToString(),
+                    cam.transform.rotation.y.ToString(),
+                    cam.transform.rotation.z.ToString(),
+                    cam.transform.rotation.w.ToString(),
+
+                    count.ToString()
+                };
+            calibrationObj_Pos.Add(data);
+        }
+
+        // get clone data
+        /////////////////
+        List<GameObject> allCloneObjects = m_CalibrationManager
+                .GetComponent<Test_TurnOnOffWorldCalib>()
+                .GetCloneObject();
+
+        if (allCloneObjects.Count <= 0) return;
+
+        foreach (var item in allCloneObjects)
+        {
+            string[] data = new[]
+            {
+                    GlobalConfig.GetNowDateandTime(),
+                    item.name,
+
+                    item.transform.position.x.ToString(),
+                    item.transform.position.y.ToString(),
+                    item.transform.position.z.ToString(),
+
+                    item.transform.eulerAngles.x.ToString(),
+                    item.transform.eulerAngles.y.ToString(),
+                    item.transform.eulerAngles.z.ToString(),
+
+                    item.transform.rotation.x.ToString(),
+                    item.transform.rotation.y.ToString(),
+                    item.transform.rotation.z.ToString(),
+                    item.transform.rotation.w.ToString(),
+
+                    count.ToString()
+                };
+            calibrationObj_Pos.Add(data);
+        }
+
+        // Increament the text by 1
+        m_RecordedValue.text = count.ToString();
+    }
+
+    void Calibration_Save()
+    {
+        if (calibrationObj_Pos.Count <= 0) return;
+
+        string time = GlobalConfig.GetNowDateandTime();
+        string map = GlobalConfig.MapsSelection.ToString();
+        string fileName = time + "_NewARScene_calibrationObj_Pos__Maps_" + map + ".csv";
+        string path = Path.Combine(Application.persistentDataPath, fileName);
+        ExportCSV.exportData(path, calibrationObj_Pos);
     }
 }

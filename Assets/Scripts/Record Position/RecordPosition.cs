@@ -129,7 +129,7 @@ public class RecordPosition : MonoBehaviour
         if (recordedCamera_Pos.Count <= 0) return;
 
         string time = GlobalConfig.GetNowDateandTime();
-        string map = GlobalConfig.MapsSelection.ToString();
+        string map = GlobalConfig.SAVE_INTO_MAP.ToString();
         string fileName = time + "_recordedCamera_Pos__Maps_" + map + ".csv";
         string path = Path.Combine(Application.persistentDataPath, fileName);
         ExportCSV.exportData(path, recordedCamera_Pos);
@@ -230,7 +230,7 @@ public class RecordPosition : MonoBehaviour
         if (recordedLoadObject_Pos.Count <= 0) return;
 
         string time = GlobalConfig.GetNowDateandTime();
-        string map = GlobalConfig.MapsSelection.ToString();
+        string map = GlobalConfig.SAVE_INTO_MAP.ToString();
         string fileName = time + "_recordedLoadObject_Pos__Maps_" + map + ".csv";        
         string path = Path.Combine(Application.persistentDataPath, fileName);
         ExportCSV.exportData(path, recordedLoadObject_Pos);
@@ -304,7 +304,7 @@ public class RecordPosition : MonoBehaviour
 
         // save data into csv
         string time = GlobalConfig.GetNowDateandTime();
-        string map = GlobalConfig.MapsSelection.ToString();
+        string map = GlobalConfig.SAVE_INTO_MAP.ToString();
         string fileName = time + "_pointClouds_Pos__Maps_" + map + ".csv";
         string path = Path.Combine(Application.persistentDataPath, fileName);
         ExportCSV.exportData(path, pointClouds_Pos);

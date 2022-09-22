@@ -10,6 +10,10 @@ using UnityEngine.XR.ARSubsystems;
 using UnityEngine.XR.ARKit;
 #endif
 
+/// <summary>
+/// This script implements in NewARScene (user role)
+/// without load map button (automatically)
+/// </summary>
 public class WorldMap_CatExample_2__NewARScene : MonoBehaviour
 {
     // my modification
@@ -204,7 +208,7 @@ public class WorldMap_CatExample_2__NewARScene : MonoBehaviour
         }
         catch (System.Exception ex)
         {
-            Debug.LogError("No csv!");
+            Debug.LogError("No csv! System error: " + ex);
         }
 
         if (origindata.Count <= 0)

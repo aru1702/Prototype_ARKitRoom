@@ -18,6 +18,15 @@ public class TestModeManager_NewARScene : MonoBehaviour
     GameObject m_TestModeUI;
 
     [SerializeField]
+    bool m_ActiveUI_1;
+
+    [SerializeField]
+    GameObject m_TestModeUI_2;
+
+    [SerializeField]
+    bool m_ActiveUI_2;
+
+    [SerializeField]
     GameObject m_RaycastManager;
 
     bool m_IsTestMode;
@@ -26,8 +35,14 @@ public class TestModeManager_NewARScene : MonoBehaviour
     {
         m_IsTestMode = GlobalConfig.TEST_MODE;
 
-        m_TestModeUI.SetActive(m_IsTestMode);
-        ActiveRaycast(m_IsTestMode);
+        m_TestModeUI.SetActive(m_IsTestMode && m_ActiveUI_1);
+        m_TestModeUI_2.SetActive(m_IsTestMode && m_ActiveUI_2);
+
+        //ActiveRaycast(m_IsTestMode);
+
+        ///////////
+        //if (GetComponent<Test_ShowLocationAboveObject>() != null)
+        //    GetComponent<Test_ShowLocationAboveObject>().enabled = m_IsTestMode;
     }
 
     void ActiveRaycast(bool state)

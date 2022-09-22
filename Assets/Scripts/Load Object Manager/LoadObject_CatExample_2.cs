@@ -370,6 +370,7 @@ public class LoadObject_CatExample_2 : MonoBehaviour
                         //{
                         //    UpdatingColorManager(newGameObject, 40.0f);
                         //}
+                        
                     }
                     else
                     {
@@ -396,7 +397,26 @@ public class LoadObject_CatExample_2 : MonoBehaviour
         }
 
         www.Dispose();
+
+        if (test_loadCameraTrail)
+        {
+            saveAndLoad.LoadCameraTrailData(cameraTrails);
+        }
     }
+
+    //////////////////////////////////////////////////////////////////////
+    RecordPosition_SaveAndLoad saveAndLoad;
+    List<CameraTrail> cameraTrails = new();
+    bool test_loadCameraTrail;
+
+    public void Test_LoadCameraTrails(List<CameraTrail> cameraTrails,
+                                      RecordPosition_SaveAndLoad obj)
+    {
+        saveAndLoad = obj;
+        this.cameraTrails = cameraTrails;
+        test_loadCameraTrail = true;
+    }
+    //////////////////////////////////////////////////////////////////////
 
     private bool CheckIfParentsExists(List<GameObject> parentsList, string parentName)
     {

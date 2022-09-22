@@ -94,7 +94,7 @@ public class Test_CameraTracksToMarker_AsSLAMPosition : MonoBehaviour
 
         // import to csv and save
         string time = GlobalConfig.GetNowDateandTime();
-        string map = GlobalConfig.MapsSelection.ToString();
+        string map = GlobalConfig.SAVE_INTO_MAP.ToString();
         string fileName = time + "_cameraTracksByMarker_Pos__Maps_" + map + ".csv";
         string path = Path.Combine(Application.persistentDataPath, fileName);
         ExportCSV.exportData(path, cameraTracksByMarker_Pos);
@@ -171,7 +171,7 @@ public class Test_CameraTracksToMarker_AsSLAMPosition : MonoBehaviour
 
         // import to csv and save
         string time = GlobalConfig.GetNowDateandTime();
-        string map = GlobalConfig.MapsSelection.ToString();
+        string map = GlobalConfig.SAVE_INTO_MAP.ToString();
         string fileName = time + "_pointCloudsByMarker_Pos__Maps_" + map + ".csv";
         string path = Path.Combine(Application.persistentDataPath, fileName);
         ExportCSV.exportData(path, pointCloudsByMarker_Pos);
