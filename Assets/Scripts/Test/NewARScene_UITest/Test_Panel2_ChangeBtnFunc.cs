@@ -14,6 +14,7 @@ public class Test_Panel2_ChangeBtnFunc : MonoBehaviour
     [SerializeField]
     Text m_ChangeBtn_text;
 
+    [SerializeField]
     int screen = 0;
 
     public void ChangeBtn()
@@ -31,7 +32,8 @@ public class Test_Panel2_ChangeBtnFunc : MonoBehaviour
     void OnEnable()
     {
         // default
-        screen = 1;
+        if (screen == 0)
+            screen = 1;
         SwitchPanel(screen);
     }
 

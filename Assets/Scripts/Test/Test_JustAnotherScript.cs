@@ -23,8 +23,9 @@ public class Test_JustAnotherScript : MonoBehaviour
         //}
 
         GlobalConfig.TempOriginGO = new();
+        GlobalConfig.TEST_MODE = true;
 
-        Debug.Log(Application.persistentDataPath);
+        //Debug.Log(Application.persistentDataPath);
     }
 
     // Update is called once per frame

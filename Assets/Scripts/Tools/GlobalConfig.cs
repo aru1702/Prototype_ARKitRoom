@@ -99,4 +99,29 @@ public class GlobalConfig : MonoBehaviour
     public static GameObject DESK_RAYCAST_OBJ;
     public static GameObject WORLD_CALIBRATION_OBJ;
     public static bool WORLD_CALIBRATION_ONOFF = false;
+
+    /// <summary>
+    /// We get matrix4x4 of "from" gameObject by "reference" gameobject.
+    /// Since both does have connectivity to root of Unity, we convert by equation
+    /// target-to-refetence = world-to-reference * from-to-world
+    /// </summary>
+    /// <param name="from">From where gameobject</param>
+    /// <param name="reference">Reference gameobject as source</param>
+    /// <returns></returns>
+    public static Matrix4x4 GetM44ByGameObjRef(GameObject from, GameObject reference)
+    {
+        return reference.transform.worldToLocalMatrix
+            * from.transform.localToWorldMatrix;
+    }
+
+    public static Vector3 GetPositionFromM44(Matrix4x4 matrix)
+    {
+        return matrix.GetPosition();
+    }
+
+    public static Quaternion GetRotationFromM44(Matrix4x4 matrix)
+    {
+        return Quaternion.LookRotation(
+                matrix.GetColumn(2), matrix.GetColumn(1));
+    }
 }

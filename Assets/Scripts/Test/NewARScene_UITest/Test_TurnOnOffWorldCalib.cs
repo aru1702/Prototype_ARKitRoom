@@ -30,6 +30,22 @@ public class Test_TurnOnOffWorldCalib : MonoBehaviour
         }
     }
 
+    bool _IoTVC = true;
+
+    public void ShowHideIoTVC()
+    {
+        if(_IoTVC)
+        {
+            _IoTVC = false;
+            GlobalConfig.PlaySpaceOriginGO.SetActive(_IoTVC);
+        }
+        else
+        {
+            _IoTVC = true;
+            GlobalConfig.PlaySpaceOriginGO.SetActive(_IoTVC);
+        }
+    }
+
     [SerializeField]
     GameObject m_LoadObjectManager;
 
@@ -45,7 +61,14 @@ public class Test_TurnOnOffWorldCalib : MonoBehaviour
         if (m_DeskPrefab == null) return;
         if (!m_LoadObjectManager.activeSelf) return;
 
-        GlobalConfig.WORLD_CALIBRATION_OBJ = new();
+        GameObject tempCloneWorld = new();
+        GameObject tempWorld = GlobalConfig.PlaySpaceOriginGO;
+
+        tempCloneWorld.transform.SetPositionAndRotation(
+            tempWorld.transform.position,
+            tempWorld.transform.rotation);
+
+        GlobalConfig.WORLD_CALIBRATION_OBJ = tempCloneWorld;
 
         var loadObject = m_LoadObjectManager
             .GetComponent<LoadObject_CatExample_2__NewARScene>();
