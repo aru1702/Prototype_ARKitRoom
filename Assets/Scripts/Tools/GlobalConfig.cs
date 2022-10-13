@@ -124,4 +124,25 @@ public class GlobalConfig : MonoBehaviour
         return Quaternion.LookRotation(
                 matrix.GetColumn(2), matrix.GetColumn(1));
     }
+
+    public static GameObject GetNearestObject (List<GameObject> goList, GameObject goRef, out int itemC)
+    {
+        float nearestGO_dis = 99999f;
+        itemC = 0;
+
+        for (int i = 0; i < goList.Count; i++)
+        {
+            float dis = Vector3.Distance(
+                goRef.transform.position,
+                goList[i].transform.position);
+
+            if (dis < nearestGO_dis)
+            {
+                itemC = i;
+                nearestGO_dis = dis;
+            }
+        }
+
+        return goList[itemC];
+    }
 }

@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Test_WorldCalibrationSettings : MonoBehaviour
 {
+    [SerializeField]
+    GameObject m_ARCamera;
+
     bool CheckWorldCalibObj()
     {
         if (GlobalConfig.WORLD_CALIBRATION_OBJ != null)
@@ -14,6 +17,23 @@ public class Test_WorldCalibrationSettings : MonoBehaviour
 
     const float pos_value = 0.01f;      // 0.01f equals to 1 cm
     const float rotE_value = 1.0f;      // 1.0f equals to 1 degree (from 360)
+
+    GameObject tempGo;
+
+    void CreateGo()
+    {
+        tempGo = new();
+        tempGo.transform.position = m_ARCamera.transform.position;
+
+        GlobalConfig.WORLD_CALIBRATION_OBJ.transform.parent
+            = tempGo.transform;
+    }
+
+    void DestroyGo()
+    {
+        GlobalConfig.WORLD_CALIBRATION_OBJ.transform.parent = null;
+        Destroy(tempGo);
+    }
 
     /////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////
@@ -89,20 +109,28 @@ public class Test_WorldCalibrationSettings : MonoBehaviour
     {
         if (!CheckWorldCalibObj()) return;
 
-        var wo = GlobalConfig.WORLD_CALIBRATION_OBJ.transform;
+        CreateGo();
+
+        var wo = tempGo.transform;
         var wo_v3 = wo.eulerAngles;
 
         wo.eulerAngles = new Vector3(wo_v3.x + rotE_value, wo_v3.y, wo_v3.z);
+
+        DestroyGo();
     }
 
     public void Rot_rX_minud()
     {
         if (!CheckWorldCalibObj()) return;
 
-        var wo = GlobalConfig.WORLD_CALIBRATION_OBJ.transform;
+        CreateGo();
+
+        var wo = tempGo.transform;
         var wo_v3 = wo.eulerAngles;
 
         wo.eulerAngles = new Vector3(wo_v3.x - rotE_value, wo_v3.y, wo_v3.z);
+
+        DestroyGo();
     }
 
     /////////////////////////////////////
@@ -111,20 +139,28 @@ public class Test_WorldCalibrationSettings : MonoBehaviour
     {
         if (!CheckWorldCalibObj()) return;
 
-        var wo = GlobalConfig.WORLD_CALIBRATION_OBJ.transform;
+        CreateGo();
+
+        var wo = tempGo.transform;
         var wo_v3 = wo.eulerAngles;
 
         wo.eulerAngles = new Vector3(wo_v3.x, wo_v3.y + rotE_value, wo_v3.z);
+
+        DestroyGo();
     }
 
     public void Rot_rY_minus()
     {
         if (!CheckWorldCalibObj()) return;
 
-        var wo = GlobalConfig.WORLD_CALIBRATION_OBJ.transform;
+        CreateGo();
+
+        var wo = tempGo.transform;
         var wo_v3 = wo.eulerAngles;
 
         wo.eulerAngles = new Vector3(wo_v3.x, wo_v3.y - rotE_value, wo_v3.z);
+
+        DestroyGo();
     }
 
     /////////////////////////////////////
@@ -133,19 +169,27 @@ public class Test_WorldCalibrationSettings : MonoBehaviour
     {
         if (!CheckWorldCalibObj()) return;
 
-        var wo = GlobalConfig.WORLD_CALIBRATION_OBJ.transform;
+        CreateGo();
+
+        var wo = tempGo.transform;
         var wo_v3 = wo.eulerAngles;
 
         wo.eulerAngles = new Vector3(wo_v3.x, wo_v3.y, wo_v3.z + rotE_value);
+
+        DestroyGo();
     }
 
     public void Rot_rZ_minus()
     {
         if (!CheckWorldCalibObj()) return;
 
-        var wo = GlobalConfig.WORLD_CALIBRATION_OBJ.transform;
+        CreateGo();
+
+        var wo = tempGo.transform;
         var wo_v3 = wo.eulerAngles;
 
         wo.eulerAngles = new Vector3(wo_v3.x, wo_v3.y, wo_v3.z - rotE_value);
+
+        DestroyGo();
     }
 }

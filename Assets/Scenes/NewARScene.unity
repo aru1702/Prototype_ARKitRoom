@@ -1501,6 +1501,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14f7ae86dfb9e4f53a0b00f8fef48bb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_ARCamera: {fileID: 1580354072}
 --- !u!1 &371032298
 GameObject:
   m_ObjectHideFlags: 0
@@ -4250,6 +4251,7 @@ MonoBehaviour:
   - {fileID: 5105219495360517106, guid: a9bf08deaff094f7fbdfecd45f9c372c, type: 3}
   - {fileID: 5105219495360517106, guid: d72570e5e20fc4364bf0a11983025430, type: 3}
   - {fileID: 8867173366992833971, guid: 4881c7cf8c0db4843aa73654148a6bcb, type: 3}
+  - {fileID: 3205738944846637306, guid: c313c290245d34e80a06b880d114f8a2, type: 3}
 --- !u!1 &835322206
 GameObject:
   m_ObjectHideFlags: 0

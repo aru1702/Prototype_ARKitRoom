@@ -301,7 +301,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5105219495360517107}
   m_Layer: 0
-  m_Name: TableOnly140_prefab
+  m_Name: TableOnlyL140_prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
