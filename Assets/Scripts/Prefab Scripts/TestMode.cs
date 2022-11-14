@@ -15,16 +15,23 @@ using UnityEngine.UI;
 /// </summary>
 public class TestMode : MonoBehaviour
 {
-    [SerializeField]
-    Toggle m_TestMode;
-
-    bool m_IsTestMode;
-
     private void OnEnable()
     {
         m_IsTestMode = GlobalConfig.TEST_MODE;
         m_TestMode.isOn = m_IsTestMode;
+
+        m_IsActiveCorrectionMode = GlobalConfig.UseCorrectionMethod;
+        m_ActiveCorrectionMode.isOn = m_IsActiveCorrectionMode;
     }
+
+    ////////////////////////////////////////
+    ////////////////////////////////////////
+    ////////////////////////////////////////
+
+    [SerializeField]
+    Toggle m_TestMode;
+
+    bool m_IsTestMode;
 
     bool GetTestModeToggle()
     {
@@ -37,5 +44,28 @@ public class TestMode : MonoBehaviour
     {
         GlobalConfig.TEST_MODE = GetTestModeToggle();
         m_IsTestMode = GetTestModeToggle();
+    }
+
+
+    ////////////////////////////////////////
+    ////////////////////////////////////////
+    ////////////////////////////////////////
+
+    [SerializeField]
+    Toggle m_ActiveCorrectionMode;
+
+    bool m_IsActiveCorrectionMode;
+
+    bool GetActiveCorrectionModeToggle()
+    {
+        if (!m_ActiveCorrectionMode) return false;
+
+        return m_ActiveCorrectionMode.isOn;
+    }
+
+    public void Set__CORRECTION_ACTIVE()
+    {
+        GlobalConfig.UseCorrectionMethod = GetActiveCorrectionModeToggle();
+        m_IsActiveCorrectionMode = GetActiveCorrectionModeToggle();
     }
 }

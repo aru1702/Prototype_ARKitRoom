@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class Test_JustAnotherScript : MonoBehaviour
 {
+    [SerializeField]
+    int m_SaveMap = 0;
+
+    [SerializeField]
+    int m_LoadMap = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,6 +28,8 @@ public class Test_JustAnotherScript : MonoBehaviour
         //    Debug.Log(e);
         //}
 
+        GlobalConfig.SAVE_INTO_MAP = m_SaveMap;
+        GlobalConfig.LOAD_MAP = m_LoadMap;
         GlobalConfig.TempOriginGO = new();
         GlobalConfig.TEST_MODE = true;
 

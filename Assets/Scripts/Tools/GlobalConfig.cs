@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GlobalConfig : MonoBehaviour
 {
+    public static string WORLD_IMG_TARGET_NAME = "img_0";
     public static List<GameObject> ThingsList = new();
     public static Things OurWorldOrigin_Things;
     public static GameObject OurWorldOrigin_GameObject;
@@ -14,9 +15,15 @@ public class GlobalConfig : MonoBehaviour
     public static Quaternion ITT_QuatRot;
     public static List<GameObject> MyObjectList = new();
     //public static MyOrigin PlaySpaceMyOrigin;
+
+    /// <summary>GameObject for marker</summary>
     public static GameObject TempOriginGO;
+
+    /// <summary>GameObject for designated world coordinate</summary>
     public static GameObject PlaySpaceOriginGO;
     public static bool AlreadyRender = false;
+    public static bool PauseCameraTrackingTrails = false;
+    public static bool UseCorrectionMethod = true;
 
     public static List<Transform> AnchorParentTransform = new();
     public static List<string> AnchorTags = new();
@@ -98,6 +105,7 @@ public class GlobalConfig : MonoBehaviour
 
     public static GameObject DESK_RAYCAST_OBJ;
     public static GameObject WORLD_CALIBRATION_OBJ;
+    public static GameObject REPLICA_WORLD_CALIBRATION_OBJ;
     public static bool WORLD_CALIBRATION_ONOFF = false;
 
     /// <summary>
@@ -114,6 +122,12 @@ public class GlobalConfig : MonoBehaviour
             * from.transform.localToWorldMatrix;
     }
 
+    public static Matrix4x4 GetM44ByGameObjRef(Transform from, GameObject reference)
+    {
+        return reference.transform.worldToLocalMatrix
+            * from.localToWorldMatrix;
+    }
+
     public static Vector3 GetPositionFromM44(Matrix4x4 matrix)
     {
         return matrix.GetPosition();
@@ -123,6 +137,12 @@ public class GlobalConfig : MonoBehaviour
     {
         return Quaternion.LookRotation(
                 matrix.GetColumn(2), matrix.GetColumn(1));
+    }
+
+    public static Vector3 GetEulerAngleFromM44(Matrix4x4 matrix)
+    {
+        var q = GetRotationFromM44(matrix);
+        return q.eulerAngles;
     }
 
     public static GameObject GetNearestObject (List<GameObject> goList, GameObject goRef, out int itemC)

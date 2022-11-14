@@ -391,6 +391,7 @@ public class LoadObject_CatExample_2__NewARScene : MonoBehaviour
             }
 
             SetStartTime();
+            UseCorrectionFunction();
         }
 
         www.Dispose();
@@ -575,5 +576,16 @@ public class LoadObject_CatExample_2__NewARScene : MonoBehaviour
             yield return new WaitForSeconds(1);
             UpdatingDataManager(gO);
         }
+    }
+
+    void UseCorrectionFunction()
+    {
+        GetComponent<NewARSceneCorrectionFunction>().Main();
+
+        // save data (DISABLE THIS IF DOESNT USE
+        //var t = m_ShowTextAboveLocation
+        //    .GetComponent<Test_JustAnotherScript>();
+        //if (!t.enabled) return;
+        //Test_CorrectionDataSave.SaveDataIntoCSV(GetMyObjects());
     }
 }

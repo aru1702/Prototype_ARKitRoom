@@ -12,14 +12,8 @@ public class LoadObject_CatExample_2 : MonoBehaviour
     List<GameObject> _parents = new();
     List<GameObject> _objects = new();
 
-    [SerializeField, TextArea(2,5)]
+    [SerializeField, TextArea(2, 5)]
     string m_MyOriginURL, m_MyObjectURL;
-
-    //string front_url = "https://docs.google.com/spreadsheets/d/e/";
-    //string back_url = "/pub?gid=0&single=true&output=csv";
-
-    //string myorigin_id = "2PACX-1vSro1d6_-qq849bGCdHpk1G3GJFEbN3HVTebeU9YyGRzeoscFmJkDapQ0ShaFdJ9y5njwW84FWOwBE0";
-    //string myobject_id = "2PACX-1vTycxJw3OJkgI2xyqWdGIkRaSsNkknLJdYUcswSWOqeF5Gfde7pLrShwgxWxHAWxsuXrnL8GWW1DMS9";
 
     [SerializeField]
     float _alpha = 0.3f;
@@ -41,6 +35,9 @@ public class LoadObject_CatExample_2 : MonoBehaviour
 
     GameObject originChild;
 
+    [SerializeField]
+    GameObject m_ShowTextAboveLocation;
+
     void OnEnable()
     {
         Debug.Log("LoadObj active");
@@ -51,7 +48,7 @@ public class LoadObject_CatExample_2 : MonoBehaviour
 
         StartCoroutine(CheckInternet());
         StartCoroutine(RenderMyOriginData(pos, rot));
-        
+
     }
 
     // Update is called once per frame
@@ -106,6 +103,7 @@ public class LoadObject_CatExample_2 : MonoBehaviour
             // do foreach in csv data
             foreach (var item in myOrigins)
             {
+                // DEBUGGING ONLY, CHECK ITEM NAME AND POSITION BASED ON DATABASE
                 //Debug.Log("Origin data: " + item.name + " " + item.position.ToString());
 
                 // check if name contains of imagetarget
@@ -169,6 +167,8 @@ public class LoadObject_CatExample_2 : MonoBehaviour
                     originChild = Instantiate(root, GlobalConfig.TempOriginGO.transform, true);
                     originChild.name = "originChild";
 
+                    GlobalConfig.PlaySpaceOriginGO = root;
+
                     // OLD MECHANIC
                     /**
                         GameObject gameObject = new(item.name);
@@ -219,6 +219,9 @@ public class LoadObject_CatExample_2 : MonoBehaviour
 
                     // create anchor prefab
                     if (createAnchor) { CreateWorldAnchor(root); }
+
+                    // DEBUGGING ONLY, SEE ORIGIN NAME IF ALREADY EXIST
+                    //Debug.Log("root name: " + GlobalConfig.PlaySpaceOriginGO.name);
                 }
 
                 // if it's under root
@@ -253,6 +256,9 @@ public class LoadObject_CatExample_2 : MonoBehaviour
 
                     // create anchor prefab
                     if (createAnchor) { CreateWorldAnchor(childGameObject); }
+
+                    // DEBUGGING ONLY, SEE ORIGIN NAME IF ALREADY EXIST
+                    //Debug.Log("obj name after creation: " + childGameObject.name);
                 }
             }
         }
@@ -289,6 +295,9 @@ public class LoadObject_CatExample_2 : MonoBehaviour
             // do foreach data in the csv
             foreach (var item in myObjects)
             {
+                // DEBUGGING ONLY, CHECK ITEM NAME AND PARENT BASED ON DATABASE
+                //Debug.Log("Object data: " + item.name + ", CS: " + item.coordinate_system);
+
                 // initialize gameobject
                 GameObject newGameObject;
                 string prefabtype = item.virtualObject.type;
@@ -362,15 +371,11 @@ public class LoadObject_CatExample_2 : MonoBehaviour
                         newGameObject.GetComponent<DataManager>().Test_AssignHiLoValue();
                         //StartCoroutine(Test_Loop__PlayingColor(newGameObject));
 
-                        //if (newGameObject.name.Split()[0] == "sample")
-                        //{
-                        //    UpdatingColorManager(newGameObject, 100.0f);
-                        //}
-                        //else
-                        //{
-                        //    UpdatingColorManager(newGameObject, 40.0f);
-                        //}
-                        
+                        /// TEST LOCATION ABOVE GAME
+                        ///
+                        //m_ShowTextAboveLocation
+                        //    .GetComponent<Test_ShowLocationAboveObject>()
+                        //    .AddGameObject(newGameObject.transform.parent.gameObject);
                     }
                     else
                     {
@@ -392,8 +397,16 @@ public class LoadObject_CatExample_2 : MonoBehaviour
                             }
                         }
                     }
+
+                    // DEBUGGING ONLY, CHECK ITEM INFORMATION
+                    //Debug.Log("Object data information:\n" +
+                    //          "  pos and rot: " + newGameObject.transform.position.ToString() +
+                    //            ", " + newGameObject.transform.eulerAngles.ToString() +
+                    //          "  IoT status: " + item.iotDevice_true.ToString());
                 }
             }
+
+            SetStartTime();
         }
 
         www.Dispose();
@@ -404,19 +417,13 @@ public class LoadObject_CatExample_2 : MonoBehaviour
         }
     }
 
-    //////////////////////////////////////////////////////////////////////
-    RecordPosition_SaveAndLoad saveAndLoad;
-    List<CameraTrail> cameraTrails = new();
-    bool test_loadCameraTrail;
-
-    public void Test_LoadCameraTrails(List<CameraTrail> cameraTrails,
-                                      RecordPosition_SaveAndLoad obj)
+    /// <summary>
+    /// Only set the time after load all object
+    /// </summary>
+    void SetStartTime()
     {
-        saveAndLoad = obj;
-        this.cameraTrails = cameraTrails;
-        test_loadCameraTrail = true;
+        GlobalConfig.AFTER_LOAD_START_TIME = Time.time;
     }
-    //////////////////////////////////////////////////////////////////////
 
     private bool CheckIfParentsExists(List<GameObject> parentsList, string parentName)
     {
@@ -571,6 +578,11 @@ public class LoadObject_CatExample_2 : MonoBehaviour
         return _objects;
     }
 
+    public List<GameObject> GetMyParents()
+    {
+        return _parents;
+    }
+
     //////////////////////////////
     // PLAYING COLOR DATA
     IEnumerator Test_Loop__PlayingColor(GameObject gO)
@@ -581,4 +593,18 @@ public class LoadObject_CatExample_2 : MonoBehaviour
             UpdatingDataManager(gO);
         }
     }
+
+    //////////////////////////////////////////////////////////////////////
+    RecordPosition_SaveAndLoad saveAndLoad;
+    List<CameraTrail> cameraTrails = new();
+    bool test_loadCameraTrail;
+
+    public void Test_LoadCameraTrails(List<CameraTrail> cameraTrails,
+                                      RecordPosition_SaveAndLoad obj)
+    {
+        saveAndLoad = obj;
+        this.cameraTrails = cameraTrails;
+        test_loadCameraTrail = true;
+    }
+    //////////////////////////////////////////////////////////////////////
 }

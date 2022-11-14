@@ -15,8 +15,13 @@ public class Test_WorldCalibrationSettings : MonoBehaviour
         return false;
     }
 
-    const float pos_value = 0.01f;      // 0.01f equals to 1 cm
-    const float rotE_value = 1.0f;      // 1.0f equals to 1 degree (from 360)
+    [SerializeField]
+    [Tooltip("0.01f equals to 1 cm")]
+    float pos_value = 0.01f;
+
+    [SerializeField]
+    [Tooltip("1.0f equals to 1 degree (from 360)")]
+    float rotE_value = 1.0f;
 
     GameObject tempGo;
 
@@ -192,4 +197,19 @@ public class Test_WorldCalibrationSettings : MonoBehaviour
 
         DestroyGo();
     }
+
+    //[SerializeField]
+    //[Tooltip("Standard calibration object position")]
+    //bool m_RecordCalibObjPos = false;
+    //public bool GetRecordCalibObjPos() { return m_RecordCalibObjPos; }
+
+    //[SerializeField]
+    //[Tooltip("Result of calibration object from clone position")]
+    //bool m_RecordCalibObjPosFromCloneOri = false;
+    //public bool GetRRecordCalibObjPosFromCloneOri() { return m_RecordCalibObjPosFromCloneOri; }
+
+    //[SerializeField]
+    //[Tooltip("Get calibration result of one object that nearest from the camera")]
+    //bool m_RecordCalibObjPosFromCloneOriOneObj = false;
+    //public bool GetRecordCalibObjPosFromCloneOriOneObj() { return m_RecordCalibObjPosFromCloneOriOneObj; }
 }

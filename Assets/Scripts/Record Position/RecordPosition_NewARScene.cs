@@ -288,9 +288,16 @@ public class RecordPosition_NewARScene : MonoBehaviour
         int count = int.Parse(m_RecordedValue.text);
         count++;
 
-        Calibration_Record_ByWorldOrigin(count);
-        Calibration_Record_ByCloneVC(count);
-        Calibration_Record_ByCloneVC_OneObj(count);
+        //var calibObj = m_CalibrationManager.GetComponent<Test_WorldCalibrationSettings>();
+
+        //if (calibObj.GetRecordCalibObjPos())
+            Calibration_Record_ByWorldOrigin(count);
+
+        //if (calibObj.GetRRecordCalibObjPosFromCloneOri())
+            Calibration_Record_ByCloneVC(count);
+
+        //if (calibObj.GetRecordCalibObjPosFromCloneOriOneObj())
+            Calibration_Record_ByCloneVC_OneObj(count);
 
         calibrationFirstTime = true;
         calibrationObj_hasHeader = true;

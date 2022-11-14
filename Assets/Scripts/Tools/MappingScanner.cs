@@ -463,8 +463,16 @@ public class MappingScanner : MonoBehaviour
         //}
 
 #if UNITY_IOS
-        var sessionSubsystem = (ARKitSessionSubsystem)m_Session.subsystem;
-        mappingStatus = sessionSubsystem.worldMappingStatus.ToString();
+        try
+        {
+            var sessionSubsystem = (ARKitSessionSubsystem)m_Session.subsystem;
+            mappingStatus = sessionSubsystem.worldMappingStatus.ToString();
+        }
+        catch (System.Exception ex)
+        {
+            // do nothing, just skip
+            Debug.LogError("Subsystem: " + ex);
+        }
 #endif
 
         // get ARCamera

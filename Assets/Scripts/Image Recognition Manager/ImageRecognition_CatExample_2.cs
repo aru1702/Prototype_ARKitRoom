@@ -5,7 +5,9 @@ using UnityEngine.XR.ARFoundation;
 
 public class ImageRecognition_CatExample_2 : MonoBehaviour
 {
-    private const string _imgSource_name = "cat_example";
+    [SerializeField]
+    string _imgSource_name;
+
     private ARTrackedImageManager _arTrackedImageManager;
 
     [SerializeField]
@@ -22,6 +24,8 @@ public class ImageRecognition_CatExample_2 : MonoBehaviour
 
     [SerializeField]
     bool m_TransferSLAMOrigin = false;
+
+    public List<CustomImgTarget> m_ImageTargetsTransform;
 
     /**
      * Default methods
@@ -41,6 +45,8 @@ public class ImageRecognition_CatExample_2 : MonoBehaviour
         }
 
         CanvasCat.SetActive(true);
+
+        m_ImageTargetsTransform = new();
     }
 
     private void OnDisable() { _arTrackedImageManager.trackedImagesChanged -= OnImageChanged; }
@@ -52,9 +58,48 @@ public class ImageRecognition_CatExample_2 : MonoBehaviour
             // Handle new event
         }
 
+        // this method always updated per image recognition system
         foreach (var updatedImage in args.updated)
         {
-            // Handle updated event
+            // DEBUGGING
+            //Debug.Log("name: " + trackedImage.referenceImage.name);
+            //Debug.Log("updatedImage name: " + updatedImage.referenceImage.name +
+            //          "\nupdatedImage loc: " + updatedImage.transform.position.ToString());
+            //Debug.Log("ref: " + updatedImage.referenceImage.name);
+
+            // if the tracked img become LIMITED --> remove from array
+            if (string.Equals(updatedImage.trackingState.ToString(), STATUS_LIMITED))
+            {
+                foreach (var marker in m_ImageTargetsTransform)
+                {
+                    if (string.Equals(updatedImage.referenceImage.name, marker.name))
+                    {
+                        m_ImageTargetsTransform.Remove(marker);
+                        return;
+                    }
+                }
+            }
+
+            //if (updatedImage.referenceImage.name != _imgSource_name)
+            //{
+
+            // for each the tracked imgs are already exist, no action taken
+            foreach (var marker in m_ImageTargetsTransform)
+            {
+                if (string.Equals(updatedImage.referenceImage.name, marker.name)) return;
+            }
+
+            // if the tracked img become TRACKING --> add to array
+            if (string.Equals(updatedImage.trackingState.ToString(), STATUS_TRACKING))
+            {
+                CustomImgTarget newImgTgt = new(
+                    updatedImage.referenceImage.name,
+                    updatedImage.transform);
+
+                m_ImageTargetsTransform.Add(newImgTgt);                 
+            }
+            
+            //}
         }
 
         foreach (var removedImage in args.removed)
@@ -70,18 +115,34 @@ public class ImageRecognition_CatExample_2 : MonoBehaviour
     {
         // check if camera already found trackable image
         // in this case we use only 1 image but default ARFoundation use List<>
+
+        // DEBUGGING
+        //Debug.Log("count: " + _arTrackedImageManager.trackables.count);
+
         if (_arTrackedImageManager.trackables.count > 0)
         {
             foreach (var trackedImage in _arTrackedImageManager.trackables)
             {
-                // check if trackedImage name is same
-                // otherwise it is useless
+
+                // DEBUGGING
+                //Debug.Log("name: " + trackedImage.referenceImage.name);
+                //Debug.Log("TrackedImg name: " + trackedImage.referenceImage.name +
+                //          "\nTrackedImg loc: " + trackedImage.transform.position.ToString());
+
+                //Debug.Log("justTransform name: " + trackedImage.referenceImage.name +
+                //          "\njustTransform loc: " + transform.position.ToString());
+
+                // only the one that the name == the imgsource_name (aka. WORLD ORIGIN REF)
                 if (trackedImage.referenceImage.name != _imgSource_name) { return; }
                 else
                 {
                     // wait for 3 seconds
                     //HoldStillText.SetActive(true);
                     //StartCoroutine(CountDown());
+
+                    // DEBUGGING
+                    //Debug.Log("render?: " + GlobalConfig.AlreadyRender);
+                    //Debug.Log("TempOriginGO: " + GlobalConfig.TempOriginGO == null);
 
                     // check if first time rendering already done
                     if (!GlobalConfig.AlreadyRender)
@@ -107,7 +168,7 @@ public class ImageRecognition_CatExample_2 : MonoBehaviour
                         CanvasCat.SetActive(false);
 
                         // show btn
-                        m_TransferSLAMOriginBtn.SetActive(true);
+                        //m_TransferSLAMOriginBtn.SetActive(true);
 
                         // activate LoadObjectManager
                         if (m_LoadObjectManager) m_LoadObjectManager.SetActive(true);
@@ -124,6 +185,8 @@ public class ImageRecognition_CatExample_2 : MonoBehaviour
                         GlobalConfig.TempOriginGO.transform.SetPositionAndRotation(
                             GlobalConfig.ITT_VtriPos,
                             GlobalConfig.ITT_QuatRot);
+
+                        //Debug.Log("TempOriginGO loc: " + GlobalConfig.TempOriginGO.transform.position.ToString());
 
                         break;
                     }
@@ -153,5 +216,40 @@ public class ImageRecognition_CatExample_2 : MonoBehaviour
             .arSessionOrigin = m_ARSessionOrigin;
         self.GetComponent<ImageRecognition_CatExample_2__TransferSLAMOrigin>()
             .TransferNow();
+    }
+
+    /// <summary>
+    /// Get currently tracked Image Target transform based to world coordinate
+    /// </summary>
+    /// <returns></returns>
+    public List<CustomImgTarget> GetAllImageTargetsTranform()
+    {
+        // only return the transform, not the class
+
+        //List<Transform> imgTgtTransform = new();
+
+        //foreach (var item in m_ImageTargetsTransform)
+        //{
+        //    imgTgtTransform.Add(item.transformObj);
+        //}
+
+        //return imgTgtTransform;
+
+        return m_ImageTargetsTransform;
+    }
+
+    const string STATUS_TRACKING = "Tracking";
+    const string STATUS_LIMITED = "Limited";
+
+    public class CustomImgTarget
+    {
+        public string name { get; set; }
+        public Transform transformObj { get; set; }
+
+        public CustomImgTarget(string name, Transform transformObj)
+        {
+            this.name = name;
+            this.transformObj = transformObj;
+        }
     }
 }
