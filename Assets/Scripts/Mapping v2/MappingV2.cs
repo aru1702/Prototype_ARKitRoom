@@ -175,14 +175,14 @@ public class MappingV2 : MonoBehaviour
         var scriptI = m_ImageRecognitionManager
             .GetComponent<ImageRecognition_CatExample_2>();
 
-        var transforms = scriptI.GetAllImageTargetsTranform();
+        var imageTrackedList = scriptI.GetAllImageTargetsTranform();
 
         //Debug.Log("how many IT: " + transforms.Count);
 
         // check if no data
-        if (transforms.Count <= 0) return;
+        if (imageTrackedList.Count <= 0) return;
 
-        foreach (var item in transforms)
+        foreach (var imageTracked in imageTrackedList)
         {
             //Debug.Log("item name: " + item.name);
 
@@ -190,8 +190,8 @@ public class MappingV2 : MonoBehaviour
             if (m_MarkerGroundTruth.Count <= 0) GetMarkerGroundTruth();
 
             //GameObject gT = new();
-            Vector3 gT_pos = new();
-            Vector3 gT_rot = new();
+            //Vector3 gT_pos = new();
+            //Vector3 gT_rot = new();
 
             foreach (var mGT in m_MarkerGroundTruth)
             {
@@ -201,20 +201,25 @@ public class MappingV2 : MonoBehaviour
 
                 // only save data if exist by DATABASE
                 // for those not assigned, NO SAVE
-                if (string.Equals(mGT.name, item.name))
+                if (string.Equals(mGT.name, imageTracked.name))
                 {
-                    gT_pos = mGT.transform.localPosition;
-                    gT_rot = mGT.transform.localEulerAngles;
+                    //var gT_pos = mGT.transform.localPosition;
+                    //var gT_rot = mGT.transform.localEulerAngles;
 
-                    // data based to world coordinate
-                    var m44 = GlobalConfig.GetM44ByGameObjRef(item.transformObj, localWorldCoordinate);
-                    Vector3 c_pos = GlobalConfig.GetPositionFromM44(m44);
-                    Vector3 c_rot = GlobalConfig.GetEulerAngleFromM44(m44);
+                    // ground truth data with world coordinate ref
+                    var gT_m44 = GlobalConfig.GetM44ByGameObjRef(mGT, localWorldCoordinate);
+                    var gT_pos = GlobalConfig.GetPositionFromM44(gT_m44);
+                    var gT_rot = GlobalConfig.GetEulerAngleFromM44(gT_m44);
+
+                    // current data with world coordinate ref
+                    var cR_m44 = GlobalConfig.GetM44ByGameObjRef(imageTracked.transformObj, localWorldCoordinate);
+                    var c_pos = GlobalConfig.GetPositionFromM44(cR_m44);
+                    var c_rot = GlobalConfig.GetEulerAngleFromM44(cR_m44);
 
                     string[] data = new[]
                     {
                         GlobalConfig.GetNowDateandTime(),   // 0
-                        item.name,
+                        imageTracked.name,
 
                         gT_pos.x.ToString(),                // 2
                         gT_pos.y.ToString(),
@@ -242,6 +247,8 @@ public class MappingV2 : MonoBehaviour
                     //          "  GT rot: " + gT_rot.ToString() + "\n" +
                     //          "  Cr pos: " + c_pos.ToString() + "\n" +
                     //          "  Cr rot: " + c_rot.ToString());
+
+                    //RelocateARCamera(mGT, imageTracked.transform);
                 }
             }
         }
@@ -288,5 +295,55 @@ public class MappingV2 : MonoBehaviour
     public void SaveMarkerOnly()
     {
         MarkerSave();
+    }
+
+
+    ////////////////////////////////////////////////
+    /// AR camera relocalization when see marker ///
+    ////////////////////////////////////////////////
+
+    [SerializeField]
+    GameObject m_MappingConfigurationUI;
+
+    [SerializeField]
+    UnityEngine.XR.ARFoundation.ARSessionOrigin m_ARSessionOrigin;
+
+    bool isRelocateARCameraEnable;
+
+    void GetRelocateARCameraCondition()
+    {
+        isRelocateARCameraEnable = m_MappingConfigurationUI
+            .GetComponent<MappingConfigurationUI_CatExample>()
+            .GetToggleRelocateARCamera();
+    }
+
+    void RelocateARCamera(GameObject groundtruthMarker, Transform trackedMarker)
+    {
+        GetRelocateARCameraCondition();
+        if (!isRelocateARCameraEnable) return;
+
+        // try relocate camera position only
+        var gt_pos = groundtruthMarker.transform.position;
+        var cr_pos = trackedMarker.position;
+        var drift = gt_pos - cr_pos;
+
+        var arCam = m_ARSessionOrigin.camera;
+        var cam_pos = arCam.transform.position;
+
+        var alt_cam_pos = cam_pos + drift;
+        m_ARSessionOrigin.camera.transform.position = alt_cam_pos;
+
+        Debug.Log("gt_pos  : " + gt_pos.ToString() + "\n" +
+                  "cr_pos  : " + cr_pos.ToString() + "\n" +
+                  "drift   : " + drift.ToString() + "\n" +
+                  "cam_pos : " + cam_pos.ToString() + "\n" +
+                  "alt_cam : " + alt_cam_pos.ToString() + "\n" +
+                  "now_cam : " + m_ARSessionOrigin.camera.transform.position.ToString()
+            );
+
+        // turn off the camera relocating after found one
+        m_MappingConfigurationUI
+            .GetComponent<MappingConfigurationUI_CatExample>()
+            .ToggleRelocateARCamera();
     }
 }

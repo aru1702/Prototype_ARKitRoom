@@ -96,9 +96,9 @@ public class ImageRecognition_CatExample_2 : MonoBehaviour
                     updatedImage.referenceImage.name,
                     updatedImage.transform);
 
-                m_ImageTargetsTransform.Add(newImgTgt);                 
+                m_ImageTargetsTransform.Add(newImgTgt);
             }
-            
+
             //}
         }
 

@@ -30,6 +30,9 @@ public class LoadObject_CatExample_2__NewARScene : MonoBehaviour
     [SerializeField]
     bool dontUseZBuffer = false;
 
+    [SerializeField]
+    GameObject m_CorrectionFunctionManager;
+
     Vector3 pos, rot;
     Quaternion rotQ;
 
@@ -580,7 +583,12 @@ public class LoadObject_CatExample_2__NewARScene : MonoBehaviour
 
     void UseCorrectionFunction()
     {
-        GetComponent<NewARSceneCorrectionFunction>().Main();
+        if (m_CorrectionFunctionManager == null) return;
+
+        m_CorrectionFunctionManager
+            .GetComponent<NewARSceneCorrectionFunction>().Main();
+        m_CorrectionFunctionManager
+            .GetComponent<NewARSceneImageTrackingCorrection>().enabled = true;
 
         // save data (DISABLE THIS IF DOESNT USE
         //var t = m_ShowTextAboveLocation

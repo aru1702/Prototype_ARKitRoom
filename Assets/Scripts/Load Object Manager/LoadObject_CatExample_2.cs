@@ -38,6 +38,8 @@ public class LoadObject_CatExample_2 : MonoBehaviour
     [SerializeField]
     GameObject m_ShowTextAboveLocation;
 
+    List<GameObject> objectsWithoutMarkerPrefabs = new();
+
     void OnEnable()
     {
         Debug.Log("LoadObj active");
@@ -581,6 +583,23 @@ public class LoadObject_CatExample_2 : MonoBehaviour
     public List<GameObject> GetMyParents()
     {
         return _parents;
+    }
+
+    public List<GameObject> GetObjectsWithoutMarkerPrefabs()
+    {
+        if (objectsWithoutMarkerPrefabs.Count <= 0)
+        {
+            foreach (var obj in _objects)
+            {
+                var names = obj.name.Split("_");
+                if (names[0] != "img")
+                {
+                    objectsWithoutMarkerPrefabs.Add(obj);
+                }
+            }
+        }
+
+        return objectsWithoutMarkerPrefabs;
     }
 
     //////////////////////////////

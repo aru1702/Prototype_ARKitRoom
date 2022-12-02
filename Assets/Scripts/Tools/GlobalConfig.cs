@@ -24,6 +24,7 @@ public class GlobalConfig : MonoBehaviour
     public static bool AlreadyRender = false;
     public static bool PauseCameraTrackingTrails = false;
     public static bool UseCorrectionMethod = true;
+    public static bool RelocateARCamera = false;
 
     public static List<Transform> AnchorParentTransform = new();
     public static List<string> AnchorTags = new();

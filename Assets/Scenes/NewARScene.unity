@@ -194,7 +194,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Save recorded position
+  m_Text: Save recorded data
 --- !u!222 &8765213
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -440,6 +440,70 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ARCamera: {fileID: 1580354072}
   m_ARCameraDebugText: {fileID: 2000059465}
+--- !u!1 &100959371
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 100959372}
+  - component: {fileID: 100959373}
+  - component: {fileID: 100959374}
+  m_Layer: 0
+  m_Name: Correction Function Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &100959372
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100959371}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1577129088}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &100959373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100959371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 607166b9cdf1a4d0ba87f70de31879a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_LoadObjectManager: {fileID: 1048425736}
+  m_UseCorrectionFunction: 0
+  m_UseCameraTrajectoryData: 0
+  m_TestKeepOriginalData: 1
+--- !u!114 &100959374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100959371}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42bd04d7edd9248a8b883139fab301a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TimeIntervalPerSecond: 1
+  m_EnableThisFunction: 0
+  m_ARSessionOrigin: {fileID: 1073739941}
 --- !u!1 &106830607
 GameObject:
   m_ObjectHideFlags: 0
@@ -1502,9 +1566,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ARCamera: {fileID: 1580354072}
-  m_RecordCalibObjPos: 0
-  m_RecordCalibObjPosFromCloneOri: 0
-  m_RecordCalibObjPosFromCloneOriOneObj: 1
+  pos_value: 0.01
+  rotE_value: 1
 --- !u!1 &371032298
 GameObject:
   m_ObjectHideFlags: 0
@@ -3285,7 +3348,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &618161914
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4053,7 +4116,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Record position
+  m_Text: Record data
 --- !u!222 &781125703
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5365,7 +5428,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1048425738}
   - component: {fileID: 1048425739}
-  - component: {fileID: 1048425740}
   m_Layer: 0
   m_Name: Load Object Manager
   m_TagString: Untagged
@@ -5407,23 +5469,8 @@ MonoBehaviour:
   originPrefabInstantiate: {fileID: 0}
   specialPrefabList: {fileID: 826375759}
   dontUseZBuffer: 1
+  m_CorrectionFunctionManager: {fileID: 100959371}
   m_ShowTextAboveLocation: {fileID: 1648417628}
---- !u!114 &1048425740
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1048425736}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 607166b9cdf1a4d0ba87f70de31879a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_LoadObjectManager: {fileID: 1048425736}
-  m_UseCorrectionFunction: 0
-  m_UseCameraTrajectoryData: 1
-  m_TestKeepOriginalData: 1
 --- !u!1 &1073739939
 GameObject:
   m_ObjectHideFlags: 0
@@ -5435,6 +5482,7 @@ GameObject:
   - component: {fileID: 1073739940}
   - component: {fileID: 1073739941}
   - component: {fileID: 1073739942}
+  - component: {fileID: 1073739943}
   m_Layer: 0
   m_Name: AR Session Origin
   m_TagString: Untagged
@@ -5484,6 +5532,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_RaycastPrefab: {fileID: 0}
+--- !u!114 &1073739943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1073739939}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dea56a9eaadd1c439095de4f9a371cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedLibrary: {fileID: 11400000, guid: daee4dd0884d34bb98d516671c82ad98, type: 2}
+  m_MaxNumberOfMovingImages: 20
+  m_TrackedImagePrefab: {fileID: 0}
 --- !u!1 &1085716615
 GameObject:
   m_ObjectHideFlags: 0
@@ -6382,6 +6445,18 @@ MonoBehaviour:
       - m_Target: {fileID: 2136321579}
         m_TargetAssemblyTypeName: RecordPosition_NewARScene, Assembly-CSharp
         m_MethodName: SaveData
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1648417636}
+        m_TargetAssemblyTypeName: Test_NewARSceneCameraTrajectorySave, Assembly-CSharp
+        m_MethodName: CameraSave
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8450,7 +8525,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1564938528
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8611,6 +8686,7 @@ Transform:
   - {fileID: 306148651}
   - {fileID: 1648417629}
   - {fileID: 356689472}
+  - {fileID: 100959372}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9266,6 +9342,8 @@ GameObject:
   - component: {fileID: 1648417631}
   - component: {fileID: 1648417632}
   - component: {fileID: 1648417634}
+  - component: {fileID: 1648417635}
+  - component: {fileID: 1648417636}
   m_Layer: 0
   m_Name: Test Mode Manager
   m_TagString: Untagged
@@ -9361,6 +9439,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7eae9cc3cd3c14ffc9c9131d79d6b9ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1648417635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1648417628}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d053d730585fb4fd2a8511757d7d5a6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Target: {fileID: 0}
+  m_Source: {fileID: 0}
+  m_PerSec: 1
+--- !u!114 &1648417636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1648417628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bef23d147336047c9a025ca47f58191d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ARCamera: {fileID: 1580354072}
+  m_CreateTrailPerSecond: 0.2
+  m_EnableCameraRecording: 1
 --- !u!1 &1706002984
 GameObject:
   m_ObjectHideFlags: 0
@@ -9672,7 +9780,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1792276544
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10256,7 +10364,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Device angle: (0.111111, 0.111111, 0.1111111)'
+  m_Text: 'Device position: (0.000,0.000, 0.000)'
 --- !u!222 &2000059466
 CanvasRenderer:
   m_ObjectHideFlags: 0

@@ -16,13 +16,7 @@ using UnityEngine;
 ///
 
 public class CorrectionWithMarker
-{
-    enum WeightFunctionType
-    {
-        Sigmoid,
-        Tanh
-    }
-
+{    
     [SerializeField]
     GameObject m_DataImportCsv;
 

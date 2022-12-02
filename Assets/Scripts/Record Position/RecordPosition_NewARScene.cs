@@ -291,10 +291,10 @@ public class RecordPosition_NewARScene : MonoBehaviour
         //var calibObj = m_CalibrationManager.GetComponent<Test_WorldCalibrationSettings>();
 
         //if (calibObj.GetRecordCalibObjPos())
-            Calibration_Record_ByWorldOrigin(count);
+            //Calibration_Record_ByWorldOrigin(count);
 
         //if (calibObj.GetRRecordCalibObjPosFromCloneOri())
-            Calibration_Record_ByCloneVC(count);
+            //Calibration_Record_ByCloneVC(count);
 
         //if (calibObj.GetRecordCalibObjPosFromCloneOriOneObj())
             Calibration_Record_ByCloneVC_OneObj(count);
@@ -621,7 +621,8 @@ public class RecordPosition_NewARScene : MonoBehaviour
         string[] data = new[]
                 {
                     GlobalConfig.GetNowDateandTime(),
-                    worldGo.name + "(Clone)",
+                    //worldGo.name + "(Clone)",
+                    "gt_" + worldGo.name,
 
                     tempGo.transform.position.x.ToString(),
                     tempGo.transform.position.y.ToString(),
@@ -669,7 +670,7 @@ public class RecordPosition_NewARScene : MonoBehaviour
                 };
         calibrationObj_Pos_fromClone_OneObj.Add(data);
 
-        // actual (drift)
+        // observation (drift)
         localToVCorigin = GlobalConfig.GetM44ByGameObjRef(
                     worldGo, GlobalConfig.WORLD_CALIBRATION_OBJ);
         tempGo.transform.position = localToVCorigin.GetPosition();
@@ -679,7 +680,8 @@ public class RecordPosition_NewARScene : MonoBehaviour
         data = new[]
                 {
                     GlobalConfig.GetNowDateandTime(),
-                    worldGo.name,
+                    //worldGo.name,
+                    "obs_" + worldGo.name,
 
                     tempGo.transform.position.x.ToString(),
                     tempGo.transform.position.y.ToString(),
