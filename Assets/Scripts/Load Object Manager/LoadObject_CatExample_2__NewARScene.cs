@@ -586,14 +586,29 @@ public class LoadObject_CatExample_2__NewARScene : MonoBehaviour
         if (m_CorrectionFunctionManager == null) return;
 
         m_CorrectionFunctionManager
-            .GetComponent<NewARSceneCorrectionFunction>().Main();
+            .GetComponent<NewARSceneCorrectionFunction>().enabled = true;
         m_CorrectionFunctionManager
             .GetComponent<NewARSceneImageTrackingCorrection>().enabled = true;
 
-        // save data (DISABLE THIS IF DOESNT USE
+        // VERSION 0:  result failed
+
+        //m_CorrectionFunctionManager
+        //    .GetComponent<NewARSceneCorrectionFunction>().Main();
+
+        // save data (DISABLE THIS IF DOESNT USE)
         //var t = m_ShowTextAboveLocation
         //    .GetComponent<Test_JustAnotherScript>();
         //if (!t.enabled) return;
         //Test_CorrectionDataSave.SaveDataIntoCSV(GetMyObjects());
+
+        // VERSION 1:
+
+        // desc:
+        // - don't use previous marker result
+        // - generate marker in testing phase runtime
+
+        // how:
+        // - use the NewARSceneCorrectionFunction to get and process marker data
+        // - use the NewARSceneImageTrackingCorrection to get marker data
     }
 }

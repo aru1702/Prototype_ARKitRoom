@@ -40,7 +40,8 @@ public class CorrectionWithMarker
 
     List<float[]> MarkerToObjsDistance(List<MarkerImportCsv.MarkerLocation> markers,
                                        List<Test_ImportTrueObjPos.DataObj> dataObjs,
-                                       int ref_asArraySize)
+                                       int ref_asArraySize,
+                                       float adjustedWeightValue)
     {
         List<float[]> dist = new();
 
@@ -52,7 +53,7 @@ public class CorrectionWithMarker
             foreach (var m in markers)
             {
                 float d = Vector3.Distance(obj.Position, m.GT_Position);
-                d_array[i] = d * m_AdjustedValue;
+                d_array[i] = d * adjustedWeightValue;
                 i++;
             }
 
@@ -152,9 +153,11 @@ public class CorrectionWithMarker
     public List<Vector3> ProcessData(List<MarkerImportCsv.MarkerLocation> markers,
                                      List<CameraTrajectoryImportCsv.CameraTrajectory> cameras,
                                      List<Test_ImportTrueObjPos.DataObj> dataObjs,
-                                     bool useCameraTrajectoryData=false)
+                                     bool useCameraTrajectoryData=false,
+                                     float adjustedWeightValue = 1.0f)
     {
-        List<MarkerImportCsv.MarkerLocation> marLoc = markers; 
+        List<MarkerImportCsv.MarkerLocation> marLoc = markers;
+        m_AdjustedValue = adjustedWeightValue;
 
         if (useCameraTrajectoryData)
         {
@@ -167,7 +170,7 @@ public class CorrectionWithMarker
             }
             int arrSize_2 = markers.Count;
             var med_2 = MarkerErrorDifference(markers);
-            var mtod_2 = MarkerToObjsDistance(markers, camTVecL, arrSize_2);
+            var mtod_2 = MarkerToObjsDistance(markers, camTVecL, arrSize_2, m_AdjustedValue);
             var wf_2 = WeightFunction(mtod_2, MathFunctions.SIGMOID, arrSize_2, true, true);
             var cv_2 = CorrectedVector(camTVecL, wf_2, med_2);
 
@@ -184,7 +187,7 @@ public class CorrectionWithMarker
         // 3. use this to correct obj
         int arrSize = marLoc.Count;
         var med_3 = MarkerErrorDifference(marLoc);
-        var mtod_3 = MarkerToObjsDistance(marLoc, dataObjs, arrSize);
+        var mtod_3 = MarkerToObjsDistance(marLoc, dataObjs, arrSize, m_AdjustedValue);
         var wf_3 = WeightFunction(mtod_3, MathFunctions.SIGMOID, arrSize, true, true);
 
         return CorrectedVector(dataObjs, wf_3, med_3);
@@ -333,7 +336,7 @@ public class CorrectionWithMarker
         //    i++;
         //}
 
-        var mtod = MarkerToObjsDistance(marLocListSum, objPosList, ref_asArraySize);
+        var mtod = MarkerToObjsDistance(marLocListSum, objPosList, ref_asArraySize, m_AdjustedValue);
 
         //int j = 1;
         //foreach (var item in mtod)
@@ -375,7 +378,7 @@ public class CorrectionWithMarker
         }
         int arrSize_2 = marLocListSum.Count;
         var med_2 = MarkerErrorDifference(marLocListSum);
-        var mtod_2 = MarkerToObjsDistance(marLocListSum, camTVecL, arrSize_2);
+        var mtod_2 = MarkerToObjsDistance(marLocListSum, camTVecL, arrSize_2, m_AdjustedValue);
         var wf_2 = WeightFunction(mtod_2, MathFunctions.SIGMOID, arrSize_2, true, true);
         var cv_2 = CorrectedVector(camTVecL, wf_2, med_2);
 
@@ -391,7 +394,7 @@ public class CorrectionWithMarker
         // 3. use this to correct obj
         int arrSize_3 = newCamAsMar.Count;
         var med_3 = MarkerErrorDifference(newCamAsMar);
-        var mtod_3 = MarkerToObjsDistance(newCamAsMar, objPosList, arrSize_3);
+        var mtod_3 = MarkerToObjsDistance(newCamAsMar, objPosList, arrSize_3, m_AdjustedValue);
         var wf_3 = WeightFunction(mtod_3, MathFunctions.SIGMOID, arrSize_3, true, true);
         var cv_3 = CorrectedVector(objPosList, wf_3, med_3);
 

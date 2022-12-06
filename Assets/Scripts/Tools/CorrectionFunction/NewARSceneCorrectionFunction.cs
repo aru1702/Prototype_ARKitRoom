@@ -9,10 +9,58 @@ public class NewARSceneCorrectionFunction : MonoBehaviour
     GameObject m_LoadObjectManager;
 
     [SerializeField]
+    GameObject m_ImageTargetCorrection;
+
+    [SerializeField]
     bool m_UseCorrectionFunction = true, m_UseCameraTrajectoryData = false;
 
     [SerializeField]
     bool m_TestKeepOriginalData = false;
+
+    [SerializeField]
+    float m_UpdateCorrectionInterval = 1.0f;
+
+    [SerializeField]
+    [Tooltip("This value can be changed depend on math unit used.")]
+    float m_AdjustedWeightCorrectionValue = 1.0f;
+
+    GameObject m_Replica;
+    List<GameObject> m_MarkerGroundTruth = new();
+    List<Test_ImportTrueObjPos.DataObj> dataObjs = new();
+    List<GameObject> oriObjList = new();
+
+    void Start()
+    {
+        if (m_LoadObjectManager == null) return;
+        if (m_ImageTargetCorrection == null) return;
+
+        m_UseCorrectionFunction = GlobalConfig.UseCorrectionMethod;
+
+        Debug.Log("useCorrection: " + m_UseCorrectionFunction);
+        if (!m_UseCorrectionFunction) return;
+
+        Debug.Log("camTraUsed: " + m_UseCameraTrajectoryData);
+        Debug.Log("keepOriData: " + m_TestKeepOriginalData);
+
+        // duplicate if want to keep previous data
+        if (m_TestKeepOriginalData)
+        {
+            m_Replica = Instantiate(GlobalConfig.PlaySpaceOriginGO);
+            m_Replica.name = "Replica_" + GlobalConfig.PlaySpaceOriginGO.name;
+            m_Replica.SetActive(false);
+        }
+
+        StartCoroutine(LoopMain());
+    }
+
+    IEnumerator LoopMain()
+    {
+        while(true)
+        {
+            yield return new WaitForSeconds(m_UpdateCorrectionInterval);
+            Main_Version_One();
+        }
+    }
 
     public void Main()
     {
@@ -68,7 +116,7 @@ public class NewARSceneCorrectionFunction : MonoBehaviour
         var tObj = new GameObject();
         tObj.transform.SetParent(GlobalConfig.PlaySpaceOriginGO.transform);
 
-            // for markers
+        // for markers
         for (int i = 0; i < markers.Count; i++)
         {
             tObj.transform.localPosition = markers[i].GT_Position;
@@ -160,6 +208,130 @@ public class NewARSceneCorrectionFunction : MonoBehaviour
         //}
     }
 
+    /// <summary>
+    /// Update in runtime
+    /// </summary>
+    public void Main_Version_One()
+    {
+        var update = m_ImageTargetCorrection
+            .GetComponent<NewARSceneImageTrackingCorrection>()
+            .GetImageTargetUpdateStatus();
+        if (!update) return;
+
+        //Debug.Log("correction need update?: " + update);
+
+        var markers = m_ImageTargetCorrection
+            .GetComponent<NewARSceneImageTrackingCorrection>()
+            .GetImageTrackedList();
+        if (markers.Count <= 0) return;
+
+        //Debug.Log("correction marker count: " + markers.Count);
+
+        // data based on online
+        if (m_MarkerGroundTruth.Count <= 0) GetMarkerGroundTruth();
+
+        // both marker dan camera data are based on DESIGNATED WORLD origin
+        // our AR app works based on SLAM origin, which not matched
+        // we have to convert them by putting on DESIGNATED WORLD, then get SLAM position
+        var tObj = new GameObject();
+        tObj.transform.SetParent(GlobalConfig.PlaySpaceOriginGO.transform);
+        List<MarkerImportCsv.MarkerLocation> markerLocations = new();
+
+        // for markers
+        //Debug.Log("convert marker to proper form");
+        for (int i = 0; i < markers.Count; i++)
+        {
+            //Debug.Log("convert marker num: " + markers[i]);
+            Vector3 gT_pos;
+            Vector3 gT_rot;
+
+            foreach (var mGT in m_MarkerGroundTruth)
+            {
+                if (string.Equals(mGT.name, markers[i].custom_name))
+                {
+                    Debug.Log("marker found! name: " + mGT.name);
+
+                    var gT_m44 = GlobalConfig.GetM44ByGameObjRef(
+                        mGT,
+                        GlobalConfig.PlaySpaceOriginGO);
+                    gT_pos = GlobalConfig.GetPositionFromM44(gT_m44);
+                    gT_rot = GlobalConfig.GetEulerAngleFromM44(gT_m44);
+
+                    tObj.transform.localPosition = gT_pos;
+                    tObj.transform.localEulerAngles = gT_rot;
+
+                    break;
+                }
+            }
+
+            //Debug.Log("gt pos and rot");
+            Vector3 gt_pos = new(tObj.transform.position.x,
+                                 tObj.transform.position.y,
+                                 tObj.transform.position.z);
+            Vector3 gt_eul = new(tObj.transform.eulerAngles.x,
+                                 tObj.transform.eulerAngles.y,
+                                 tObj.transform.eulerAngles.z);
+
+            //Debug.Log("cr pos and rot");
+            tObj.transform.position = markers[i].custom_position;
+            tObj.transform.eulerAngles = markers[i].custom_euler_rotation;
+            Vector3 cr_pos = new(tObj.transform.position.x,
+                                 tObj.transform.position.y,
+                                 tObj.transform.position.z);
+            Vector3 cr_eul = new(tObj.transform.eulerAngles.x,
+                                 tObj.transform.eulerAngles.y,
+                                 tObj.transform.eulerAngles.z);
+
+            //Debug.Log("create an object");
+
+            Debug.Log("gt_pos: " + LoggingVec3(gt_pos));
+            Debug.Log("gt_eul: " + LoggingVec3(gt_eul));
+            Debug.Log("cr_pos: " + LoggingVec3(cr_pos));
+            Debug.Log("cr_eul: " + LoggingVec3(cr_eul));
+
+            MarkerImportCsv.MarkerLocation newML =
+                new(markers[i].custom_name, gt_pos, gt_eul, cr_pos, cr_eul);
+            markerLocations.Add(newML);
+            //Debug.Log("marker " + markers[i].custom_name + "success");
+        }       
+        Destroy(tObj);
+        //Debug.Log("marker convertion success");
+
+        // convert object into DataObj form
+        //Debug.Log("convert original Obj to proper form");
+        if (dataObjs.Count <= 0)
+        {
+            // get gameObj list from loadManager
+            oriObjList = m_LoadObjectManager
+                .GetComponent<LoadObject_CatExample_2__NewARScene>()
+                .GetMyObjects();
+
+            foreach (var obj in oriObjList)
+            {
+                var dataObj = new Test_ImportTrueObjPos.DataObj(obj.transform.position);
+                dataObjs.Add(dataObj);
+            }
+        }
+        //Debug.Log("Original obj convertion success");
+
+        // correction START
+        //Debug.Log("correction start");
+        CorrectionWithMarker cWM = new();
+        var altObjs = cWM.ProcessData(
+            markerLocations,
+            null,
+            dataObjs,
+            m_UseCameraTrajectoryData,
+            m_AdjustedWeightCorrectionValue);
+        //Debug.Log("correction finish");
+
+        // alternate obj used
+        for (int i = 0; i < oriObjList.Count; i++)
+        {
+            oriObjList[i].transform.position = altObjs[i];
+        }
+        //Debug.Log("alternate Obj position");
+    }
  
     string LoggingVec3(Vector3 v)
     {
@@ -169,5 +341,23 @@ public class NewARSceneCorrectionFunction : MonoBehaviour
         r += v.z;
         r += ")";
         return r;
+    }
+
+    void GetMarkerGroundTruth()
+    {
+        if (m_LoadObjectManager == null) return;
+
+        var scriptL = m_LoadObjectManager
+            .GetComponent<LoadObject_CatExample_2__NewARScene>();
+        foreach (var item in scriptL.GetMyParents())
+        {
+            //Debug.Log("name: " + item.name);
+
+            string[] names = item.name.Split("_");
+            if (names[0] == "img")
+                m_MarkerGroundTruth.Add(item);
+        }
+
+        //Debug.Log("how many GT: " + m_MarkerGroundTruth.Count);
     }
 }

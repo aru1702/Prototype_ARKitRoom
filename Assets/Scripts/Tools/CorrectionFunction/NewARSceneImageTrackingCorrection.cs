@@ -17,8 +17,10 @@ public class NewARSceneImageTrackingCorrection : MonoBehaviour
 
     ARTrackedImageManager m_ARTrackedImageManager;
 
-    List<CustomTransform> m_ImageTrackedList;
+    List<CustomTransform> m_ImageTrackedList = new();
     List<CustomTransform> m_MarkerList;
+
+    bool m_HasUpdate = false;
 
     // Awake is called on app starts
     void Awake()
@@ -36,6 +38,17 @@ public class NewARSceneImageTrackingCorrection : MonoBehaviour
         if (!m_EnableThisFunction) return;
 
         m_ARTrackedImageManager.trackedImagesChanged += OnImageChanged;
+
+        //TestCustomDataAdd();
+        //m_HasUpdate = true;
+    }
+
+    // OnDisable is called when script is deactivated
+    void OnDisable()
+    {
+        m_ARTrackedImageManager.trackedImagesChanged -= OnImageChanged;
+
+        //m_HasUpdate = false;
     }
 
     // Start is called before the first frame update
@@ -56,24 +69,24 @@ public class NewARSceneImageTrackingCorrection : MonoBehaviour
         {
             trackingEnable.enabled = true;
         }
-
-        m_ImageTrackedList = new();
-        m_MarkerList = new();
+        //m_MarkerList = new();
 
         // get saved marker data from local
-        string map = GlobalConfig.LOAD_MAP.ToString();
-        string fileName = MappingV2.GetMarkerCalibrationFileName(map);
-        string path = System.IO.Path.Combine(Application.persistentDataPath, fileName);
+        //string map = GlobalConfig.LOAD_MAP.ToString();
+        //string fileName = MappingV2.GetMarkerCalibrationFileName(map);
+        //string path = System.IO.Path.Combine(Application.persistentDataPath, fileName);
 
-        MarkerImportCsv mIC = new();
-        var markers = mIC.GetMarkerLocationsSummarized(path);
+        // get marker data from local
+        //MarkerImportCsv mIC = new();
+        //var markers = mIC.GetMarkerLocationsSummarized(path);
 
-        // Debug.Log("Marker info: " + markers.Count);
-        // Debug.Log("SavedMarkerToGameObjectList");
-        SavedMarkerToGameObjectList(markers);
+        // process into gameObject form
+        //SavedMarkerToGameObjectList(markers);
 
-        // Debug.Log("StartCoroutine(LoopMain()");
+        // start loop process
         StartCoroutine(LoopMain());
+
+        // UPDATE: proceed plan version 1
     }
 
     // OnImageChanged is called when the a marker is captured by camera
@@ -85,18 +98,23 @@ public class NewARSceneImageTrackingCorrection : MonoBehaviour
             // if the tracked img become LIMITED --> remove from array
             if (string.Equals(updatedImage.trackingState.ToString(), "Limited"))
             {
-                // Debug.Log("name: " + updatedImage.referenceImage.name + ", status: Limited");
-                //if (m_ImageTrackedList.Count <= 0) return;
+                //    // Debug.Log("name: " + updatedImage.referenceImage.name + ", status: Limited");
+                //    //if (m_ImageTrackedList.Count <= 0) return;
 
-                foreach (var marker in m_ImageTrackedList)
-                {
-                    if (string.Equals(updatedImage.referenceImage.name, marker.custom_name))
-                    {
-                        m_ImageTrackedList.Remove(marker);
-                        return;
-                    }
-                }
+                //    foreach (var marker in m_ImageTrackedList)
+                //    {
+                //        if (string.Equals(updatedImage.referenceImage.name, marker.custom_name))
+                //        {
+                //            m_ImageTrackedList.Remove(marker);
+                //            return;
+                //        }
+                //    }
+
+                m_HasUpdate = false;
+
+                return;
             }
+            // UPDATE: we don't need to remove the marker from list
 
             // for each the tracked imgs are already exist --> update location
             foreach (var marker in m_ImageTrackedList)
@@ -107,6 +125,8 @@ public class NewARSceneImageTrackingCorrection : MonoBehaviour
 
                     marker.custom_position = updatedImage.transform.position;
                     marker.customer_q_rotation = updatedImage.transform.rotation;
+
+                    m_HasUpdate = true;
 
                     return;
                 }
@@ -119,6 +139,7 @@ public class NewARSceneImageTrackingCorrection : MonoBehaviour
                 newImgTgt.custom_name = updatedImage.referenceImage.name;
                 newImgTgt.custom_position = updatedImage.transform.position;
                 newImgTgt.customer_q_rotation = updatedImage.transform.rotation;
+                newImgTgt.custom_euler_rotation = newImgTgt.customer_q_rotation.eulerAngles;
                 m_ImageTrackedList.Add(newImgTgt);
 
                 // Debug.Log("name: " + updatedImage.referenceImage.name + ", status: Added");
@@ -133,7 +154,11 @@ public class NewARSceneImageTrackingCorrection : MonoBehaviour
         {
             yield return new WaitForSeconds(m_TimeIntervalPerSecond);
             // Debug.Log("Corountine on loop");
-            Main();
+
+            //Main();
+
+            Debug.Log("update status: " + m_HasUpdate);
+            Debug.Log("marker in list: " + m_ImageTrackedList.Count);
         }
     }
 
@@ -175,12 +200,6 @@ public class NewARSceneImageTrackingCorrection : MonoBehaviour
         }
     }
 
-    // OnDisable is called when script is deactivated
-    void OnDisable()
-    {
-        m_ARTrackedImageManager.trackedImagesChanged -= OnImageChanged;
-    }
-
     void SavedMarkerToGameObjectList(List<MarkerImportCsv.MarkerLocation> markerList)
     {
         foreach (var marker in markerList)
@@ -195,7 +214,7 @@ public class NewARSceneImageTrackingCorrection : MonoBehaviour
         }
     }
 
-    CustomTransform GetCustomTransformByName(string name, List<CustomTransform> list)
+    public CustomTransform GetCustomTransformByName(string name, List<CustomTransform> list)
     {
         // Debug.Log("imageTracked name: " + name);
         foreach (var item in list)
@@ -205,5 +224,25 @@ public class NewARSceneImageTrackingCorrection : MonoBehaviour
         }
 
         return null;
+    }
+
+    public List<CustomTransform> GetImageTrackedList()
+    {
+        return m_ImageTrackedList;
+    }
+
+    public bool GetImageTargetUpdateStatus()
+    {
+        return m_HasUpdate;
+    }
+
+    void TestCustomDataAdd()
+    {
+        CustomTransform newImgTgt = new();
+        newImgTgt.custom_name = "img_1";
+        newImgTgt.custom_position = new(3.474f, -0.788f, -0.781f);
+        newImgTgt.customer_q_rotation = new();
+        newImgTgt.custom_euler_rotation = new();
+        m_ImageTrackedList.Add(newImgTgt);
     }
 }

@@ -55,6 +55,12 @@ public class Test_TurnOnOffWorldCalib : MonoBehaviour
     List<GameObject> cloneParents = new();
     List<GameObject> cloneObjects = new();
 
+    public void ResetCalibration()
+    {
+        Destroy(GlobalConfig.WORLD_CALIBRATION_OBJ);
+        CreateSimilarObj();
+    }
+
     void CreateSimilarObj()
     {
         if (m_LoadObjectManager == null) return;
