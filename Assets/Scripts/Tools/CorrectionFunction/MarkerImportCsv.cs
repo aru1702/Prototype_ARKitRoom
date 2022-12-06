@@ -40,35 +40,78 @@ public class MarkerImportCsv
         // put into class
         foreach (var csvData in data)
         {
-            string name = csvData[1];
+            // csvData[0] = timestamp
 
-            Vector3 gt_pos = new(float.Parse(csvData[2]),
-                                   float.Parse(csvData[3]),
-                                   float.Parse(csvData[4]));
-
-            Vector3 gt_e_rot = new(float.Parse(csvData[5]),
-                                        float.Parse(csvData[6]),
-                                        float.Parse(csvData[7]));
-
-            Vector3 c_pos = new(float.Parse(csvData[8]),
-                                   float.Parse(csvData[9]),
-                                   float.Parse(csvData[10]));
-
-            Vector3 c_e_rot = new(float.Parse(csvData[11]),
-                                        float.Parse(csvData[12]),
-                                        float.Parse(csvData[13]));
-
-
-            var mL = new MarkerLocation
+            // old
+            if (csvData.Length == 14)
             {
-                name = name,
-                GT_Position = gt_pos,
-                GT_EulerAngle = gt_e_rot,
-                C_Position = c_pos,
-                C_EulerAngle = c_e_rot
-            };
+                string name = csvData[1];
 
-            markerLocations.Add(mL);
+                Vector3 gt_pos = new(float.Parse(csvData[2]),
+                                       float.Parse(csvData[3]),
+                                       float.Parse(csvData[4]));
+
+                Vector3 gt_e_rot = new(float.Parse(csvData[5]),
+                                            float.Parse(csvData[6]),
+                                            float.Parse(csvData[7]));
+
+                Vector3 c_pos = new(float.Parse(csvData[8]),
+                                       float.Parse(csvData[9]),
+                                       float.Parse(csvData[10]));
+
+                Vector3 c_e_rot = new(float.Parse(csvData[11]),
+                                            float.Parse(csvData[12]),
+                                            float.Parse(csvData[13]));
+
+
+                var mL = new MarkerLocation
+                {
+                    name = name,
+                    GT_Position = gt_pos,
+                    GT_EulerAngle = gt_e_rot,
+                    C_Position = c_pos,
+                    C_EulerAngle = c_e_rot
+                };
+
+                markerLocations.Add(mL);
+            }
+
+            // new
+            // date: Dec 2nd
+            if (csvData.Length == 15)
+            {
+                string name = csvData[1];
+
+                Vector3 gt_pos = new(float.Parse(csvData[2]),
+                                       float.Parse(csvData[3]),
+                                       float.Parse(csvData[4]));
+
+                Vector3 gt_e_rot = new(float.Parse(csvData[5]),
+                                            float.Parse(csvData[6]),
+                                            float.Parse(csvData[7]));
+
+                Vector3 c_pos = new(float.Parse(csvData[8]),
+                                       float.Parse(csvData[9]),
+                                       float.Parse(csvData[10]));
+
+                Vector3 c_e_rot = new(float.Parse(csvData[11]),
+                                            float.Parse(csvData[12]),
+                                            float.Parse(csvData[13]));
+
+
+                var mL = new MarkerLocation
+                {
+                    name = name,
+                    GT_Position = gt_pos,
+                    GT_EulerAngle = gt_e_rot,
+                    C_Position = c_pos,
+                    C_EulerAngle = c_e_rot
+                };
+
+                mL.before = csvData[14];
+
+                markerLocations.Add(mL);
+            }
         }
     }
 
@@ -84,6 +127,8 @@ public class MarkerImportCsv
         public Vector3 GT_EulerAngle { get; set; }
         public Vector3 C_Position { get; set; }
         public Vector3 C_EulerAngle { get; set; }
+        public string before { get; set; }
+
         public MarkerLocation(string name, Vector3 GT_Position, Vector3 GT_EulerAngle,
                                            Vector3 C_Position, Vector3 C_EulerAngle)
         {
@@ -93,6 +138,7 @@ public class MarkerImportCsv
             this.C_Position = C_Position;
             this.C_EulerAngle = C_EulerAngle;
         }
+
         public MarkerLocation() { }
     }
 

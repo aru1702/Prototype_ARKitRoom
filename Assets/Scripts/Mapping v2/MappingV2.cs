@@ -33,6 +33,9 @@ public class MappingV2 : MonoBehaviour
     [SerializeField]
     bool m_EnableMarkerRecording = true;
 
+    string marker_before = "na";
+    string marker_next = "na";
+
     /// <summary>
     /// Start function
     /// </summary>
@@ -47,6 +50,8 @@ public class MappingV2 : MonoBehaviour
         };
         m_RecordedCameraData.Add(header);
 
+        // date: Dec 2nd
+        // add: before --> img marker before this
         header = new[] {
             "timestamp", "name",
 
@@ -54,7 +59,9 @@ public class MappingV2 : MonoBehaviour
             "gt_rot_e_x", "gt_rot_e_y", "gt_rot_e_z",
 
             "c_pos_x", "c_pos_y", "c_pos_z",
-            "c_rot_e_x", "c_rot_e_y", "c_rot_e_z"
+            "c_rot_e_x", "c_rot_e_y", "c_rot_e_z",
+
+            "before"
         };
         m_RecordedMarkerData.Add(header);
 
@@ -180,7 +187,11 @@ public class MappingV2 : MonoBehaviour
         //Debug.Log("how many IT: " + transforms.Count);
 
         // check if no data
-        if (imageTrackedList.Count <= 0) return;
+        if (imageTrackedList.Count <= 0)
+        {
+            marker_before = marker_next;
+            return;
+        }
 
         foreach (var imageTracked in imageTrackedList)
         {
@@ -233,10 +244,13 @@ public class MappingV2 : MonoBehaviour
                         c_pos.z.ToString(),
                         c_rot.x.ToString(),
                         c_rot.y.ToString(),
-                        c_rot.z.ToString()                  // 13
+                        c_rot.z.ToString(),                 // 13
+
+                        marker_before                       // 14
                     };
 
                     m_RecordedMarkerData.Add(data);
+                    marker_next = imageTracked.name;
 
                     //Destroy(gT);
 
