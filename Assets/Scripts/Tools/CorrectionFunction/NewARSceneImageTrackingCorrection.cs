@@ -245,4 +245,26 @@ public class NewARSceneImageTrackingCorrection : MonoBehaviour
         newImgTgt.custom_euler_rotation = new();
         m_ImageTrackedList.Add(newImgTgt);
     }
+
+    public void TestInputData(CustomTransform customTransform)
+    {
+        m_ImageTrackedList.Add(customTransform);
+    }
+
+    public void UpdateHasUpdate(bool trigger)
+    {
+        m_HasUpdate = trigger;
+    }
+
+    public void UpdateInputData(string name, Vector3 vector)
+    {
+        foreach (var item in m_ImageTrackedList)
+        {
+            if(Equals(name, item.custom_name))
+            {
+                item.custom_position = vector;
+                return;
+            }
+        }
+    }
 }

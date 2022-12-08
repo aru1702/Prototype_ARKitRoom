@@ -27,6 +27,7 @@ public class MappingV2NewARScene : MonoBehaviour
     [SerializeField]
     bool m_EnableMarkerRecording = true;
 
+    List<Vector3> m_PreviousMarkerData = new();
     string marker_before = "na";
     string marker_next = "na";
 
@@ -177,12 +178,20 @@ public class MappingV2NewARScene : MonoBehaviour
         //Debug.Log("how many IT: " + transforms.Count);
 
         // check if no data
-        if (imageTrackedList.Count <= 0)
+        //if (imageTrackedList.Count <= 0)
+        //{
+        //    marker_before = marker_next;
+        //    return;
+        //}
+
+        // check if no update from image tracking
+        if (!scriptI.GetImageTargetUpdateStatus())
         {
             marker_before = marker_next;
             return;
         }
 
+        int i = 0;
         foreach (var imageTracked in imageTrackedList)
         {
             //Debug.Log("item name: " + item.name);
@@ -244,7 +253,23 @@ public class MappingV2NewARScene : MonoBehaviour
                     };
 
                     m_RecordedMarkerData.Add(data);
-                    marker_next = imageTracked.custom_name;
+
+                    // check previous marker data
+                    if (m_PreviousMarkerData.Count < imageTrackedList.Count)
+                    {
+                        marker_next = imageTracked.custom_name;
+                        m_PreviousMarkerData.Add(c_pos);
+                    }
+
+                    // update next marker name
+                    var prev_pos = m_PreviousMarkerData[i];
+                    if (!Equals(c_pos, prev_pos))
+                    {
+                        marker_next = imageTracked.custom_name;
+                        m_PreviousMarkerData[i] = c_pos;
+                    }
+
+                    i++;
 
                     //Destroy(gT);
 
@@ -258,8 +283,11 @@ public class MappingV2NewARScene : MonoBehaviour
 
                     //RelocateARCamera(mGT, imageTracked.transform);
                 }
+                // end if
             }
+            // end for ground truth
         }
+        // end for image tracked
     }
 
     /// <summary>

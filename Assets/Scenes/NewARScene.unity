@@ -407,7 +407,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1313966052}
   m_Father: {fileID: 1577129088}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4011,10 +4012,10 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 21
+    m_FontSize: 18
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 2
+    m_MinSize: 1
     m_MaxSize: 40
     m_Alignment: 0
     m_AlignByGeometry: 0
@@ -6903,6 +6904,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1670321751}
+        m_TargetAssemblyTypeName: MappingV2NewARScene, Assembly-CSharp
+        m_MethodName: SaveData
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1233600550
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7473,12 +7486,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1313966051}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1648417629}
+  m_Father: {fileID: 83105680}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1313966053
@@ -9977,6 +9990,7 @@ GameObject:
   - component: {fileID: 1648417634}
   - component: {fileID: 1648417635}
   - component: {fileID: 1648417636}
+  - component: {fileID: 1648417637}
   m_Layer: 0
   m_Name: Test Mode Manager
   m_TagString: Untagged
@@ -9995,8 +10009,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1313966052}
+  m_Children: []
   m_Father: {fileID: 1577129088}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -10103,6 +10116,25 @@ MonoBehaviour:
   m_ARCamera: {fileID: 1580354072}
   m_CreateTrailPerSecond: 0.2
   m_EnableCameraRecording: 1
+--- !u!114 &1648417637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1648417628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bebd4233492f44afb8544e8969be97e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_InputData1: 0
+  m_Data1: {x: -1.776, y: -0.713, z: -1.405}
+  m_InputData2: 0
+  m_Data2: {x: 2.955, y: -0.611, z: -4.925}
+  m_ImgTrackingHasUpdate: 0
+  m_ImageTrackingCorrectionHandler: {fileID: 100959371}
+  m_Reset: 0
 --- !u!1 &1670321749
 GameObject:
   m_ObjectHideFlags: 0
@@ -10150,7 +10182,7 @@ MonoBehaviour:
   m_ARCamera: {fileID: 1580354072}
   m_ImageRecognitionManager: {fileID: 100959371}
   m_LoadObjectManager: {fileID: 1048425736}
-  m_EnableCameraRecording: 1
+  m_EnableCameraRecording: 0
   m_EnableMarkerRecording: 1
   m_CreateTrailPerSecond: 0.5
 --- !u!1 &1706002984
@@ -11786,7 +11818,7 @@ RectTransform:
   m_GameObject: {fileID: 2120411363}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.0000001, y: 1.0000001, z: 1.0000001}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 181441758}
@@ -11795,7 +11827,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 330.99997, y: -304.7}
+  m_AnchoredPosition: {x: 330.99994, y: -304.70007}
   m_SizeDelta: {x: 49.13672, y: 23.551208}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2120411365

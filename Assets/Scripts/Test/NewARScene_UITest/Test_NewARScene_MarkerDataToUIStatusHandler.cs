@@ -53,9 +53,17 @@ public class Test_NewARScene_MarkerDataToUIStatusHandler : MonoBehaviour
 
         foreach (var trf in customTransforms)
         {
+            GameObject go = new();
+            go.transform.position = trf.custom_position;
+            var m44 = GlobalConfig.GetM44ByGameObjRef(go, GlobalConfig.PlaySpaceOriginGO);
+            var new_pos = GlobalConfig.GetPositionFromM44(m44);            
+
             str += "name: " + trf.custom_name + ", ";
-            str += "position: " + trf.custom_position + ", ";
+            str += "pos: " + trf.custom_position.ToString() + ", ";
+            str += "world pos: " + new_pos.ToString();
             str += "\n";
+
+            Destroy(go);
         }
 
         return str;
