@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CustomTransform : MonoBehaviour
+public class CustomTransform
 {
     public string custom_name { get; set; }
     public Transform custom_transform { get; set; }

@@ -52,13 +52,27 @@ public class Test_TurnOnOffWorldCalib : MonoBehaviour
     [SerializeField]
     GameObject m_DeskPrefab;
 
-    List<GameObject> cloneParents = new();
+    //List<GameObject> cloneParents = new();
     List<GameObject> cloneObjects = new();
 
     public void ResetCalibration()
     {
-        Destroy(GlobalConfig.WORLD_CALIBRATION_OBJ);
-        CreateSimilarObj();
+        // this change every object insider world calibration based on LoadObjectManager
+        var loadObjects = m_LoadObjectManager
+            .GetComponent<LoadObject_CatExample_2__NewARScene>()
+            .GetMyObjects();
+
+        for (int i = 0; i < loadObjects.Count; i++)
+        {
+            cloneObjects[i].transform.SetPositionAndRotation(
+                loadObjects[i].transform.position,
+                loadObjects[i].transform.rotation);
+        }
+
+        // this only change the world calibration origin
+        //GlobalConfig.WORLD_CALIBRATION_OBJ.transform.SetPositionAndRotation
+        //    (GlobalConfig.PlaySpaceOriginGO.transform.position,
+        //     GlobalConfig.PlaySpaceOriginGO.transform.rotation);
     }
 
     void CreateSimilarObj()
@@ -73,6 +87,8 @@ public class Test_TurnOnOffWorldCalib : MonoBehaviour
         tempCloneWorld.transform.SetPositionAndRotation(
             tempWorld.transform.position,
             tempWorld.transform.rotation);
+
+        tempCloneWorld.name = "WorldCalibration";
 
         GlobalConfig.WORLD_CALIBRATION_OBJ = tempCloneWorld;
 

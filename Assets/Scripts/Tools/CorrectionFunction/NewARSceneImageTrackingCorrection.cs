@@ -150,15 +150,15 @@ public class NewARSceneImageTrackingCorrection : MonoBehaviour
     // Call in while(true) with m_TimeIntervalPerSecond
     IEnumerator LoopMain()
     {
-        while(true)
+        while (true)
         {
             yield return new WaitForSeconds(m_TimeIntervalPerSecond);
             // Debug.Log("Corountine on loop");
 
             //Main();
 
-            Debug.Log("update status: " + m_HasUpdate);
-            Debug.Log("marker in list: " + m_ImageTrackedList.Count);
+            //Debug.Log("update status: " + m_HasUpdate);
+            //Debug.Log("marker in list: " + m_ImageTrackedList.Count);
         }
     }
 
@@ -173,7 +173,7 @@ public class NewARSceneImageTrackingCorrection : MonoBehaviour
         {
             var marker = GetCustomTransformByName(imageTracked.custom_name, m_MarkerList);
             // Debug.Log("marker info: " + marker.custom_name + ", " + marker.custom_position.ToString());
-            
+
             GameObject tempGo = new();
             tempGo.transform.position = imageTracked.custom_position;
             var m44 = GlobalConfig.GetM44ByGameObjRef(tempGo, GlobalConfig.PlaySpaceOriginGO);

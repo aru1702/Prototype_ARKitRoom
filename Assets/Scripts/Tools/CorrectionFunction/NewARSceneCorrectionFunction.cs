@@ -28,6 +28,12 @@ public class NewARSceneCorrectionFunction : MonoBehaviour
     List<GameObject> m_MarkerGroundTruth = new();
     List<Test_ImportTrueObjPos.DataObj> dataObjs = new();
     List<GameObject> oriObjList = new();
+    List<Vector3> replicaOriObjListPos = new();
+
+    [SerializeField]
+    bool m_UseResetObjLocation = false;
+
+    bool m_MarkerBeingUpdate;
 
     void Start()
     {
@@ -216,9 +222,14 @@ public class NewARSceneCorrectionFunction : MonoBehaviour
         var update = m_ImageTargetCorrection
             .GetComponent<NewARSceneImageTrackingCorrection>()
             .GetImageTargetUpdateStatus();
-        if (!update) return;
 
         //Debug.Log("correction need update?: " + update);
+
+        if (!update)
+        {
+            m_MarkerBeingUpdate = false;
+            return;
+        }
 
         var markers = m_ImageTargetCorrection
             .GetComponent<NewARSceneImageTrackingCorrection>()
@@ -249,7 +260,7 @@ public class NewARSceneCorrectionFunction : MonoBehaviour
             {
                 if (string.Equals(mGT.name, markers[i].custom_name))
                 {
-                    Debug.Log("marker found! name: " + mGT.name);
+                    //Debug.Log("marker found! name: " + mGT.name);
 
                     var gT_m44 = GlobalConfig.GetM44ByGameObjRef(
                         mGT,
@@ -284,10 +295,10 @@ public class NewARSceneCorrectionFunction : MonoBehaviour
 
             //Debug.Log("create an object");
 
-            Debug.Log("gt_pos: " + LoggingVec3(gt_pos));
-            Debug.Log("gt_eul: " + LoggingVec3(gt_eul));
-            Debug.Log("cr_pos: " + LoggingVec3(cr_pos));
-            Debug.Log("cr_eul: " + LoggingVec3(cr_eul));
+            //Debug.Log("gt_pos: " + LoggingVec3(gt_pos));
+            //Debug.Log("gt_eul: " + LoggingVec3(gt_eul));
+            //Debug.Log("cr_pos: " + LoggingVec3(cr_pos));
+            //Debug.Log("cr_eul: " + LoggingVec3(cr_eul));
 
             MarkerImportCsv.MarkerLocation newML =
                 new(markers[i].custom_name, gt_pos, gt_eul, cr_pos, cr_eul);
@@ -296,6 +307,19 @@ public class NewARSceneCorrectionFunction : MonoBehaviour
         }       
         Destroy(tObj);
         //Debug.Log("marker convertion success");
+
+        // reset obj location
+        if (m_UseResetObjLocation && m_TestKeepOriginalData && !m_MarkerBeingUpdate
+                && replicaOriObjListPos.Count > 0)
+        {
+            Debug.Log("Reset obj pos");
+            dataObjs.Clear();
+
+            for (int i = 0; i < oriObjList.Count; i++)
+            {
+                oriObjList[i].transform.position = replicaOriObjListPos[i];
+            }
+        }
 
         // convert object into DataObj form
         //Debug.Log("convert original Obj to proper form");
@@ -310,6 +334,10 @@ public class NewARSceneCorrectionFunction : MonoBehaviour
             {
                 var dataObj = new Test_ImportTrueObjPos.DataObj(obj.transform.position);
                 dataObjs.Add(dataObj);
+                replicaOriObjListPos.Add(
+                    new(obj.transform.position.x,
+                        obj.transform.position.y,
+                        obj.transform.position.z));
             }
         }
         //Debug.Log("Original obj convertion success");
@@ -331,6 +359,8 @@ public class NewARSceneCorrectionFunction : MonoBehaviour
             oriObjList[i].transform.position = altObjs[i];
         }
         //Debug.Log("alternate Obj position");
+
+        m_MarkerBeingUpdate = true;
     }
  
     string LoggingVec3(Vector3 v)

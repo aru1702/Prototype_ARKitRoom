@@ -166,4 +166,10 @@ public class GlobalConfig : MonoBehaviour
 
         return goList[itemC];
     }
+
+    public static void PublicDebug (string text, string context="")
+    {
+        var date = GetNowDateandTime();
+        Debug.Log(date + ": " + text + " (" + context + ")");
+    }
 }

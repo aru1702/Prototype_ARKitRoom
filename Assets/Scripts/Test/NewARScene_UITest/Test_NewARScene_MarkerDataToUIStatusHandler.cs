@@ -39,7 +39,7 @@ public class Test_NewARScene_MarkerDataToUIStatusHandler : MonoBehaviour
 
         if (markers.Count <= 0)
         {
-            Debug.Log(GlobalConfig.GetNowDateandTime() + ", No markers in sight!");
+            //Debug.Log(GlobalConfig.GetNowDateandTime() + ", No markers in sight!");
             
         }
 

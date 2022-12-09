@@ -5,6 +5,10 @@ using UnityEngine;
 public class Test_NewARScene_InputImgTrackingData : MonoBehaviour
 {
     [SerializeField]
+    [Tooltip("Disable this in real build, since all function run in Update")]
+    bool m_EnableThisFunction = false;
+
+    [SerializeField]
     bool m_InputData1 = false;
 
     [SerializeField]
@@ -30,6 +34,8 @@ public class Test_NewARScene_InputImgTrackingData : MonoBehaviour
 
     void Update()
     {
+        if (!m_EnableThisFunction) return;
+
         InputData();
         HasUpdate();
         Reset();

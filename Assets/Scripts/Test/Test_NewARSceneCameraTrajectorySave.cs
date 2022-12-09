@@ -58,10 +58,10 @@ public class Test_NewARSceneCameraTrajectorySave : MonoBehaviour
         if (m_RecordedCameraData.Count <= 0) return;
 
         string time = GlobalConfig.GetNowDateandTime();
-        string map = GlobalConfig.SAVE_INTO_MAP.ToString();
+        string map = GlobalConfig.LOAD_MAP.ToString();
 
         // for documentation
-        string fileName = time + "_NewARScene__RecordedCameraDataV2__Maps_" + map + ".csv";
+        string fileName = time + "_NewARScene__CamTrajectoryTest__Maps_" + map + ".csv";
         string path = Path.Combine(Application.persistentDataPath, fileName);
         ExportCSV.exportData(path, m_RecordedCameraData);
     }

@@ -297,7 +297,7 @@ public class RecordPosition_NewARScene : MonoBehaviour
             //Calibration_Record_ByCloneVC(count);
 
         //if (calibObj.GetRecordCalibObjPosFromCloneOriOneObj())
-            Calibration_Record_ByCloneVC_OneObj(count);
+        Calibration_Record_ByCloneVC_OneObj(count);
 
         calibrationFirstTime = true;
         calibrationObj_hasHeader = true;
@@ -611,7 +611,7 @@ public class RecordPosition_NewARScene : MonoBehaviour
         GameObject nearGo = GlobalConfig.GetNearestObject(allCloneObjects, m_ARCamera.gameObject, out int i);
         GameObject worldGo = allLoadObjects[i];
 
-        // ground truth (clone)
+        // ground truth (object to world GO)
         Matrix4x4 localToVCorigin = GlobalConfig.GetM44ByGameObjRef(
                     worldGo, GlobalConfig.PlaySpaceOriginGO);
         tempGo.transform.position = localToVCorigin.GetPosition();
@@ -621,7 +621,6 @@ public class RecordPosition_NewARScene : MonoBehaviour
         string[] data = new[]
                 {
                     GlobalConfig.GetNowDateandTime(),
-                    //worldGo.name + "(Clone)",
                     "gt_" + worldGo.name,
 
                     tempGo.transform.position.x.ToString(),
@@ -641,7 +640,7 @@ public class RecordPosition_NewARScene : MonoBehaviour
                 };
         calibrationObj_Pos_fromClone_OneObj.Add(data);
 
-        // ar camera (clone)
+        // ar camera (observation point --device--)
         localToVCorigin = GlobalConfig.GetM44ByGameObjRef(
                     m_ARCamera.gameObject, GlobalConfig.WORLD_CALIBRATION_OBJ);
         tempGo.transform.position = localToVCorigin.GetPosition();
@@ -670,7 +669,7 @@ public class RecordPosition_NewARScene : MonoBehaviour
                 };
         calibrationObj_Pos_fromClone_OneObj.Add(data);
 
-        // observation (drift)
+        // observation (drift, object to clone world GO)
         localToVCorigin = GlobalConfig.GetM44ByGameObjRef(
                     worldGo, GlobalConfig.WORLD_CALIBRATION_OBJ);
         tempGo.transform.position = localToVCorigin.GetPosition();
@@ -680,8 +679,35 @@ public class RecordPosition_NewARScene : MonoBehaviour
         data = new[]
                 {
                     GlobalConfig.GetNowDateandTime(),
-                    //worldGo.name,
                     "obs_" + worldGo.name,
+
+                    tempGo.transform.position.x.ToString(),
+                    tempGo.transform.position.y.ToString(),
+                    tempGo.transform.position.z.ToString(),
+
+                    tempGo.transform.eulerAngles.x.ToString(),
+                    tempGo.transform.eulerAngles.y.ToString(),
+                    tempGo.transform.eulerAngles.z.ToString(),
+
+                    tempGo.transform.rotation.x.ToString(),
+                    tempGo.transform.rotation.y.ToString(),
+                    tempGo.transform.rotation.z.ToString(),
+                    tempGo.transform.rotation.w.ToString(),
+
+                    count.ToString()
+                };
+        calibrationObj_Pos_fromClone_OneObj.Add(data);
+
+        // observation drift from clone object (object to clone object)
+        localToVCorigin = GlobalConfig.GetM44ByGameObjRef(
+                    worldGo, nearGo);
+        tempGo.transform.position = GlobalConfig.GetPositionFromM44(localToVCorigin);
+        tempGo.transform.rotation = GlobalConfig.GetRotationFromM44(localToVCorigin);
+
+        data = new[]
+                {
+                    GlobalConfig.GetNowDateandTime(),
+                    "toclone_" + worldGo.name,
 
                     tempGo.transform.position.x.ToString(),
                     tempGo.transform.position.y.ToString(),
@@ -708,28 +734,31 @@ public class RecordPosition_NewARScene : MonoBehaviour
     /// </summary>
     void Calibration_Save()
     {
-        if (calibrationObj_Pos.Count <= 0) return;
+        if (calibrationObj_Pos.Count > 0)
+        {
+            string time = GlobalConfig.GetNowDateandTime();
+            string map = GlobalConfig.LOAD_MAP.ToString();
+            string fileName = time + "_NewARScene_calibrationObj_Pos_fromWorldOrigin__Maps_" + map + ".csv";
+            string path = Path.Combine(Application.persistentDataPath, fileName);
+            ExportCSV.exportData(path, calibrationObj_Pos);
+        }
 
-        string time = GlobalConfig.GetNowDateandTime();
-        string map = GlobalConfig.MapsSelection.ToString();
-        string fileName = time + "_NewARScene_calibrationObj_Pos_fromWorldOrigin__Maps_" + map + ".csv";
-        string path = Path.Combine(Application.persistentDataPath, fileName);
-        ExportCSV.exportData(path, calibrationObj_Pos);
+        if (calibrationObj_Pos_fromCloneOrigin.Count > 0)
+        {
+            string time = GlobalConfig.GetNowDateandTime();
+            string map = GlobalConfig.LOAD_MAP.ToString();
+            string fileName = time + "_NewARScene_calibrationObj_Pos_fromCloneOrigin__Maps_" + map + ".csv";
+            string path = Path.Combine(Application.persistentDataPath, fileName);
+            ExportCSV.exportData(path, calibrationObj_Pos_fromCloneOrigin);
+        }
 
-        if (calibrationObj_Pos_fromCloneOrigin.Count <= 0) return;
-
-        time = GlobalConfig.GetNowDateandTime();
-        map = GlobalConfig.MapsSelection.ToString();
-        fileName = time + "_NewARScene_calibrationObj_Pos_fromCloneOrigin__Maps_" + map + ".csv";
-        path = Path.Combine(Application.persistentDataPath, fileName);
-        ExportCSV.exportData(path, calibrationObj_Pos_fromCloneOrigin);
-
-        if (calibrationObj_Pos_fromClone_OneObj.Count <= 0) return;
-
-        time = GlobalConfig.GetNowDateandTime();
-        map = GlobalConfig.MapsSelection.ToString();
-        fileName = time + "_NewARScene_calibrationObj_Pos_fromClone_OneObj__Maps_" + map + ".csv";
-        path = Path.Combine(Application.persistentDataPath, fileName);
-        ExportCSV.exportData(path, calibrationObj_Pos_fromClone_OneObj);
+        if (calibrationObj_Pos_fromClone_OneObj.Count > 0)
+        {
+            string time = GlobalConfig.GetNowDateandTime();
+            string map = GlobalConfig.LOAD_MAP.ToString();
+            string fileName = time + "_NewARScene_calibrationObj_Pos_fromClone_OneObj__Maps_" + map + ".csv";
+            string path = Path.Combine(Application.persistentDataPath, fileName);
+            ExportCSV.exportData(path, calibrationObj_Pos_fromClone_OneObj);
+        }
     }
 }

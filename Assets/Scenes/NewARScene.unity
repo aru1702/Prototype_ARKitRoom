@@ -493,6 +493,7 @@ MonoBehaviour:
   m_TestKeepOriginalData: 1
   m_UpdateCorrectionInterval: 0.25
   m_AdjustedWeightCorrectionValue: 1
+  m_UseResetObjLocation: 0
 --- !u!114 &100959374
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10073,7 +10074,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_SaveMap: 0
-  m_LoadMap: 210
+  m_LoadMap: 13
+  m_LoadObjectManager: {fileID: 1048425736}
+  m_PanelUIs:
+  - {fileID: 533565751}
+  - {fileID: 1762378597}
 --- !u!114 &1648417634
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10123,11 +10128,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1648417628}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bebd4233492f44afb8544e8969be97e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_EnableThisFunction: 0
   m_InputData1: 0
   m_Data1: {x: -1.776, y: -0.713, z: -1.405}
   m_InputData2: 0

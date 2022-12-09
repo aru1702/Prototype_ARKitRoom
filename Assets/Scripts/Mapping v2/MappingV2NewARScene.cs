@@ -38,16 +38,21 @@ public class MappingV2NewARScene : MonoBehaviour
     {
         string[] header;
 
-        header = new[] {
+        if (m_EnableCameraRecording)
+        {
+            header = new[] {
             "timestamp",
             "pos_x", "pos_y", "pos_z",
             "rot_e_x", "rot_e_y", "rot_e_z"
         };
-        m_RecordedCameraData.Add(header);
+            m_RecordedCameraData.Add(header);
+        }
 
         // date: Dec 2nd
         // add: before --> img marker before this
-        header = new[] {
+        if (m_EnableMarkerRecording)
+        {
+            header = new[] {
             "timestamp", "name",
 
             "gt_pos_x", "gt_pos_y", "gt_pos_z",
@@ -58,7 +63,8 @@ public class MappingV2NewARScene : MonoBehaviour
 
             "before"
         };
-        m_RecordedMarkerData.Add(header);
+            m_RecordedMarkerData.Add(header);
+        }
 
         StartCoroutine(TickPerPeriod());
     }
@@ -133,10 +139,10 @@ public class MappingV2NewARScene : MonoBehaviour
         if (m_RecordedCameraData.Count <= 0) return;
 
         string time = GlobalConfig.GetNowDateandTime();
-        string map = GlobalConfig.SAVE_INTO_MAP.ToString();
+        string map = GlobalConfig.LOAD_MAP.ToString();
 
         // for documentation
-        var fileName = time + "_NewARScene_RecordedCameraDataV2__Maps_" + map + ".csv";
+        var fileName = time + "_NewARSceneMappingV2_CamTrajectory__Maps_" + map + ".csv";
         var path = Path.Combine(Application.persistentDataPath, fileName);
         ExportCSV.exportData(path, m_RecordedCameraData);
     }
@@ -305,10 +311,10 @@ public class MappingV2NewARScene : MonoBehaviour
         if (m_RecordedMarkerData.Count <= 0) return;
 
         string time = GlobalConfig.GetNowDateandTime();
-        string map = GlobalConfig.SAVE_INTO_MAP.ToString();
+        string map = GlobalConfig.LOAD_MAP.ToString();
 
         // for documentation
-        var fileName = time + "_NewARScene_RecordedMarkerDataV2__Maps_" + map + ".csv";
+        var fileName = time + "_NewARSceneMappingV2_MarkerData__Maps_" + map + ".csv";
         var path = Path.Combine(Application.persistentDataPath, fileName);
         ExportCSV.exportData(path, m_RecordedMarkerData);
     }

@@ -10,6 +10,12 @@ public class Test_JustAnotherScript : MonoBehaviour
     [SerializeField]
     int m_LoadMap = 0;
 
+    [SerializeField]
+    GameObject m_LoadObjectManager;
+
+    [SerializeField]
+    GameObject[] m_PanelUIs;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,6 +38,13 @@ public class Test_JustAnotherScript : MonoBehaviour
         GlobalConfig.LOAD_MAP = m_LoadMap;
         GlobalConfig.TempOriginGO = new();
         GlobalConfig.TEST_MODE = true;
+
+        m_LoadObjectManager.SetActive(true);
+
+        foreach (var item in m_PanelUIs)
+        {
+            item.SetActive(true);
+        }
 
         //Debug.Log(Application.persistentDataPath);
     }
