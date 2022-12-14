@@ -9,16 +9,19 @@ public class Test_NewARScene_InputImgTrackingData : MonoBehaviour
     bool m_EnableThisFunction = false;
 
     [SerializeField]
+    bool m_Reset = false;
+
+    [SerializeField]
     bool m_InputData1 = false;
 
     [SerializeField]
-    Vector3 m_Data1 = new(-1.776f, -0.713f, -1.405f);
+    Vector3 m_Data1 = new(-0.9675f, -0.713f, -2.909f);
 
     [SerializeField]
     bool m_InputData2 = false;
 
     [SerializeField]
-    Vector3 m_Data2 = new(2.955f, -0.611f, -4.925f);
+    Vector3 m_Data2 = new(-4.8975f, -0.711f, -2.899f);
 
     bool hasInputed1 = false;
     bool hasInputed2 = false;
@@ -28,9 +31,6 @@ public class Test_NewARScene_InputImgTrackingData : MonoBehaviour
 
     [SerializeField]
     GameObject m_ImageTrackingCorrectionHandler;
-
-    [SerializeField]
-    bool m_Reset = false;
 
     void Update()
     {

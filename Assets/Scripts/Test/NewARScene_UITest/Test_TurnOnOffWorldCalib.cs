@@ -55,8 +55,23 @@ public class Test_TurnOnOffWorldCalib : MonoBehaviour
     //List<GameObject> cloneParents = new();
     List<GameObject> cloneObjects = new();
 
+    /// <summary>
+    /// To reset the whole origin and objects' location to back to original position.
+    ///
+    /// In correction activated condition, only objects are affected by compensation.
+    /// In world calibration, we also need origin to be reset.
+    /// Objects are sticked to their origin
+    ///
+    /// We reset the origin location first.
+    /// Then we reset each object location, respectively to each that has been compensanated.
+    /// </summary>
     public void ResetCalibration()
     {
+        // this only change the world calibration origin
+        GlobalConfig.WORLD_CALIBRATION_OBJ.transform.SetPositionAndRotation
+            (GlobalConfig.PlaySpaceOriginGO.transform.position,
+             GlobalConfig.PlaySpaceOriginGO.transform.rotation);
+
         // this change every object insider world calibration based on LoadObjectManager
         var loadObjects = m_LoadObjectManager
             .GetComponent<LoadObject_CatExample_2__NewARScene>()
@@ -68,11 +83,6 @@ public class Test_TurnOnOffWorldCalib : MonoBehaviour
                 loadObjects[i].transform.position,
                 loadObjects[i].transform.rotation);
         }
-
-        // this only change the world calibration origin
-        //GlobalConfig.WORLD_CALIBRATION_OBJ.transform.SetPositionAndRotation
-        //    (GlobalConfig.PlaySpaceOriginGO.transform.position,
-        //     GlobalConfig.PlaySpaceOriginGO.transform.rotation);
     }
 
     void CreateSimilarObj()

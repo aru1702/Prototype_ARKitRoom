@@ -18,7 +18,9 @@ public class NewARSceneImageTrackingCorrection : MonoBehaviour
     ARTrackedImageManager m_ARTrackedImageManager;
 
     List<CustomTransform> m_ImageTrackedList = new();
-    List<CustomTransform> m_MarkerList;
+    List<CustomTransform> m_ImageTrackedListWithRemove = new();
+
+    List<CustomTransform> m_MarkerList = new();
 
     bool m_HasUpdate = false;
 
@@ -101,14 +103,14 @@ public class NewARSceneImageTrackingCorrection : MonoBehaviour
                 //    // Debug.Log("name: " + updatedImage.referenceImage.name + ", status: Limited");
                 //    //if (m_ImageTrackedList.Count <= 0) return;
 
-                //    foreach (var marker in m_ImageTrackedList)
-                //    {
-                //        if (string.Equals(updatedImage.referenceImage.name, marker.custom_name))
-                //        {
-                //            m_ImageTrackedList.Remove(marker);
-                //            return;
-                //        }
-                //    }
+                foreach (var marker in m_ImageTrackedListWithRemove)
+                {
+                    if (string.Equals(updatedImage.referenceImage.name, marker.custom_name))
+                    {
+                        m_ImageTrackedListWithRemove.Remove(marker);
+                        //return;
+                    }
+                }
 
                 m_HasUpdate = false;
 
@@ -143,6 +145,7 @@ public class NewARSceneImageTrackingCorrection : MonoBehaviour
                 m_ImageTrackedList.Add(newImgTgt);
 
                 // Debug.Log("name: " + updatedImage.referenceImage.name + ", status: Added");
+                m_ImageTrackedListWithRemove.Add(newImgTgt);
             }
         }
     }
@@ -229,6 +232,11 @@ public class NewARSceneImageTrackingCorrection : MonoBehaviour
     public List<CustomTransform> GetImageTrackedList()
     {
         return m_ImageTrackedList;
+    }
+
+    public List<CustomTransform> GetImageTrackedListWithRemove()
+    {
+        return m_ImageTrackedListWithRemove;
     }
 
     public bool GetImageTargetUpdateStatus()

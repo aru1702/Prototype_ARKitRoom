@@ -330,15 +330,20 @@ public class NewARSceneCorrectionFunction : MonoBehaviour
                 .GetComponent<LoadObject_CatExample_2__NewARScene>()
                 .GetMyObjects();
 
+            var s1 = "before: \n";
             foreach (var obj in oriObjList)
             {
                 var dataObj = new Test_ImportTrueObjPos.DataObj(obj.transform.position);
                 dataObjs.Add(dataObj);
+
+                s1 += obj.name + ", " + dataObj.Position + "\n";
+
                 replicaOriObjListPos.Add(
                     new(obj.transform.position.x,
                         obj.transform.position.y,
                         obj.transform.position.z));
             }
+            //if (!m_MarkerBeingUpdate) Debug.Log(s1);
         }
         //Debug.Log("Original obj convertion success");
 
@@ -349,16 +354,30 @@ public class NewARSceneCorrectionFunction : MonoBehaviour
             markerLocations,
             null,
             dataObjs,
-            m_UseCameraTrajectoryData,
+            false,
             m_AdjustedWeightCorrectionValue);
         //Debug.Log("correction finish");
 
+        var s2 = "after: \n";
         // alternate obj used
         for (int i = 0; i < oriObjList.Count; i++)
         {
+            s2 += oriObjList[i].name + ", " + altObjs[i] + "\n";
             oriObjList[i].transform.position = altObjs[i];
         }
         //Debug.Log("alternate Obj position");
+        //if (!m_MarkerBeingUpdate) Debug.Log(s2);
+
+        var s = "";
+        foreach (var m in markerLocations)
+        {
+            s += m.GT_Position + "\n";
+            s += m.GT_EulerAngle + "\n";
+            s += m.C_Position + "\n";
+            s += m.C_EulerAngle + "\n";
+            s += "\n";
+        }
+        Debug.Log(s);
 
         m_MarkerBeingUpdate = true;
     }

@@ -585,8 +585,10 @@ public class LoadObject_CatExample_2__NewARScene : MonoBehaviour
     {
         if (m_CorrectionFunctionManager == null) return;
 
+        //m_CorrectionFunctionManager
+        //    .GetComponent<NewARSceneCorrectionFunction>().enabled = true;
         m_CorrectionFunctionManager
-            .GetComponent<NewARSceneCorrectionFunction>().enabled = true;
+            .GetComponent<CorrectionFunctions.VersionOne>().enabled = true; 
         m_CorrectionFunctionManager
             .GetComponent<NewARSceneImageTrackingCorrection>().enabled = true;
 

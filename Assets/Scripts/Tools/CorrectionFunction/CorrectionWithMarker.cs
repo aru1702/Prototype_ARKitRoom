@@ -75,15 +75,16 @@ public class CorrectionWithMarker
             for (int i = 0; i < v.Length; i++)
             {
                 float result = 0;
+                var new_v = v[i] / 10;
 
                 if (type == MathFunctions.SIGMOID)
                 {
-                    result = MathFunctions.Sigmoid(v[i], inverted);
+                    result = MathFunctions.Sigmoid(new_v, inverted);
                 }
 
                 if (type == MathFunctions.TANH)
                 {
-                    result = MathFunctions.Tanh(v[i], inverted);
+                    result = MathFunctions.Tanh(new_v, inverted);
                 }
 
                 w_array[i] = result;
@@ -187,12 +188,36 @@ public class CorrectionWithMarker
         // 3. use this to correct obj
         int arrSize = marLoc.Count;
         var med_3 = MarkerErrorDifference(marLoc);
+        //DebugLogListVector(med_3, "MarkerErrorDifference");
         var mtod_3 = MarkerToObjsDistance(marLoc, dataObjs, arrSize, m_AdjustedValue);
+        //DebugLogListFloats(mtod_3, "MarkerToObjsDistance");
         var wf_3 = WeightFunction(mtod_3, MathFunctions.SIGMOID, arrSize, true, true);
+        //DebugLogListFloats(wf_3, "WeightFunction");
+        var cv_3 = CorrectedVector(dataObjs, wf_3, med_3);
+        //DebugLogListVector(cv_3, "CorrectedVector");
 
-        return CorrectedVector(dataObjs, wf_3, med_3);
+        return cv_3;
     }
 
+    void DebugLogListVector(List<Vector3> vectors, string context)
+    {
+        var s = context + ": \n";
+        for (int i = 0; i < vectors.Count; i++)
+        {
+            s += i + ", " + LoggingVec3(vectors[i]) + "\n";
+        }
+        Debug.Log(s);
+    }
+
+    void DebugLogListFloats(List<float[]> floats, string context)
+    {
+        var s = context + ": \n";
+        for (int i = 0; i < floats.Count; i++)
+        {
+            s += i + ", " + LoggingFloat(floats[i]) + "\n";
+        }
+        Debug.Log(s);
+    }
     
     string LoggingFloat(float[] array)
     {
