@@ -23,7 +23,7 @@ namespace WeightFunction
         {
             if (!alreadySetCameraNow) { m_CameraNow = camera_now; }
 
-            m_CameraDistance = Distance(m_CameraNow, m_CameraNow, a);
+            m_CameraDistance += MathFunctions.Distance(m_CameraNow, m_CameraNow, a);
             m_CameraPrev = m_CameraNow;
         }
 
@@ -133,12 +133,6 @@ namespace WeightFunction
             foreach (var d in distances) { m_Distances.Add(d); }
         }
 
-        public List<float> GetDistances() { return m_Distances; }
-
-        float Distance(Vector3 a, Vector3 b, float scalar)
-        {
-            var distance = Vector3.Distance(a, b);
-            return Mathf.Abs(scalar * distance);
-        }        
+        public List<float> GetDistances() { return m_Distances; }       
     }
 }

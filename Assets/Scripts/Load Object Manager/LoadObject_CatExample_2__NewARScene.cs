@@ -585,12 +585,29 @@ public class LoadObject_CatExample_2__NewARScene : MonoBehaviour
     {
         if (m_CorrectionFunctionManager == null) return;
 
+        // VERSION 1:
+
+        // desc:
+        // - don't use previous marker result
+        // - generate marker in testing phase runtime
+        // how:
+        // - use the NewARSceneCorrectionFunction to get and process marker data
+        // - use the NewARSceneImageTrackingCorrection to get marker data
+
         //m_CorrectionFunctionManager
         //    .GetComponent<NewARSceneCorrectionFunction>().enabled = true;
-        m_CorrectionFunctionManager
-            .GetComponent<CorrectionFunctions.VersionOne>().enabled = true; 
+
+        if (GlobalConfig.CorrectionFunctionVersion == 1)
+            m_CorrectionFunctionManager
+                .GetComponent<CorrectionFunctions.VersionOne>().enabled = true;
+
+        if (GlobalConfig.CorrectionFunctionVersion == 2)
+            m_CorrectionFunctionManager
+                .GetComponent<CorrectionFunctions.VersionTwoA>().enabled = true;
+
         m_CorrectionFunctionManager
             .GetComponent<NewARSceneImageTrackingCorrection>().enabled = true;
+
 
         // VERSION 0:  result failed
 
@@ -602,15 +619,5 @@ public class LoadObject_CatExample_2__NewARScene : MonoBehaviour
         //    .GetComponent<Test_JustAnotherScript>();
         //if (!t.enabled) return;
         //Test_CorrectionDataSave.SaveDataIntoCSV(GetMyObjects());
-
-        // VERSION 1:
-
-        // desc:
-        // - don't use previous marker result
-        // - generate marker in testing phase runtime
-
-        // how:
-        // - use the NewARSceneCorrectionFunction to get and process marker data
-        // - use the NewARSceneImageTrackingCorrection to get marker data
     }
 }

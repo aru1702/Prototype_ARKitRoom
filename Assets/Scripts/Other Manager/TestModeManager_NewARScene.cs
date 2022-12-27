@@ -27,6 +27,12 @@ public class TestModeManager_NewARScene : MonoBehaviour
     bool m_ActiveUI_2;
 
     [SerializeField]
+    GameObject m_TestModeUI_3;
+
+    [SerializeField]
+    bool m_ActiveUI_3;
+
+    [SerializeField]
     GameObject m_RaycastManager;
 
     bool m_IsTestMode;
@@ -37,6 +43,7 @@ public class TestModeManager_NewARScene : MonoBehaviour
 
         m_TestModeUI.SetActive(m_IsTestMode && m_ActiveUI_1);
         m_TestModeUI_2.SetActive(m_IsTestMode && m_ActiveUI_2);
+        m_TestModeUI_3.SetActive(m_IsTestMode && m_ActiveUI_3);
 
         //ActiveRaycast(m_IsTestMode);
 

@@ -4,11 +4,16 @@ using UnityEngine;
 
 public class Test_JustAnotherScript : MonoBehaviour
 {
+    enum Ver { Version1, Version2 };
+
     [SerializeField]
     int m_SaveMap = 0;
 
     [SerializeField]
     int m_LoadMap = 0;
+
+    [SerializeField]
+    Ver m_CorrectionVersion;
 
     [SerializeField]
     GameObject m_LoadObjectManager;
@@ -38,6 +43,7 @@ public class Test_JustAnotherScript : MonoBehaviour
         GlobalConfig.LOAD_MAP = m_LoadMap;
         GlobalConfig.TempOriginGO = new();
         GlobalConfig.TEST_MODE = true;
+        GlobalConfig.CorrectionFunctionVersion = ((int)m_CorrectionVersion) + 1;
 
         m_LoadObjectManager.SetActive(true);
 

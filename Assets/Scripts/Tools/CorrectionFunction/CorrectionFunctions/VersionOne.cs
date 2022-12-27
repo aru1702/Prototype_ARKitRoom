@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using WeightFunction;
 
+
 namespace CorrectionFunctions
 {
     /// <summary>
     /// This version ONE will update the marker in NewARScene.
     /// Requirements: 1) Marker ground truth in runtime, 2) Objects
-    /// Enable this function by attach this script to GameObject (enable/disable as trigger)/// 
+    /// Enable this function by attach this script to GameObject (enable/disable as trigger)
     /// </summary>
     public class VersionOne : MonoBehaviour
     {
@@ -16,6 +17,7 @@ namespace CorrectionFunctions
         List<GameObject> m_Objects;
         List<GameObject> m_MarkersGroundTruth;
         List<Vector3> m_InitObjectsLocations;
+        ObjectToMarkers OTM;
 
         [SerializeField]
         [Tooltip("To import object location.")]
@@ -29,12 +31,17 @@ namespace CorrectionFunctions
         [Tooltip("Update runtime per interval in seconds.")]
         float m_UpdateInterval = 1.0f;
 
+        [SerializeField]
+        [Tooltip("Scalar multiplier for weight function.")]
+        float m_ScalarWeight = 1.0f;
+
 
         // Trigger when GameObject is enabled
         private void OnEnable()
         {
             // initialization
             m_Markers = new();
+            OTM = new();
             GetMarkerGroundTruth();
 
             // please be know that this function only works with NewARScene case
@@ -73,10 +80,12 @@ namespace CorrectionFunctions
 
             // use ObjectToMarker function from WeightFunction to get weights
             List<CustomTransform> MCT = StaticFunctions.ExtractToCustomTransform(m_Markers);
-            ObjectToMarkers OTM = new();
             OTM.SetMarkers(MCT);
             OTM.SetObjects(m_Objects);
-            var weights = OTM.GetAllWeights(MathFunctions.SIGMOID);
+            var weights = OTM.GetAllWeights(MathFunctions.SIGMOID, true, true, m_ScalarWeight);
+
+            //GlobalDebugging.DebugLogListFloatArray(Test_OnlyAxisObjectGet.AxisForDec192022(weights),
+            //    "Marker to Object weights on Version 1");
 
             // calculate new object location with weight
             var new_vector = StaticFunctions.CorrectedVector(m_InitObjectsLocations, weights, MED);
@@ -92,13 +101,10 @@ namespace CorrectionFunctions
             var temp_obj = new GameObject();
             var origin = GlobalConfig.PlaySpaceOriginGO;
             temp_obj.transform.SetParent(origin.transform);
-
-            Debug.Log("m_Markers: " + m_Markers.Count + ", markers: " + markers.Count);
                         
             // add new marker into list
             if (m_Markers.Count < markers.Count)
             {
-                Debug.Log("add");
                 for (int i = m_Markers.Count; i < markers.Count; i++)
                 {
                     MarkerLocation temp_ml = new();
@@ -130,7 +136,6 @@ namespace CorrectionFunctions
             }
 
             // update current marker in the list
-            Debug.Log("update");
             for (int i = 0; i < markers.Count; i++)
             {
                 //temp_obj.transform.position = markers[i].custom_position;
@@ -148,17 +153,17 @@ namespace CorrectionFunctions
                 }
             }
 
-            var s = "";
-            foreach (var m in m_Markers)
-            {
-                s += m.Marker_name + "\n";
-                s += m.GT_Position + "\n";
-                s += m.GT_EulerAngle + "\n";
-                s += m.C_Position + "\n";
-                s += m.C_EulerAngle + "\n";
-                s += "\n";
-            }
-            Debug.Log(s);
+            //var s = "";
+            //foreach (var m in m_Markers)
+            //{
+            //    s += m.Marker_name + "\n";
+            //    s += m.GT_Position + "\n";
+            //    s += m.GT_EulerAngle + "\n";
+            //    s += m.C_Position + "\n";
+            //    s += m.C_EulerAngle + "\n";
+            //    s += "\n";
+            //}
+            //Debug.Log(s);
 
             Destroy(temp_obj);
         }

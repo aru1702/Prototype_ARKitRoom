@@ -43,7 +43,10 @@ public class Test_NewARScene_MarkerDataToUIStatusHandler : MonoBehaviour
             
         }
 
-        var text = ExtractCustomTransformList(markers);
+        var text = VersionTwoConfiguration(); 
+        text += NewLineTwoTimes();
+        text += ExtractCustomTransformList(markers);
+
         uiHandler.SetMarkerStatusText(text);
     }
 
@@ -67,5 +70,20 @@ public class Test_NewARScene_MarkerDataToUIStatusHandler : MonoBehaviour
         }
 
         return str;
+    }
+
+    string VersionTwoConfiguration()
+    {
+        string
+        str  = "Object to marker weight scalar: " + GlobalConfig.OTM_SCALAR + "\n";
+        str += "Object to marker priority: " + (int) (GlobalConfig.OTM_PRIORITY * 100) + "%\n";
+        str += "Camera time usage weight scalar: " + GlobalConfig.CTTtime_SCALAR + "\n";
+        str += "Camera time usage priority: " + (int)(GlobalConfig.CTTtime_PRIORITY * 100) + "%";
+        return str;
+    }
+
+    string NewLineTwoTimes()
+    {
+        return "\n\n";
     }
 }

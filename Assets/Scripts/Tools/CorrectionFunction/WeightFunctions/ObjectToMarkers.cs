@@ -29,7 +29,7 @@ namespace WeightFunction
             for (int i = 0; i < m_Markers.Count; i++)
             {
                 // calculate object-to-marker distance
-                var distance = Distance(object_position, m_Markers[i].custom_position, a);
+                var distance = MathFunctions.Distance(object_position, m_Markers[i].custom_position, a);
 
                 // get weight
                 float w = 0;
@@ -106,11 +106,5 @@ namespace WeightFunction
         }
 
         public List<CustomTransform> GetMarkers() { return m_Markers; }
-
-        float Distance(Vector3 a, Vector3 b, float scalar)
-        {
-            var distance = Vector3.Distance(a, b);
-            return Mathf.Abs(scalar * distance);
-        }        
     }
 }

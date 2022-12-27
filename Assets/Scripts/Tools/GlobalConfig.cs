@@ -21,6 +21,7 @@ public class GlobalConfig : MonoBehaviour
 
     /// <summary>GameObject for designated world coordinate</summary>
     public static GameObject PlaySpaceOriginGO;
+
     public static bool AlreadyRender = false;
     public static bool PauseCameraTrackingTrails = false;
     public static bool UseCorrectionMethod = true;
@@ -109,6 +110,13 @@ public class GlobalConfig : MonoBehaviour
     public static GameObject REPLICA_WORLD_CALIBRATION_OBJ;
     public static bool WORLD_CALIBRATION_ONOFF = false;
 
+    /// <summary>Use of correction function</summary>
+    public static int CorrectionFunctionVersion = 1;
+    public static float OTM_SCALAR = 1.0f;
+    public static float OTM_PRIORITY = 1.0f;
+    public static float CTTtime_SCALAR = 1.0f;
+    public static float CTTtime_PRIORITY = 1.0f;
+
     /// <summary>
     /// We get matrix4x4 of "from" gameObject by "reference" gameobject.
     /// Since both does have connectivity to root of Unity, we convert by equation
@@ -144,6 +152,26 @@ public class GlobalConfig : MonoBehaviour
     {
         var q = GetRotationFromM44(matrix);
         return q.eulerAngles;
+    }
+
+    /// <summary>
+    /// Create new Vector3 from object attached Vector3.
+    /// </summary>
+    /// <param name="v"></param>
+    /// <returns></returns>
+    public static Vector3 ExtractVector3(Vector3 v)
+    {
+        return new(v.x, v.y, v.z);
+    }
+
+    /// <summary>
+    /// Create new Quaternion from object attached Quaternion.
+    /// </summary>
+    /// <param name="q"></param>
+    /// <returns></returns>
+    public static Quaternion ExtractQuaternion(Quaternion q)
+    {
+        return new(q.x, q.y, q.z, q.w);
     }
 
     public static GameObject GetNearestObject (List<GameObject> goList, GameObject goRef, out int itemC)

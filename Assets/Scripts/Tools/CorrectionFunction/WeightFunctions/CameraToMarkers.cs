@@ -39,8 +39,7 @@ namespace WeightFunction
             // calculate each weight to camera
             for (int i = 0; i < m_Markers.Count; i++)
             {
-                var distance = Vector3.Distance(camera_pos, m_Markers[i].custom_position);
-                distance = Mathf.Abs(a * distance);
+                var distance = MathFunctions.Distance(camera_pos, m_Markers[i].custom_position, a);
 
                 float w = 0;
                 if (weight_function == MathFunctions.SIGMOID)

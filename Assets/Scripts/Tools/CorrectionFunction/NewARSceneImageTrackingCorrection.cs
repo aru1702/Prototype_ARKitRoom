@@ -19,6 +19,7 @@ public class NewARSceneImageTrackingCorrection : MonoBehaviour
 
     List<CustomTransform> m_ImageTrackedList = new();
     List<CustomTransform> m_ImageTrackedListWithRemove = new();
+    string m_NowMarkerTracked, m_PreviousMarkerTracked = "na";
 
     List<CustomTransform> m_MarkerList = new();
 
@@ -97,56 +98,77 @@ public class NewARSceneImageTrackingCorrection : MonoBehaviour
         // an image is tracked/changed/extended (not tracked)
         foreach (var updatedImage in args.updated)
         {
-            // if the tracked img become LIMITED --> remove from array
+            // initialization
+            bool is_new_data = true;
+
+            // if the tracked img become LIMITED --> remove, and no update
             if (string.Equals(updatedImage.trackingState.ToString(), "Limited"))
             {
                 //    // Debug.Log("name: " + updatedImage.referenceImage.name + ", status: Limited");
                 //    //if (m_ImageTrackedList.Count <= 0) return;
 
-                foreach (var marker in m_ImageTrackedListWithRemove)
-                {
-                    if (string.Equals(updatedImage.referenceImage.name, marker.custom_name))
-                    {
-                        m_ImageTrackedListWithRemove.Remove(marker);
-                        //return;
-                    }
-                }
+                //foreach (var marker in m_ImageTrackedListWithRemove)
+                //{
+                //    if (string.Equals(updatedImage.referenceImage.name, marker.custom_name))
+                //    {
+                //        m_ImageTrackedListWithRemove.Remove(marker);
+                //    }
+                //}
 
+                m_PreviousMarkerTracked = updatedImage.referenceImage.name;
                 m_HasUpdate = false;
 
                 return;
             }
             // UPDATE: we don't need to remove the marker from list
+            // UPDATE: enable "remove marker from list" from another list
 
-            // for each the tracked imgs are already exist --> update location
-            foreach (var marker in m_ImageTrackedList)
+            // if the tracked img become TRACKING --> add/update, and has update
+            if (string.Equals(updatedImage.trackingState.ToString(), "Tracking"))
             {
-                if (string.Equals(updatedImage.referenceImage.name, marker.custom_name))
+                // for each the tracked imgs are already exist --> update location
+                foreach (var img in m_ImageTrackedList)
                 {
-                    // Debug.Log("name: " + updatedImage.referenceImage.name + ", status: Already in list");
+                    if (string.Equals(updatedImage.referenceImage.name, img.custom_name))
+                    {
+                        // Debug.Log("name: " + updatedImage.referenceImage.name + ", status: Already in list");
 
-                    marker.custom_position = updatedImage.transform.position;
-                    marker.customer_q_rotation = updatedImage.transform.rotation;
+                        img.custom_position = updatedImage.transform.position;
+                        img.customer_q_rotation = updatedImage.transform.rotation;
+                        is_new_data = false;
+                    }
+                }
 
-                    m_HasUpdate = true;
+                //foreach (var img in m_ImageTrackedListWithRemove)
+                //{
+                //    if (string.Equals(updatedImage.referenceImage.name, img.custom_name))
+                //    {
+                //        // Debug.Log("name: " + updatedImage.referenceImage.name + ", status: Already in list");
 
-                    return;
+                //        img.custom_position = updatedImage.transform.position;
+                //        img.customer_q_rotation = updatedImage.transform.rotation;
+                //        is_new_data = false;
+                //    }
+                //}
+
+                if (is_new_data)
+                {
+                    CustomTransform newImgTgt = new();
+
+                    newImgTgt.custom_name = updatedImage.referenceImage.name;
+                    newImgTgt.custom_position = updatedImage.transform.position;
+                    newImgTgt.customer_q_rotation = updatedImage.transform.rotation;
+                    newImgTgt.custom_euler_rotation = newImgTgt.customer_q_rotation.eulerAngles;
+
+                    m_ImageTrackedList.Add(newImgTgt);
+                    //m_ImageTrackedListWithRemove.Add(newImgTgt);
+
+                    // Debug.Log("name: " + updatedImage.referenceImage.name + ", status: Added");
                 }
             }
 
-            // if the tracked img become TRACKING --> add to array
-            if (string.Equals(updatedImage.trackingState.ToString(), "Tracking"))
-            {
-                CustomTransform newImgTgt = new();
-                newImgTgt.custom_name = updatedImage.referenceImage.name;
-                newImgTgt.custom_position = updatedImage.transform.position;
-                newImgTgt.customer_q_rotation = updatedImage.transform.rotation;
-                newImgTgt.custom_euler_rotation = newImgTgt.customer_q_rotation.eulerAngles;
-                m_ImageTrackedList.Add(newImgTgt);
-
-                // Debug.Log("name: " + updatedImage.referenceImage.name + ", status: Added");
-                m_ImageTrackedListWithRemove.Add(newImgTgt);
-            }
+            m_NowMarkerTracked = updatedImage.referenceImage.name;
+            m_HasUpdate = true;
         }
     }
 
@@ -257,6 +279,12 @@ public class NewARSceneImageTrackingCorrection : MonoBehaviour
     public void TestInputData(CustomTransform customTransform)
     {
         m_ImageTrackedList.Add(customTransform);
+        m_NowMarkerTracked = customTransform.custom_name;
+    }
+
+    public void TestInputDataRemove(CustomTransform customTransform)
+    {
+        m_ImageTrackedListWithRemove.Add(customTransform);
     }
 
     public void UpdateHasUpdate(bool trigger)
@@ -271,8 +299,42 @@ public class NewARSceneImageTrackingCorrection : MonoBehaviour
             if(Equals(name, item.custom_name))
             {
                 item.custom_position = vector;
-                return;
+                m_PreviousMarkerTracked = m_NowMarkerTracked;
+                m_NowMarkerTracked = item.custom_name;                
             }
         }
+
+        foreach (var item in m_ImageTrackedListWithRemove)
+        {
+            if (Equals(name, item.custom_name))
+            {
+                item.custom_position = vector;
+                m_PreviousMarkerTracked = m_NowMarkerTracked;
+                m_NowMarkerTracked = item.custom_name;
+            }
+        }
+    }
+
+    public void ResetImageTrackedListWithRemove()
+    {
+        m_ImageTrackedListWithRemove.Clear();
+    }
+
+    public string GetNowMarkerTracked()
+    {
+        return m_NowMarkerTracked;
+    }
+
+    public string GetPreviousMarkerTracked()
+    {
+        return m_PreviousMarkerTracked;
+    }
+
+    public string[] GetNowAndPrevMarkerTracked()
+    {
+        string[] s = new string[2];
+        s[0] = GetNowMarkerTracked();
+        s[1] = GetPreviousMarkerTracked();
+        return s;
     }
 }

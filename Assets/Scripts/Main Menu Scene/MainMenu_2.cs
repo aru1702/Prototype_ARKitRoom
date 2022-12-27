@@ -19,12 +19,20 @@ public class MainMenu_2 : MonoBehaviour
     [SerializeField]
     InputField m_SaveMapIntoInputField, m_LoadMapInputField;
 
+    [SerializeField]
+    Dropdown m_DrdCorrectionVersion;
+
+    [SerializeField]
+    GameObject m_LocalConfigHandler;
+
     string mapName;
 
     void OnEnable()
     {
         m_errorText.gameObject.SetActive(false);
         SetMapsNumber();
+
+        LocalConfigLoad();
     }
 
     static void LoadScene(string sceneName)
@@ -34,13 +42,18 @@ public class MainMenu_2 : MonoBehaviour
 
     public void AdministratorRoleButtonPressed()
     {
+        LocalConfigSave();
+
         ApplyMapsNumber();
         LoadScene("MappingConfigurationScene");
     }
 
     public void UserRoleButtonPressed()
     {
+        LocalConfigSave();
+
         ApplyMapsNumber();
+        ApplyCorrectionFunctionVersion();
 
         if (CheckIfMapAvailable())
         {
@@ -89,5 +102,33 @@ public class MainMenu_2 : MonoBehaviour
             m_SaveMapIntoInputField.text = GlobalConfig.SAVE_INTO_MAP.ToString();
             m_LoadMapInputField.text = GlobalConfig.LOAD_MAP.ToString();
         }
+    }
+
+    void ApplyCorrectionFunctionVersion()
+    {
+        if (GlobalConfig.UseCorrectionMethod)
+        {
+            GlobalConfig.CorrectionFunctionVersion = m_DrdCorrectionVersion.value + 1;
+        }
+    }
+
+    void LocalConfigSave()
+    {
+        m_LocalConfigHandler
+            .GetComponent<LocalConfigHandler>()
+            .ExportToCSV();
+
+        var LCH = m_LocalConfigHandler.GetComponent<LocalConfigHandler>();
+        GlobalConfig.OTM_SCALAR = LCH.GetOTMScalarInputField();
+        GlobalConfig.OTM_PRIORITY = LCH.GetOTMPrioritySlider();
+        GlobalConfig.CTTtime_SCALAR = LCH.GetCTTtimeScalarInputField();
+        GlobalConfig.CTTtime_PRIORITY = LCH.GetCTTtimePrioritySlider();
+    }
+
+    void LocalConfigLoad()
+    {
+        m_LocalConfigHandler
+            .GetComponent<LocalConfigHandler>()
+            .ImportFromCSV();
     }
 }
