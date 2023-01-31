@@ -25,6 +25,7 @@ public class MatricesOperation : MonoBehaviour
 
     bool alreadyLog = false;
     Matrix4x4 const_mat_five_b1;
+    Quaternion const_q_five_b1;
 
     // Update is called once per frame
     void Update()
@@ -80,6 +81,12 @@ public class MatricesOperation : MonoBehaviour
                 mat_five_b1.GetColumn(2),
                 mat_five_b1.GetColumn(3)
             );
+            const_q_five_b1 = new Quaternion(
+                m_FiveB1.transform.rotation.x,
+                m_FiveB1.transform.rotation.y,
+                m_FiveB1.transform.rotation.z,
+                m_FiveB1.transform.rotation.w
+            );
         }
 
         // emat = ori - b1
@@ -119,15 +126,16 @@ public class MatricesOperation : MonoBehaviour
 
         // this is so true
         //m_Five_clone.transform.position = new_mat_five_clone.GetPosition();
-        m_Five_clone.transform.rotation = new_mat_five_clone.rotation;
+        //m_Five_clone.transform.rotation = new_mat_five_clone.rotation;
+
+        var eq_five = Quaternion.Inverse(m_FiveB1.transform.rotation) * m_Five.transform.rotation;
+        var new_q = const_q_five_b1 * eq_five;
+        m_Five_clone.transform.rotation = new_q;
 
 
         // what if we make them like slerp mode
         // for translation it's easy since linear
         Vector3 pos_diff = (mat_five.GetPosition() - mat_five_b1.GetPosition()) * m_CubeFiveScale;
         m_Five_clone.transform.position = pos_diff + const_mat_five_b1.GetPosition();
-
-        // for rotation it's complex
-
     }
 }
