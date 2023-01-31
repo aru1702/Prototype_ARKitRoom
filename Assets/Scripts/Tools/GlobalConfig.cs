@@ -71,7 +71,7 @@ public class GlobalConfig : MonoBehaviour
     /// This method return string which better for naming format (yyyy-mm-dd-hh-mm-ss)
     /// </summary>
     /// <returns>String in (yyyy-mm-dd-hh-mm-ss) format</returns>
-    public static string GetNowDateandTime()
+    public static string GetNowDateandTime(bool in_two_zero_format = false)
     {
         string y = System.DateTime.Now.Year.ToString();
         string mo = System.DateTime.Now.Month.ToString();
@@ -80,6 +80,15 @@ public class GlobalConfig : MonoBehaviour
         string h = System.DateTime.Now.Hour.ToString();
         string mi = System.DateTime.Now.Minute.ToString();
         string s = System.DateTime.Now.Second.ToString();
+
+        if (in_two_zero_format)
+        {
+            if (mo.Length < 2) mo = "0" + mo;
+            if (d.Length < 2) d = "0" + mo;
+            if (h.Length < 2) h = "0" + mo;
+            if (mi.Length < 2) mi = "0" + mo;
+            if (s.Length < 2) s = "0" + mo;
+        }
 
         return y + "-" + mo + "-" + d + "-" + h + "-" + mi + "-" + s;
     }
@@ -122,19 +131,17 @@ public class GlobalConfig : MonoBehaviour
     /// Since both does have connectivity to root of Unity, we convert by equation
     /// target-to-refetence = world-to-reference * from-to-world
     /// </summary>
-    /// <param name="from">From where gameobject</param>
-    /// <param name="reference">Reference gameobject as source</param>
     /// <returns></returns>
-    public static Matrix4x4 GetM44ByGameObjRef(GameObject from, GameObject reference)
+    public static Matrix4x4 GetM44ByGameObjRef(GameObject target_object, GameObject origin_object)
     {
-        return reference.transform.worldToLocalMatrix
-            * from.transform.localToWorldMatrix;
+        return origin_object.transform.worldToLocalMatrix
+            * target_object.transform.localToWorldMatrix;
     }
 
-    public static Matrix4x4 GetM44ByGameObjRef(Transform from, GameObject reference)
+    public static Matrix4x4 GetM44ByGameObjRef(Transform target_object, GameObject origin_object)
     {
-        return reference.transform.worldToLocalMatrix
-            * from.localToWorldMatrix;
+        return origin_object.transform.worldToLocalMatrix
+            * target_object.localToWorldMatrix;
     }
 
     public static Vector3 GetPositionFromM44(Matrix4x4 matrix)
@@ -144,14 +151,12 @@ public class GlobalConfig : MonoBehaviour
 
     public static Quaternion GetRotationFromM44(Matrix4x4 matrix)
     {
-        return Quaternion.LookRotation(
-                matrix.GetColumn(2), matrix.GetColumn(1));
+        return Quaternion.LookRotation(matrix.GetColumn(2), matrix.GetColumn(1));
     }
 
     public static Vector3 GetEulerAngleFromM44(Matrix4x4 matrix)
     {
-        var q = GetRotationFromM44(matrix);
-        return q.eulerAngles;
+        return GetRotationFromM44(matrix).eulerAngles;
     }
 
     /// <summary>

@@ -46,7 +46,7 @@ namespace CorrectionFunctions
         float m_UpdateInterval = 1.0f;
 
 
-        [SerializeField]
+        //[SerializeField]
         [Range(0, 1)]
         [Tooltip("A is object to marker distance weight priority, 0 to 1 in float")]
         float m_OTMPriority = 1.0f;
@@ -55,7 +55,7 @@ namespace CorrectionFunctions
         [Tooltip("Scalar multiplier for object to marker distance weight function.")]
         float m_OTMScalarWeight = 1.0f;
 
-        [SerializeField]
+        //[SerializeField]
         [Range(0, 1)]
         [Tooltip("B is camera data time on travel distance weight priority, 0 to 1 in float")]
         float m_CTTTimePriority = 1.0f;

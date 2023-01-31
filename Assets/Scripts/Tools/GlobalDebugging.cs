@@ -34,7 +34,7 @@ public class GlobalDebugging
         Debug.Log(s);
     }
 
-    static string LoggingFloat(float[] array)
+    public static string LoggingFloat(float[] array)
     {
         string r = "[";
 
@@ -47,12 +47,23 @@ public class GlobalDebugging
         return r;
     }
 
-    static string LoggingVec3(Vector3 v)
+    public static string LoggingVec3(Vector3 v)
     {
         string r = "(";
         r += v.x + ", ";
         r += v.y + ", ";
         r += v.z;
+        r += ")";
+        return r;
+    }
+
+    public static string LoggingQuat(Quaternion q)
+    {
+        string r = "(x:";
+        r += q.x + ", y:";
+        r += q.y + ", z:";
+        r += q.z + ", w:";
+        r += q.w;
         r += ")";
         return r;
     }

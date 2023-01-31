@@ -43,8 +43,9 @@ public class Test_NewARScene_MarkerDataToUIStatusHandler : MonoBehaviour
             
         }
 
-        var text = VersionTwoConfiguration(); 
-        text += NewLineTwoTimes();
+        var text = "";
+        //text += VersionTwoConfiguration(); 
+        //text += NewLineTwoTimes();
         text += ExtractCustomTransformList(markers);
 
         uiHandler.SetMarkerStatusText(text);
@@ -59,11 +60,20 @@ public class Test_NewARScene_MarkerDataToUIStatusHandler : MonoBehaviour
             GameObject go = new();
             go.transform.position = trf.custom_position;
             var m44 = GlobalConfig.GetM44ByGameObjRef(go, GlobalConfig.PlaySpaceOriginGO);
-            var new_pos = GlobalConfig.GetPositionFromM44(m44);            
+            var new_pos = GlobalConfig.GetPositionFromM44(m44);
+            var new_rot = GlobalConfig.GetEulerAngleFromM44(m44);
 
-            str += "name: " + trf.custom_name + ", ";
-            str += "pos: " + trf.custom_position.ToString() + ", ";
-            str += "world pos: " + new_pos.ToString();
+
+            //str += "name: " + trf.custom_name + ", ";
+            //str += "pos: " + trf.custom_position.ToString() + ", ";
+            //str += "world pos: " + new_pos.ToString();
+            //str += "\n";
+
+            str += trf.custom_name + ", ";
+            str += "p: " + trf.custom_position.ToString() + ", ";
+            str += "wp: " + new_pos.ToString() + ", ";
+            str += "r: " + trf.custom_euler_rotation.ToString() + ", ";
+            str += "wr: " + new_rot.ToString() + ", ";
             str += "\n";
 
             Destroy(go);

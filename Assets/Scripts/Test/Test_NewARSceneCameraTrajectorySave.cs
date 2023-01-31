@@ -30,6 +30,7 @@ public class Test_NewARSceneCameraTrajectorySave : MonoBehaviour
         // data based to world coordinate
         var m44 = GlobalConfig.GetM44ByGameObjRef(m_ARCamera, localWorldCoordinate);
         Vector3 pos = GlobalConfig.GetPositionFromM44(m44);
+        Quaternion qrot = GlobalConfig.GetRotationFromM44(m44);
         Vector3 rot = GlobalConfig.GetEulerAngleFromM44(m44);
 
         string[] data = new[]
@@ -40,7 +41,11 @@ public class Test_NewARSceneCameraTrajectorySave : MonoBehaviour
             pos.z.ToString(),
             rot.x.ToString(),
             rot.y.ToString(),
-            rot.z.ToString()                    // 6
+            rot.z.ToString(),                   // 6
+            qrot.x.ToString(),
+            qrot.y.ToString(),
+            qrot.z.ToString(),
+            qrot.w.ToString()                   // 10
         };
 
         m_RecordedCameraData.Add(data);
@@ -89,7 +94,8 @@ public class Test_NewARSceneCameraTrajectorySave : MonoBehaviour
         header = new[] {
             "timestamp",
             "pos_x", "pos_y", "pos_z",
-            "rot_e_x", "rot_e_y", "rot_e_z"
+            "rot_e_x", "rot_e_y", "rot_e_z",
+            "q_rot_e_x", "q_rot_e_y", "q_rot_e_z", "q_rot_e_w"
         };
         m_RecordedCameraData.Add(header);
 

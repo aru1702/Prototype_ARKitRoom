@@ -12,6 +12,8 @@ public class LoadObject_CatExample_2__NewARScene : MonoBehaviour
     List<GameObject> _parents = new();
     List<GameObject> _objects = new();
 
+    List<GameObject> m_ObjectsGroundTruth = new();
+
     [SerializeField, TextArea(2,5)]
     string m_MyOriginURL, m_MyObjectURL;
 
@@ -348,6 +350,7 @@ public class LoadObject_CatExample_2__NewARScene : MonoBehaviour
                         if (!CheckIfParentsExists(_objects, item.name))
                         {
                             _objects.Add(newGameObject);
+                            m_ObjectsGroundTruth.Add(newGameObject);
                         }
 
                         // add into global config --> thingslist
@@ -395,6 +398,8 @@ public class LoadObject_CatExample_2__NewARScene : MonoBehaviour
 
             SetStartTime();
             UseCorrectionFunction();
+
+            SaveAllObjectOnlyDebugDontUseThisFunction();
         }
 
         www.Dispose();
@@ -565,6 +570,11 @@ public class LoadObject_CatExample_2__NewARScene : MonoBehaviour
         return _objects;
     }
 
+    public List<GameObject> GetObjectsGT()
+    {
+        return m_ObjectsGroundTruth;
+    }
+
     public List<GameObject> GetMyParents()
     {
         return _parents;
@@ -603,7 +613,15 @@ public class LoadObject_CatExample_2__NewARScene : MonoBehaviour
 
         if (GlobalConfig.CorrectionFunctionVersion == 2)
             m_CorrectionFunctionManager
+                .GetComponent<CorrectionFunctions.VersionOneB>().enabled = true;
+
+        if (GlobalConfig.CorrectionFunctionVersion == 3)
+            m_CorrectionFunctionManager
                 .GetComponent<CorrectionFunctions.VersionTwoA>().enabled = true;
+
+        //if (GlobalConfig.CorrectionFunctionVersion == 4)
+        //    m_CorrectionFunctionManager
+        //        .GetComponent<CorrectionFunctions.VersionTwoB>().enabled = true;
 
         m_CorrectionFunctionManager
             .GetComponent<NewARSceneImageTrackingCorrection>().enabled = true;
@@ -619,5 +637,26 @@ public class LoadObject_CatExample_2__NewARScene : MonoBehaviour
         //    .GetComponent<Test_JustAnotherScript>();
         //if (!t.enabled) return;
         //Test_CorrectionDataSave.SaveDataIntoCSV(GetMyObjects());
+    }
+
+    void SaveAllObjectOnlyDebugDontUseThisFunction()
+    {
+        var data = GetMyObjects();
+        List<string[]> pos_list = new();
+
+        foreach (var d in data)
+        {
+            var m44 = GlobalConfig.GetM44ByGameObjRef(d, GlobalConfig.PlaySpaceOriginGO);
+            var pos = GlobalConfig.GetPositionFromM44(m44);
+            string[] s = { d.name, pos.x.ToString(), pos.y.ToString(), pos.z.ToString() };
+            pos_list.Add(s);
+        }
+
+        // get path
+        var date = GlobalConfig.GetNowDateandTime();
+        var map = GlobalConfig.LOAD_MAP.ToString();
+        var file = date + "_AllObjPosition_" + map + ".csv";
+        var path = System.IO.Path.Combine(Application.persistentDataPath, file);
+        ExportCSV.exportData(path, pos_list);
     }
 }

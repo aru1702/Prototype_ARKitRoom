@@ -29,4 +29,15 @@ public class CustomTransform
     }
 
     public CustomTransform() { }
+
+    public CustomTransform(string custom_name,
+                           Vector3 custom_position,
+                           Vector3 custom_euler_rotation,
+                           Quaternion customer_q_rotation)
+    {
+        this.custom_name = custom_name;
+        this.custom_position = custom_position;
+        this.custom_euler_rotation = custom_euler_rotation;
+        this.customer_q_rotation = customer_q_rotation;
+    }
 }

@@ -299,6 +299,8 @@ public class RecordPosition_NewARScene : MonoBehaviour
         //if (calibObj.GetRecordCalibObjPosFromCloneOriOneObj())
         Calibration_Record_ByCloneVC_OneObj(count);
 
+        SavingToGlobalSaveData(count);
+
         calibrationFirstTime = true;
         calibrationObj_hasHeader = true;
 
@@ -760,5 +762,72 @@ public class RecordPosition_NewARScene : MonoBehaviour
             string path = Path.Combine(Application.persistentDataPath, fileName);
             ExportCSV.exportData(path, calibrationObj_Pos_fromClone_OneObj);
         }
+    }
+
+    /// <summary>
+    /// Save into GlobalSaveData.
+    /// </summary>
+    void SavingToGlobalSaveData(int count)
+    {
+        List<GameObject> allCloneObjects = m_CalibrationManager
+                .GetComponent<Test_TurnOnOffWorldCalib>()
+                .GetCloneObject();
+        GameObject clone_obj = GlobalConfig.GetNearestObject(allCloneObjects, m_ARCamera.gameObject, out int i);
+
+        List<GameObject> allLoadObjects = m_LoadObjectManager
+                .GetComponent<LoadObject_CatExample_2__NewARScene>()
+                .GetMyObjects();
+        GameObject real_obj = allLoadObjects[i];
+
+        // observation point --> user
+        var cam_m44 = GlobalConfig.GetM44ByGameObjRef(m_ARCamera.gameObject, GlobalConfig.WORLD_CALIBRATION_OBJ);
+        string[] cam_data =
+        {
+            GlobalConfig.GetNowDateandTime(true),
+            "observation_point_" + i,
+            GlobalConfig.GetPositionFromM44(cam_m44).x.ToString(),
+            GlobalConfig.GetPositionFromM44(cam_m44).y.ToString(),
+            GlobalConfig.GetPositionFromM44(cam_m44).z.ToString(),
+            GlobalConfig.GetEulerAngleFromM44(cam_m44).x.ToString(),
+            GlobalConfig.GetEulerAngleFromM44(cam_m44).y.ToString(),
+            GlobalConfig.GetEulerAngleFromM44(cam_m44).z.ToString(),
+            GlobalConfig.GetRotationFromM44(cam_m44).x.ToString(),
+            GlobalConfig.GetRotationFromM44(cam_m44).y.ToString(),
+            GlobalConfig.GetRotationFromM44(cam_m44).z.ToString(),
+            GlobalConfig.GetRotationFromM44(cam_m44).z.ToString(),
+            count.ToString()
+        };
+
+        GlobalSaveData.WriteData(cam_data);
+
+        // observed obj drift from clone object (object to clone object)
+        var obj_m44 = GlobalConfig.GetM44ByGameObjRef(real_obj, clone_obj);     // to get position
+        var obj_m44_2 = GlobalConfig.GetM44ByGameObjRef(real_obj, GlobalConfig.WORLD_CALIBRATION_OBJ);   // to get rotation (based on origin)
+
+        List<GameObject> gts = m_LoadObjectManager
+                .GetComponent<LoadObject_CatExample_2__NewARScene>()
+                .GetObjectsGT();
+        var gt = gts[i];
+        var gt_m44 = GlobalConfig.GetM44ByGameObjRef(gt, GlobalConfig.PlaySpaceOriginGO);
+        var new_obj_pos = GlobalConfig.GetPositionFromM44(gt_m44) + GlobalConfig.GetPositionFromM44(obj_m44);
+
+        string[] obj_data =
+        {
+            GlobalConfig.GetNowDateandTime(true),
+            real_obj.name,
+            new_obj_pos.x.ToString(),
+            new_obj_pos.y.ToString(),
+            new_obj_pos.z.ToString(),
+            GlobalConfig.GetEulerAngleFromM44(obj_m44_2).x.ToString(),
+            GlobalConfig.GetEulerAngleFromM44(obj_m44_2).y.ToString(),
+            GlobalConfig.GetEulerAngleFromM44(obj_m44_2).z.ToString(),
+            GlobalConfig.GetRotationFromM44(obj_m44_2).x.ToString(),
+            GlobalConfig.GetRotationFromM44(obj_m44_2).y.ToString(),
+            GlobalConfig.GetRotationFromM44(obj_m44_2).z.ToString(),
+            GlobalConfig.GetRotationFromM44(obj_m44_2).z.ToString(),
+            count.ToString()
+        };
+
+        GlobalSaveData.WriteData(obj_data);
     }
 }

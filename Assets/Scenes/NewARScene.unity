@@ -453,6 +453,7 @@ GameObject:
   - component: {fileID: 100959372}
   - component: {fileID: 100959374}
   - component: {fileID: 100959375}
+  - component: {fileID: 100959377}
   - component: {fileID: 100959376}
   - component: {fileID: 100959373}
   m_Layer: 0
@@ -544,12 +545,26 @@ MonoBehaviour:
   m_LoadObjectManager: {fileID: 1048425736}
   m_ImageTrackingManager: {fileID: 100959371}
   m_UpdateInterval: 0.25
-  m_OTMPriority: 1
   m_OTMScalarWeight: 1
-  m_CTTTimePriority: 1
   m_CTTScalarWeight: 1
   m_UnityEditorMode: 0
   m_WeightDataScript: {fileID: 1648417628}
+--- !u!114 &100959377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100959371}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b8f62e7174d14bcfbd5c7567a132a88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_LoadObjectManager: {fileID: 1048425736}
+  m_ImageTrackingManager: {fileID: 100959371}
+  m_UpdateInterval: 0.25
+  m_ScalarWeight: 1
 --- !u!1 &106830607
 GameObject:
   m_ObjectHideFlags: 0
@@ -4774,6 +4789,7 @@ MonoBehaviour:
   - {fileID: 5105219495360517106, guid: d72570e5e20fc4364bf0a11983025430, type: 3}
   - {fileID: 8867173366992833971, guid: 4881c7cf8c0db4843aa73654148a6bcb, type: 3}
   - {fileID: 3205738944846637306, guid: c313c290245d34e80a06b880d114f8a2, type: 3}
+  - {fileID: 8669019141398123038, guid: d96d8c5ae9e1045d9b604af62fd7f78d, type: 3}
 --- !u!1 &830128299
 GameObject:
   m_ObjectHideFlags: 0
@@ -6221,6 +6237,50 @@ MonoBehaviour:
   dontUseZBuffer: 1
   m_CorrectionFunctionManager: {fileID: 100959371}
   m_ShowTextAboveLocation: {fileID: 1648417628}
+--- !u!1 &1053094904
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1053094905}
+  - component: {fileID: 1053094906}
+  m_Layer: 0
+  m_Name: Global Save Data
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1053094905
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1053094904}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1577129088}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1053094906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1053094904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe88794f4d8c446f8945935155ef0dce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1073739939
 GameObject:
   m_ObjectHideFlags: 0
@@ -7318,6 +7378,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1053094906}
+        m_TargetAssemblyTypeName: GlobalSaveData, Assembly-CSharp
+        m_MethodName: SaveData
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Marker and Obj in Order
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1233600550
@@ -9603,6 +9675,7 @@ Transform:
   - {fileID: 1648417629}
   - {fileID: 356689472}
   - {fileID: 1670321750}
+  - {fileID: 1053094905}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -10481,7 +10554,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SaveMap: 0
   m_LoadMap: 13
-  m_CorrectionVersion: 1
+  m_CorrectionVersion: 0
   m_LoadObjectManager: {fileID: 1048425736}
   m_PanelUIs:
   - {fileID: 533565751}

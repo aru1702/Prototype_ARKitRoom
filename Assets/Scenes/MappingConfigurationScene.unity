@@ -4151,6 +4151,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SaveMap: 0
   m_LoadMap: 0
+  m_CorrectionVersion: 0
+  m_LoadObjectManager: {fileID: 0}
+  m_PanelUIs: []
 --- !u!1 &1330607216
 GameObject:
   m_ObjectHideFlags: 0
@@ -5149,6 +5152,7 @@ MonoBehaviour:
   - {fileID: 5105219495360517106, guid: d72570e5e20fc4364bf0a11983025430, type: 3}
   - {fileID: 8867173366992833971, guid: 4881c7cf8c0db4843aa73654148a6bcb, type: 3}
   - {fileID: 3205738944846637306, guid: c313c290245d34e80a06b880d114f8a2, type: 3}
+  - {fileID: 8669019141398123038, guid: d96d8c5ae9e1045d9b604af62fd7f78d, type: 3}
 --- !u!1 &1603189638
 GameObject:
   m_ObjectHideFlags: 0

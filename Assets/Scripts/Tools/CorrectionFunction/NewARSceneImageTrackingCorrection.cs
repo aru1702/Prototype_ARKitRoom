@@ -19,7 +19,8 @@ public class NewARSceneImageTrackingCorrection : MonoBehaviour
 
     List<CustomTransform> m_ImageTrackedList = new();
     List<CustomTransform> m_ImageTrackedListWithRemove = new();
-    string m_NowMarkerTracked, m_PreviousMarkerTracked = "na";
+
+    string m_NowMarkerTracked, m_PreviousMarkerTracked = "na";      // necessary for GlobalSaveData
 
     List<CustomTransform> m_MarkerList = new();
 
@@ -135,6 +136,7 @@ public class NewARSceneImageTrackingCorrection : MonoBehaviour
 
                         img.custom_position = updatedImage.transform.position;
                         img.customer_q_rotation = updatedImage.transform.rotation;
+                        img.custom_euler_rotation = updatedImage.transform.rotation.eulerAngles;
                         is_new_data = false;
                     }
                 }
@@ -151,6 +153,7 @@ public class NewARSceneImageTrackingCorrection : MonoBehaviour
                 //    }
                 //}
 
+                // if the tracked img is new data
                 if (is_new_data)
                 {
                     CustomTransform newImgTgt = new();
@@ -161,9 +164,22 @@ public class NewARSceneImageTrackingCorrection : MonoBehaviour
                     newImgTgt.custom_euler_rotation = newImgTgt.customer_q_rotation.eulerAngles;
 
                     m_ImageTrackedList.Add(newImgTgt);
-                    //m_ImageTrackedListWithRemove.Add(newImgTgt);
 
+                    //m_ImageTrackedListWithRemove.Add(newImgTgt);
                     // Debug.Log("name: " + updatedImage.referenceImage.name + ", status: Added");
+                }
+
+
+                // save to GlobalSaveData
+                if (!m_HasUpdate)
+                {
+                    SavingToGlobalSaveData(new CustomTransform(
+                        updatedImage.referenceImage.name,
+                        updatedImage.transform.position,
+                        updatedImage.transform.rotation.eulerAngles,
+                        updatedImage.transform.rotation)
+
+                        , updatedImage.transform);
                 }
             }
 
@@ -320,21 +336,80 @@ public class NewARSceneImageTrackingCorrection : MonoBehaviour
         m_ImageTrackedListWithRemove.Clear();
     }
 
+    /// <summary>
+    /// Get string of currently tracked image target.
+    /// </summary>
     public string GetNowMarkerTracked()
     {
         return m_NowMarkerTracked;
     }
 
+    /// <summary>
+    /// Get string of previous tracked image target.
+    /// Previous image target will be same as the current after camera no longer
+    /// looking at the image target.
+    /// </summary>
     public string GetPreviousMarkerTracked()
     {
         return m_PreviousMarkerTracked;
     }
 
+    /// <summary>
+    /// Get string of currently and previous tracked image target.
+    /// Previous image target will be same as the current after camera no longer
+    /// looking at the image target.
+    /// </summary>
     public string[] GetNowAndPrevMarkerTracked()
     {
         string[] s = new string[2];
         s[0] = GetNowMarkerTracked();
         s[1] = GetPreviousMarkerTracked();
         return s;
+    }
+
+    /// <summary>
+    /// Save into GlobalSaveData.
+    /// </summary>
+    void SavingToGlobalSaveData(CustomTransform marker, Transform raw_marker_t)
+    {
+        string[] data =
+        {
+            GlobalConfig.GetNowDateandTime(true),
+            marker.custom_name + "_raw",
+            marker.custom_position.x.ToString(),
+            marker.custom_position.y.ToString(),
+            marker.custom_position.z.ToString(),
+            marker.custom_euler_rotation.x.ToString(),
+            marker.custom_euler_rotation.y.ToString(),
+            marker.custom_euler_rotation.z.ToString(),
+            marker.customer_q_rotation.x.ToString(),
+            marker.customer_q_rotation.y.ToString(),
+            marker.customer_q_rotation.z.ToString(),
+            marker.customer_q_rotation.z.ToString(),
+            m_PreviousMarkerTracked
+        };
+
+        GlobalSaveData.WriteData(data);
+
+        // another one with to world
+        var new_m44 = GlobalConfig.GetM44ByGameObjRef(raw_marker_t, GlobalConfig.PlaySpaceOriginGO);
+        string[] new_data =
+        {
+            GlobalConfig.GetNowDateandTime(true),
+            marker.custom_name + "_byworld",
+            GlobalConfig.GetPositionFromM44(new_m44).x.ToString(),
+            GlobalConfig.GetPositionFromM44(new_m44).y.ToString(),
+            GlobalConfig.GetPositionFromM44(new_m44).z.ToString(),
+            GlobalConfig.GetEulerAngleFromM44(new_m44).x.ToString(),
+            GlobalConfig.GetEulerAngleFromM44(new_m44).y.ToString(),
+            GlobalConfig.GetEulerAngleFromM44(new_m44).z.ToString(),
+            GlobalConfig.GetRotationFromM44(new_m44).x.ToString(),
+            GlobalConfig.GetRotationFromM44(new_m44).y.ToString(),
+            GlobalConfig.GetRotationFromM44(new_m44).z.ToString(),
+            GlobalConfig.GetRotationFromM44(new_m44).z.ToString(),
+            m_PreviousMarkerTracked
+        };
+
+        GlobalSaveData.WriteData(new_data);
     }
 }
