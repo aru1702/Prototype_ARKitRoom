@@ -399,7 +399,7 @@ public class LoadObject_CatExample_2__NewARScene : MonoBehaviour
             SetStartTime();
             UseCorrectionFunction();
 
-            SaveAllObjectOnlyDebugDontUseThisFunction();
+            // SaveAllObjectOnlyDebugDontUseThisFunction();
         }
 
         www.Dispose();
@@ -613,13 +613,17 @@ public class LoadObject_CatExample_2__NewARScene : MonoBehaviour
 
         if (GlobalConfig.CorrectionFunctionVersion == 2)
             m_CorrectionFunctionManager
-                .GetComponent<CorrectionFunctions.VersionOneB>().enabled = true;
+                .GetComponent<CorrectionFunctions.VersionOneBLastMarker>().enabled = true;
 
         if (GlobalConfig.CorrectionFunctionVersion == 3)
             m_CorrectionFunctionManager
+                .GetComponent<CorrectionFunctions.VersionOneBAvgWMarker>().enabled = true;
+
+        if (GlobalConfig.CorrectionFunctionVersion == 4)
+            m_CorrectionFunctionManager
                 .GetComponent<CorrectionFunctions.VersionTwoA>().enabled = true;
 
-        //if (GlobalConfig.CorrectionFunctionVersion == 4)
+        //if (GlobalConfig.CorrectionFunctionVersion == 5)
         //    m_CorrectionFunctionManager
         //        .GetComponent<CorrectionFunctions.VersionTwoB>().enabled = true;
 

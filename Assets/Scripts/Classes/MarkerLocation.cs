@@ -7,8 +7,10 @@ public class MarkerLocation
     public string Marker_name { get; set; }
     public Vector3 GT_Position { get; set; }
     public Vector3 GT_EulerAngle { get; set; }
+    public Quaternion GT_Rotation { get; set; }
     public Vector3 C_Position { get; set; }
     public Vector3 C_EulerAngle { get; set; }
+    public Quaternion C_Rotation { get; set; }
     public string Marker_before { get; set; }
 
     public MarkerLocation(string marker_name,

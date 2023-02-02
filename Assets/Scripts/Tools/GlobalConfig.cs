@@ -84,10 +84,10 @@ public class GlobalConfig : MonoBehaviour
         if (in_two_zero_format)
         {
             if (mo.Length < 2) mo = "0" + mo;
-            if (d.Length < 2) d = "0" + mo;
-            if (h.Length < 2) h = "0" + mo;
-            if (mi.Length < 2) mi = "0" + mo;
-            if (s.Length < 2) s = "0" + mo;
+            if (d.Length < 2) d = "0" + d;
+            if (h.Length < 2) h = "0" + h;
+            if (mi.Length < 2) mi = "0" + mi;
+            if (s.Length < 2) s = "0" + s;
         }
 
         return y + "-" + mo + "-" + d + "-" + h + "-" + mi + "-" + s;
@@ -177,6 +177,28 @@ public class GlobalConfig : MonoBehaviour
     public static Quaternion ExtractQuaternion(Quaternion q)
     {
         return new(q.x, q.y, q.z, q.w);
+    }
+
+    /// <summary>
+    /// Search specific GameObject through the list with return boolean.
+    /// </summary>
+    /// <param name="list">List of GameObjects.</param>
+    /// <param name="name">Given name of GameObject.</param>
+    /// <param name="found">Out of found GameObject, will return new() if not found.</param>
+    /// <returns>True if found, false if not.</returns>
+    public static bool SearchObjectOnListByName(List<GameObject> list, string name, out GameObject found)
+    {
+        foreach (var o in list)
+        {
+            if (o.name == name)
+            {
+                found = o;
+                return true;
+            }
+        }
+
+        found = new();
+        return false;
     }
 
     public static GameObject GetNearestObject (List<GameObject> goList, GameObject goRef, out int itemC)

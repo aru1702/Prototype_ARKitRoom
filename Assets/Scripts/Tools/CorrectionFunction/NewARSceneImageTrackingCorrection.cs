@@ -135,7 +135,7 @@ public class NewARSceneImageTrackingCorrection : MonoBehaviour
                         // Debug.Log("name: " + updatedImage.referenceImage.name + ", status: Already in list");
 
                         img.custom_position = updatedImage.transform.position;
-                        img.customer_q_rotation = updatedImage.transform.rotation;
+                        img.custom_q_rotation = updatedImage.transform.rotation;
                         img.custom_euler_rotation = updatedImage.transform.rotation.eulerAngles;
                         is_new_data = false;
                     }
@@ -148,7 +148,7 @@ public class NewARSceneImageTrackingCorrection : MonoBehaviour
                 //        // Debug.Log("name: " + updatedImage.referenceImage.name + ", status: Already in list");
 
                 //        img.custom_position = updatedImage.transform.position;
-                //        img.customer_q_rotation = updatedImage.transform.rotation;
+                //        img.custom_q_rotation = updatedImage.transform.rotation;
                 //        is_new_data = false;
                 //    }
                 //}
@@ -160,8 +160,8 @@ public class NewARSceneImageTrackingCorrection : MonoBehaviour
 
                     newImgTgt.custom_name = updatedImage.referenceImage.name;
                     newImgTgt.custom_position = updatedImage.transform.position;
-                    newImgTgt.customer_q_rotation = updatedImage.transform.rotation;
-                    newImgTgt.custom_euler_rotation = newImgTgt.customer_q_rotation.eulerAngles;
+                    newImgTgt.custom_q_rotation = updatedImage.transform.rotation;
+                    newImgTgt.custom_euler_rotation = newImgTgt.custom_q_rotation.eulerAngles;
 
                     m_ImageTrackedList.Add(newImgTgt);
 
@@ -200,6 +200,14 @@ public class NewARSceneImageTrackingCorrection : MonoBehaviour
 
             //Debug.Log("update status: " + m_HasUpdate);
             //Debug.Log("marker in list: " + m_ImageTrackedList.Count);
+
+            GlobalDataUpdateTimeAndDistance();
+            if (!globaldata_update && m_HasUpdate)
+            {
+                GlobalDataResetLastMarker();
+                globaldata_update = true;
+            }
+            else globaldata_update = false;
         }
     }
 
@@ -286,8 +294,8 @@ public class NewARSceneImageTrackingCorrection : MonoBehaviour
     {
         CustomTransform newImgTgt = new();
         newImgTgt.custom_name = "img_1";
-        newImgTgt.custom_position = new(3.474f, -0.788f, -0.781f);
-        newImgTgt.customer_q_rotation = new();
+        newImgTgt.custom_position = new(-1.018f, -0.715f, -2.959f);
+        newImgTgt.custom_q_rotation = new();
         newImgTgt.custom_euler_rotation = new();
         m_ImageTrackedList.Add(newImgTgt);
     }
@@ -296,6 +304,8 @@ public class NewARSceneImageTrackingCorrection : MonoBehaviour
     {
         m_ImageTrackedList.Add(customTransform);
         m_NowMarkerTracked = customTransform.custom_name;
+
+        SavingToGlobalSaveData(customTransform, null);
     }
 
     public void TestInputDataRemove(CustomTransform customTransform)
@@ -306,6 +316,8 @@ public class NewARSceneImageTrackingCorrection : MonoBehaviour
     public void UpdateHasUpdate(bool trigger)
     {
         m_HasUpdate = trigger;
+
+        if (trigger) m_PreviousMarkerTracked = m_NowMarkerTracked;
     }
 
     public void UpdateInputData(string name, Vector3 vector)
@@ -382,16 +394,21 @@ public class NewARSceneImageTrackingCorrection : MonoBehaviour
             marker.custom_euler_rotation.x.ToString(),
             marker.custom_euler_rotation.y.ToString(),
             marker.custom_euler_rotation.z.ToString(),
-            marker.customer_q_rotation.x.ToString(),
-            marker.customer_q_rotation.y.ToString(),
-            marker.customer_q_rotation.z.ToString(),
-            marker.customer_q_rotation.z.ToString(),
-            m_PreviousMarkerTracked
+            marker.custom_q_rotation.x.ToString(),
+            marker.custom_q_rotation.y.ToString(),
+            marker.custom_q_rotation.z.ToString(),
+            marker.custom_q_rotation.z.ToString(),
+            m_PreviousMarkerTracked,
+            time_fromstart.ToString(),
+            time_lastmarker.ToString(),
+            distance_fromstart.ToString(),
+            distance_lastmarker.ToString()
         };
 
         GlobalSaveData.WriteData(data);
 
         // another one with to world
+        if (raw_marker_t == null) return;
         var new_m44 = GlobalConfig.GetM44ByGameObjRef(raw_marker_t, GlobalConfig.PlaySpaceOriginGO);
         string[] new_data =
         {
@@ -407,9 +424,47 @@ public class NewARSceneImageTrackingCorrection : MonoBehaviour
             GlobalConfig.GetRotationFromM44(new_m44).y.ToString(),
             GlobalConfig.GetRotationFromM44(new_m44).z.ToString(),
             GlobalConfig.GetRotationFromM44(new_m44).z.ToString(),
-            m_PreviousMarkerTracked
+            m_PreviousMarkerTracked,
+            time_fromstart.ToString(),
+            time_lastmarker.ToString(),
+            distance_fromstart.ToString(),
+            distance_lastmarker.ToString()
         };
 
         GlobalSaveData.WriteData(new_data);
+    }
+
+    // FOR SAVING GLOBAL DATA
+    float time_fromstart = 0.0f;
+    float distance_fromstart = 0.0f;
+    Vector3 last_camera_dist = new(0,0,0);
+    float time_lastmarker = 0.0f;
+    float distance_lastmarker = 0.0f;
+    bool globaldata_update = false;
+
+    void GlobalDataUpdateTimeAndDistance()
+    {
+        time_fromstart += Time.deltaTime;
+        time_lastmarker += Time.deltaTime;
+
+        try
+        {
+            var cam = m_ARSessionOrigin.gameObject.transform.GetChild(0);
+            if (last_camera_dist == Vector3.zero)
+            {
+                last_camera_dist = cam.position;
+            }
+
+            var dist = Vector3.Distance(cam.position, last_camera_dist);
+            distance_fromstart += dist;
+            distance_lastmarker += dist;
+        }
+        catch (System.Exception) { }
+    }
+
+    void GlobalDataResetLastMarker()
+    {
+        time_lastmarker = 0.0f;
+        distance_lastmarker = 0.0f;
     }
 }

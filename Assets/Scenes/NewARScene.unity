@@ -453,6 +453,7 @@ GameObject:
   - component: {fileID: 100959372}
   - component: {fileID: 100959374}
   - component: {fileID: 100959375}
+  - component: {fileID: 100959378}
   - component: {fileID: 100959377}
   - component: {fileID: 100959376}
   - component: {fileID: 100959373}
@@ -558,13 +559,32 @@ MonoBehaviour:
   m_GameObject: {fileID: 100959371}
   m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b8f62e7174d14bcfbd5c7567a132a88, type: 3}
+  m_Script: {fileID: 11500000, guid: 78d31834cd49f4e25aa729e5d71ce827, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ARCamera: {fileID: 1580354072}
+  m_LoadObjectManager: {fileID: 1048425736}
+  m_ImageTrackingManager: {fileID: 100959371}
+  m_UpdateInterval: 0.25
+  m_ScalarWeight: 1
+  ANGLE_THRESHOLD: 0.01
+--- !u!114 &100959378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100959371}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3f0cacc71e3c4f96954f8ea16f761bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_LoadObjectManager: {fileID: 1048425736}
   m_ImageTrackingManager: {fileID: 100959371}
   m_UpdateInterval: 0.25
   m_ScalarWeight: 1
+  ANGLE_THRESHOLD: 0.1
 --- !u!1 &106830607
 GameObject:
   m_ObjectHideFlags: 0
@@ -10461,6 +10481,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1648417629}
   - component: {fileID: 1648417633}
+  - component: {fileID: 1648417639}
   - component: {fileID: 1648417637}
   - component: {fileID: 1648417630}
   - component: {fileID: 1648417631}
@@ -10469,6 +10490,7 @@ GameObject:
   - component: {fileID: 1648417635}
   - component: {fileID: 1648417636}
   - component: {fileID: 1648417638}
+  - component: {fileID: 1648417640}
   m_Layer: 0
   m_Name: Test Mode Manager
   m_TagString: Untagged
@@ -10554,7 +10576,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SaveMap: 0
   m_LoadMap: 13
-  m_CorrectionVersion: 0
+  m_CorrectionVersion: 1
   m_LoadObjectManager: {fileID: 1048425736}
   m_PanelUIs:
   - {fileID: 533565751}
@@ -10646,6 +10668,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc04ac137dcb84532aa24ba9fac7b648, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1648417639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1648417628}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c14e33e37cc240769e446c7368ad833, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ImageTrackingCorrection: {fileID: 100959371}
+  m_MarkerName: img_1
+  m_DesirePosition: {x: -1.017, y: -0.715, z: -2.94}
+  m_DesireRotation: {x: 0, y: 95, z: 0}
+  m_Update1: 0
+  m_MarkerName4: img_4
+  m_DesirePosition4: {x: -1.015, y: -0.708, z: 10.49}
+  m_DesireRotation4: {x: 0, y: 87, z: 0}
+  m_Update4: 0
+--- !u!114 &1648417640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1648417628}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ccce8fd7a95e48ad850cf2d2ece9fb5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Object: {fileID: 0}
+  m_Position: {x: 0, y: 0, z: 0}
+  m_EulerAngle: {x: 0, y: 0, z: 0}
 --- !u!1 &1670321749
 GameObject:
   m_ObjectHideFlags: 0

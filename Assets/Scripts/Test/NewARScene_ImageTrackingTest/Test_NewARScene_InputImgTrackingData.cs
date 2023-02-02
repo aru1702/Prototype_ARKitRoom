@@ -135,7 +135,7 @@ public class Test_NewARScene_InputImgTrackingData : MonoBehaviour
             CustomTransform newImgTgt = new();
             newImgTgt.custom_name = "img_0";
             newImgTgt.custom_position = m_Data0;
-            newImgTgt.customer_q_rotation = new();
+            newImgTgt.custom_q_rotation = new();
             newImgTgt.custom_euler_rotation = new(0, 0, 0);
 
             if (!hasInputed0)
@@ -165,7 +165,7 @@ public class Test_NewARScene_InputImgTrackingData : MonoBehaviour
             CustomTransform newImgTgt = new();
             newImgTgt.custom_name = "img_1";
             newImgTgt.custom_position = m_Data1;
-            newImgTgt.customer_q_rotation = new();
+            newImgTgt.custom_q_rotation = new();
             newImgTgt.custom_euler_rotation = new(0, 90f, 0);
 
             if (!hasInputed1)
@@ -195,7 +195,7 @@ public class Test_NewARScene_InputImgTrackingData : MonoBehaviour
             CustomTransform newImgTgt = new();
             newImgTgt.custom_name = "img_2";
             newImgTgt.custom_position = m_Data2;
-            newImgTgt.customer_q_rotation = new();
+            newImgTgt.custom_q_rotation = new();
             newImgTgt.custom_euler_rotation = new(0, 90f, 0);
 
             if (!hasInputed2)
@@ -225,7 +225,7 @@ public class Test_NewARScene_InputImgTrackingData : MonoBehaviour
             CustomTransform newImgTgt = new();
             newImgTgt.custom_name = "img_3";
             newImgTgt.custom_position = m_Data3;
-            newImgTgt.customer_q_rotation = new();
+            newImgTgt.custom_q_rotation = new();
             newImgTgt.custom_euler_rotation = new(0, 90f, 0);
 
             if (!hasInputed3)
@@ -255,7 +255,7 @@ public class Test_NewARScene_InputImgTrackingData : MonoBehaviour
             CustomTransform newImgTgt = new();
             newImgTgt.custom_name = "img_4";
             newImgTgt.custom_position = m_Data4;
-            newImgTgt.customer_q_rotation = new();
+            newImgTgt.custom_q_rotation = new();
             newImgTgt.custom_euler_rotation = new(0, 90f, 0);
 
             if (!hasInputed4)
@@ -285,7 +285,7 @@ public class Test_NewARScene_InputImgTrackingData : MonoBehaviour
             CustomTransform newImgTgt = new();
             newImgTgt.custom_name = "img_5";
             newImgTgt.custom_position = m_Data5;
-            newImgTgt.customer_q_rotation = new();
+            newImgTgt.custom_q_rotation = new();
             newImgTgt.custom_euler_rotation = new(0, 90f, 0);
 
             if (!hasInputed5)

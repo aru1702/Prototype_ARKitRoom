@@ -8,7 +8,7 @@ public class CustomTransform
     public Transform custom_transform { get; set; }
     public Vector3 custom_position { get; set; }
     public Vector3 custom_euler_rotation { get; set; }
-    public Quaternion customer_q_rotation { get; set; }
+    public Quaternion custom_q_rotation { get; set; }
 
     public CustomTransform(string name, Transform transform)
     {
@@ -20,12 +20,12 @@ public class CustomTransform
                            Transform custom_transform,
                            Vector3 custom_position,
                            Vector3 custom_euler_rotation,
-                           Quaternion customer_q_rotation)
+                           Quaternion custom_q_rotation)
                                 : this(custom_name, custom_transform)
     {
         this.custom_position = custom_position;
         this.custom_euler_rotation = custom_euler_rotation;
-        this.customer_q_rotation = customer_q_rotation;
+        this.custom_q_rotation = custom_q_rotation;
     }
 
     public CustomTransform() { }
@@ -33,11 +33,11 @@ public class CustomTransform
     public CustomTransform(string custom_name,
                            Vector3 custom_position,
                            Vector3 custom_euler_rotation,
-                           Quaternion customer_q_rotation)
+                           Quaternion custom_q_rotation)
     {
         this.custom_name = custom_name;
         this.custom_position = custom_position;
         this.custom_euler_rotation = custom_euler_rotation;
-        this.customer_q_rotation = customer_q_rotation;
+        this.custom_q_rotation = custom_q_rotation;
     }
 }

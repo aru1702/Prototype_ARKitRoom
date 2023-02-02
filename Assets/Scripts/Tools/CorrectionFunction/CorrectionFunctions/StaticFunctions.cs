@@ -129,5 +129,27 @@ namespace CorrectionFunctions
             var new_vectors = CorrectedVector(objects_locations, new_weights, marker_error_vectors);
             return new_vectors;
         }
+
+        /// <summary>
+        /// Search specific MarkerLocation through the list with return boolean.
+        /// </summary>
+        /// <param name="list">List of MarkerLocations.</param>
+        /// <param name="name">Given name of MarkerLocation.</param>
+        /// <param name="found">Out of found MarkerLocation, will return new() if not found.</param>
+        /// <returns>True if found, false if not.</returns>
+        public static bool SearchMarkerLocationOnListByName(List<MarkerLocation> list, string name, out MarkerLocation found)
+        {
+            foreach (var ml in list)
+            {
+                if (ml.Marker_name == name)
+                {
+                    found = ml;
+                    return true;
+                }
+            }
+
+            found = new();
+            return false;
+        }
     }
 }

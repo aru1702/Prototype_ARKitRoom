@@ -11,9 +11,10 @@ namespace CorrectionFunctions
     /// Requirements: 1) Marker ground truth in runtime, 2) Objects
     /// Enable this function by attach this script to GameObject (enable/disable as trigger)
     ///
-    /// For B-side of Version One, we also implement rotation correction
+    /// On this B version Last Marker, it also rotate the world origin by certain
+    /// error rotation in Quaternion with data from the last detected marker.
     /// </summary>
-    public class VersionOneB : MonoBehaviour
+    public class VersionOneBLastMarker : MonoBehaviour
     {
         List<MarkerLocation> m_Markers;
         List<GameObject> m_Objects;
@@ -37,6 +38,18 @@ namespace CorrectionFunctions
         [Tooltip("Scalar multiplier for weight function.")]
         float m_ScalarWeight = 1.0f;
 
+        [SerializeField]
+        [Tooltip("Threshold of rotation angle to update initial data.")]
+        float ANGLE_THRESHOLD = 0.1f;
+
+        Quaternion previous_rotation;
+
+        // unused for this moment
+#pragma warning disable 0414
+        bool only_once_rotation = false;
+        string previous_marker = "na";
+#pragma warning restore 0414
+
 
         // Trigger when GameObject is enabled
         private void OnEnable()
@@ -44,6 +57,7 @@ namespace CorrectionFunctions
             // initialization
             m_Markers = new();
             OTM = new();
+            previous_rotation = new();
             GetMarkerGroundTruth();
 
             // please be know that this function only works with NewARScene case
@@ -60,19 +74,23 @@ namespace CorrectionFunctions
                 Main();
             }
         }
-
+               
         void Main()
         {
             // check if image tracking has detected a marker
             bool marker_has_update = m_ImageTrackingManager
                 .GetComponent<NewARSceneImageTrackingCorrection>()
                 .GetImageTargetUpdateStatus();
-            if (!marker_has_update) { return; }
+            if (!marker_has_update) { only_once_rotation = false; return; }
+
+            //// do single rotation correction
+            //if (!only_once_rotation)
+            //{
 
             // get marker on runtime
             var markers_runtime = m_ImageTrackingManager
-                .GetComponent<NewARSceneImageTrackingCorrection>()
-                .GetImageTrackedList();
+            .GetComponent<NewARSceneImageTrackingCorrection>()
+            .GetImageTrackedList();
             if (markers_runtime.Count <= 0) { return; }
 
             AddOrUpdateMarkerRuntime(markers_runtime);
@@ -96,22 +114,49 @@ namespace CorrectionFunctions
                 m_Objects[i].transform.position = new_vector[i];
             }
 
-            // rotation correction
-            var now_marker_name = m_ImageTrackingManager
+            var marker_name = m_ImageTrackingManager
                 .GetComponent<NewARSceneImageTrackingCorrection>()
                 .GetNowMarkerTracked();
-            var now_marker_obj = GetSingleMarkerData(now_marker_name);
-            var rot_by_world = GetRotationByWorld(now_marker_obj);
-            var rotation_error = now_marker_obj.GT_EulerAngle - rot_by_world;
+            if (StaticFunctions.SearchMarkerLocationOnListByName(m_Markers, marker_name, out MarkerLocation f_marker))
+            {
+                // check if detect different marker
+                //if (previous_marker != marker_name)
+                //    previous_rotation = f_marker.GT_Rotation;
 
-            Debug.Log("name:   " + now_marker_obj.Marker_name + "\n" +
-                      "gt rot: " + now_marker_obj.GT_EulerAngle.ToString() + "\n" +
-                      "c rot:  " + now_marker_obj.C_EulerAngle.ToString() + "\n" +
-                      "cw rot: " + rot_by_world.ToString() + "\n" +
-                      "rot e:  " + rotation_error.ToString());
+                // get error rotation
+                var error_q = Quaternion.Inverse(f_marker.GT_Rotation) * f_marker.C_Rotation;
 
-            //RotatingWorld(rotation_error, now_marker_obj.GT_Position);
-            //RotatingWorld(now_marker_obj.GT_EulerAngle, now_marker_obj.GT_Position);
+                // create dummy object on the marker position
+                GameObject dummy_o = new();
+                dummy_o.transform.position = f_marker.C_Position;
+                dummy_o.transform.rotation = previous_rotation;
+
+                // put the root under the dummy_o
+                GlobalConfig.PlaySpaceOriginGO.transform.parent = dummy_o.transform;
+
+                // rotate based on error
+                dummy_o.transform.rotation = error_q;
+
+                // release the root and delete dummy_o
+                GlobalConfig.PlaySpaceOriginGO.transform.parent = null;
+                Destroy(dummy_o);
+
+                // if rotating is necessary based on angle threshold (not locked by gimbal)
+                if (CheckAngleRotation(error_q, previous_rotation, ANGLE_THRESHOLD))
+                    ImportObjectsNewARScene(true);
+
+                // save the error_q into previous_rotation
+                previous_rotation = error_q;
+            }
+
+            //    only_once_rotation = true;
+            //}
+
+            if (!only_once_rotation)
+            {
+                Debug.Log("Rotation: " + GlobalDebugging.LoggingQuat(previous_rotation));
+                only_once_rotation = true;
+            }
         }
 
         void AddOrUpdateMarkerRuntime(List<CustomTransform> markers)
@@ -120,7 +165,7 @@ namespace CorrectionFunctions
             var temp_obj = new GameObject();
             var origin = GlobalConfig.PlaySpaceOriginGO;
             temp_obj.transform.SetParent(origin.transform);
-
+                        
             // add new marker into list
             if (m_Markers.Count < markers.Count)
             {
@@ -136,17 +181,19 @@ namespace CorrectionFunctions
 
                             var gt_m44 = GlobalConfig.GetM44ByGameObjRef(m_gt, origin);
                             temp_obj.transform.localPosition = GlobalConfig.GetPositionFromM44(gt_m44);
-                            temp_obj.transform.localEulerAngles = GlobalConfig.GetEulerAngleFromM44(gt_m44);
+                            //temp_obj.transform.localEulerAngles = GlobalConfig.GetEulerAngleFromM44(gt_m44);
+                            temp_obj.transform.localRotation = GlobalConfig.GetRotationFromM44(gt_m44);
 
                             temp_ml.GT_Position = ExtractVector3(temp_obj.transform.position);
-                            //temp_ml.GT_EulerAngle = ExtractVector3(temp_obj.transform.eulerAngles);
-                            temp_ml.GT_EulerAngle = ExtractVector3(m_gt.transform.localEulerAngles);
+                            temp_ml.GT_EulerAngle = ExtractVector3(temp_obj.transform.eulerAngles);
+                            temp_ml.GT_Rotation = GlobalConfig.ExtractQuaternion(temp_obj.transform.rotation);
 
                             //temp_obj.transform.position = markers[i].custom_position;
                             //temp_obj.transform.eulerAngles = markers[i].custom_euler_rotation;
 
                             temp_ml.C_Position = ExtractVector3(markers[i].custom_position);
-                            temp_ml.C_EulerAngle = ExtractVector3(markers[i].custom_q_rotation.eulerAngles);
+                            temp_ml.C_EulerAngle = ExtractVector3(markers[i].custom_euler_rotation);
+                            temp_ml.C_Rotation = GlobalConfig.ExtractQuaternion(markers[i].custom_q_rotation);
 
                             m_Markers.Add(temp_ml);
                             break;
@@ -166,17 +213,8 @@ namespace CorrectionFunctions
                     if (Equals(markers[i].custom_name, m_Markers[j].Marker_name))
                     {
                         m_Markers[j].C_Position = ExtractVector3(markers[i].custom_position);
-                        m_Markers[j].C_EulerAngle = ExtractVector3(markers[i].custom_q_rotation.eulerAngles);
-
-                        // update rotation ground truth
-                        //foreach (var m_gt in m_MarkersGroundTruth)
-                        //{
-                        //    var gt_m44 = GlobalConfig.GetM44ByGameObjRef(m_gt, origin);
-                        //    temp_obj.transform.localEulerAngles = GlobalConfig.GetEulerAngleFromM44(gt_m44);
-                        //    m_Markers[j].GT_EulerAngle = ExtractVector3(temp_obj.transform.eulerAngles);
-
-                        //    break;
-                        //}
+                        m_Markers[j].C_EulerAngle = ExtractVector3(markers[i].custom_euler_rotation);
+                        m_Markers[j].C_Rotation = GlobalConfig.ExtractQuaternion(markers[i].custom_q_rotation);
 
                         break;
                     }
@@ -198,8 +236,13 @@ namespace CorrectionFunctions
             Destroy(temp_obj);
         }
 
-        void ImportObjectsNewARScene()
+        void ImportObjectsNewARScene(bool update = false)
         {
+            if (update)
+            {
+                m_InitObjectsLocations.Clear();
+            }
+
             m_Objects = m_LoadObjectManager
                 .GetComponent<LoadObject_CatExample_2__NewARScene>()
                 .GetMyObjects();
@@ -207,8 +250,22 @@ namespace CorrectionFunctions
             m_InitObjectsLocations = new();
             foreach (var o in m_Objects)
             {
+                var m44 = GlobalConfig.GetM44ByGameObjRef(o, GlobalConfig.PlaySpaceOriginGO);
+                //m_InitObjectsLocations.Add(ExtractVector3(m44.GetPosition()));
                 m_InitObjectsLocations.Add(ExtractVector3(o.transform.position));
             }
+        }
+
+        bool CheckAngleRotation(Quaternion previous, Quaternion current, float angle_threshold = 5.0f)
+        {
+            var q_diff = Quaternion.Inverse(previous) * current;
+            float angle_in_rad = Mathf.Acos(q_diff.w);
+            float angle_in_degree = angle_in_rad * Mathf.Rad2Deg * 2;
+
+            //Debug.Log(q_diff + " " + angle_in_rad + " " + angle_in_degree);
+
+            if (angle_in_degree > angle_threshold) return true;
+            return false;
         }
 
         void ExtractVector3(Vector3 v, out float x, out float y, out float z)
@@ -223,6 +280,9 @@ namespace CorrectionFunctions
             return new(v.x, v.y, v.z);
         }
 
+        /// TODO:
+        /// - Implement this in every version of GetMarkerGroundTruth function
+        /// - Pass the data (Tr, RtE, RtQ) to GlobalSaveData
         void GetMarkerGroundTruth()
         {
             m_MarkersGroundTruth = new();
@@ -234,60 +294,37 @@ namespace CorrectionFunctions
             {
                 string[] names = item.name.Split("_");
                 if (names[0] == "img")
-                    m_MarkersGroundTruth.Add(item);
-            }
-
-            //Debug.Log("marker gt");
-            //foreach (var m in m_MarkersGroundTruth)
-            //{
-            //    Debug.Log("name:   " + m.name + "\n" +
-            //              "gl rot: " + m.transform.rotation.ToString() + "\n" +
-            //              "lc rot: " + m.transform.localRotation.ToString() + "\n" +
-            //              "gl ert: " + m.transform.eulerAngles.ToString() + "\n" +
-            //              "lc ert: " + m.transform.localEulerAngles.ToString());
-            //}
-        }
-
-        MarkerLocation GetSingleMarkerData(string marker_name)
-        {
-            if (m_Markers.Count > 0)
-            {
-                foreach (var m in m_Markers)
                 {
-                    if (Equals(m.Marker_name, marker_name))
-                    {
-                        return m;
-                    }
+                    GameObject temp = new();
+                    temp.name = item.name;
+                    temp.transform.SetPositionAndRotation(item.transform.position, item.transform.rotation);
+                    m_MarkersGroundTruth.Add(temp);
+
+                    // pass data to GlobalSaveData
+                    SavingIntoGlobalSaveData(temp);
                 }
             }
-
-            return new MarkerLocation();
         }
 
-        Vector3 GetRotationByWorld(MarkerLocation now_marker_obj)
+        void SavingIntoGlobalSaveData(GameObject item)
         {
-            GameObject dummy = new();
-            dummy.transform.position = now_marker_obj.C_Position;
-            GlobalConfig.RotateOneByOne(dummy, now_marker_obj.C_EulerAngle);
-            var m44 = GlobalConfig.GetM44ByGameObjRef(dummy, GlobalConfig.PlaySpaceOriginGO);
-            return GlobalConfig.GetEulerAngleFromM44(m44);
-        }
+                string[] data =
+            {
+                GlobalConfig.GetNowDateandTime(true),
+                "gtmarker_ver1blst_" + item.name,
+                item.transform.position.x.ToString(),
+                item.transform.position.y.ToString(),
+                item.transform.position.z.ToString(),
+                item.transform.eulerAngles.x.ToString(),
+                item.transform.eulerAngles.y.ToString(),
+                item.transform.eulerAngles.z.ToString(),
+                item.transform.rotation.x.ToString(),
+                item.transform.rotation.y.ToString(),
+                item.transform.rotation.z.ToString(),
+                item.transform.rotation.z.ToString(),
+            };
 
-        void RotatingWorld(Vector3 euler_error, Vector3 marker_position)
-        {
-            // create dummy obj
-            GameObject dummy = new();
-            dummy.transform.position = marker_position;
-
-            // rotate the world by dummy obj
-            GlobalConfig.PlaySpaceOriginGO.transform.parent = dummy.transform;
-            //GlobalConfig.RotateOneByOne(dummy, euler_error);
-            var q = Quaternion.Euler(euler_error);
-            dummy.transform.rotation = q;
-            GlobalConfig.PlaySpaceOriginGO.transform.parent = null;
-
-            // destroy dummy obj
-            Destroy(dummy);
+                GlobalSaveData.WriteData(data);
         }
     }
 }
