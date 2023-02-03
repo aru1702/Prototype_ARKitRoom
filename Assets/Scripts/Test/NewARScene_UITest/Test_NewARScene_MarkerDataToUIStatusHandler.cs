@@ -11,6 +11,9 @@ public class Test_NewARScene_MarkerDataToUIStatusHandler : MonoBehaviour
     GameObject m_ImageRecogCorrectionHandler;
 
     [SerializeField]
+    GameObject m_VersionOneRot;
+
+    [SerializeField]
     float m_IntervalDataUpdate = 1.0f;
 
     void Start()
@@ -46,7 +49,24 @@ public class Test_NewARScene_MarkerDataToUIStatusHandler : MonoBehaviour
         var text = "";
         //text += VersionTwoConfiguration(); 
         //text += NewLineTwoTimes();
-        text += ExtractCustomTransformList(markers);
+
+        //text += ExtractCustomTransformList(markers);
+
+        // this will change with
+        if (GlobalConfig.CorrectionFunctionVersion == (int)GlobalConfig.VER.Version1BLast + 1)
+        {
+            var ML_data = m_VersionOneRot
+                .GetComponent<CorrectionFunctions.VersionOneBLastMarker>()
+                .GetMarkerLocations();
+            text += ExtractMarkerLocation(ML_data);
+        }
+        else if (GlobalConfig.CorrectionFunctionVersion == (int)GlobalConfig.VER.Version1BAvg + 1)
+        {
+            var ML_data = m_VersionOneRot
+                .GetComponent<CorrectionFunctions.VersionOneBAvgWMarker>()
+                .GetMarkerLocations();
+            text += ExtractMarkerLocation(ML_data);
+        }
 
         uiHandler.SetMarkerStatusText(text);
     }
@@ -77,6 +97,23 @@ public class Test_NewARScene_MarkerDataToUIStatusHandler : MonoBehaviour
             str += "\n";
 
             Destroy(go);
+        }
+
+        return str;
+    }
+
+    string ExtractMarkerLocation(List<MarkerLocation> markerLocations)
+    {
+        string str = "";
+
+        foreach (var mL in markerLocations)
+        {
+            str += mL.Marker_name + ", ";
+            str += "GTP: " + mL.GT_Position.ToString() + ", ";
+            str += "RTP: " + mL.C_Position.ToString() + ", ";
+            str += "GTR: " + mL.GT_EulerAngle.ToString() + ", ";
+            str += "RTR: " + mL.C_EulerAngle.ToString();
+            str += "\n";
         }
 
         return str;

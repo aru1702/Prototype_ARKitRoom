@@ -13,7 +13,7 @@ namespace CorrectionFunctions
     /// </summary>
     public class VersionOne : MonoBehaviour
     {
-        List<MarkerLocation> m_Markers;
+        List<MarkerLocation> m_Markers = new();
         List<GameObject> m_Objects;
         List<GameObject> m_MarkersGroundTruth;
         List<Vector3> m_InitObjectsLocations;
@@ -40,9 +40,10 @@ namespace CorrectionFunctions
         private void OnEnable()
         {
             // initialization
-            m_Markers = new();
             OTM = new();
             GetMarkerGroundTruth();
+
+            if (GlobalConfig.OTM_SCALAR != 0.0f) m_ScalarWeight = GlobalConfig.OTM_SCALAR;
 
             // please be know that this function only works with NewARScene case
             // check the called script (GetComponent) on each manager
@@ -235,6 +236,11 @@ namespace CorrectionFunctions
             };
 
                 GlobalSaveData.WriteData(data);
+        }
+
+        public List<MarkerLocation> GetMarkerLocations()
+        {
+            return m_Markers;
         }
     }
 }

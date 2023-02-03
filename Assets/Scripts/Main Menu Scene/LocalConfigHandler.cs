@@ -77,6 +77,15 @@ public class LocalConfigHandler : MonoBehaviour
     [SerializeField]
     InputField m_CTTtimePriorityInputField;
 
+    [SerializeField]
+    InputField m_CTMScalarInputField;
+
+    [SerializeField]
+    InputField m_UTDScalarInputField;
+
+    [SerializeField]
+    InputField m_RAScalarInputField;
+
     public void SetOTMScalarInputField(float value) { m_OTMScalarInputField.text = value.ToString(); }
     public float GetOTMScalarInputField() { return float.Parse(m_OTMScalarInputField.text); }
 
@@ -95,6 +104,15 @@ public class LocalConfigHandler : MonoBehaviour
     public void SetCTTtimePriorityInputField(int value) { m_CTTtimePriorityInputField.text = value.ToString(); }
     public int GetCTTtimePriorityInputField() { return int.Parse(m_CTTtimePriorityInputField.text); }
 
+    public void SetCTMScalarInputField(float value) { m_CTMScalarInputField.text = value.ToString(); }
+    public float GetCTMScalarInputField() { return float.Parse(m_CTMScalarInputField.text); }
+
+    public void SetUTDScalarInputField(float value) { m_UTDScalarInputField.text = value.ToString(); }
+    public float GetUTDScalarInputField() { return float.Parse(m_UTDScalarInputField.text); }
+
+    public void SetRAScalarInputField(float value) { m_RAScalarInputField.text = value.ToString(); }
+    public float GetRAScalarInputField() { return float.Parse(m_RAScalarInputField.text); }
+
 
     public void ExportToCSV()
     {
@@ -111,11 +129,18 @@ public class LocalConfigHandler : MonoBehaviour
             GetOTMPriorityInputField().ToString(),
             GetCTTtimeScalarInputField().ToString(),
             GetCTTtimePrioritySlider().ToString(),
-            GetCTTtimePriorityInputField().ToString()
+            GetCTTtimePriorityInputField().ToString(),
+
+            GetCTMScalarInputField().ToString(),
+            GetUTDScalarInputField().ToString(),
+
+            GetRAScalarInputField().ToString()
         };
 
         var path = Path.Combine(Application.persistentDataPath, "config");
         ExportCSV.exportData(path, values);
+
+        ApplyValueToGlobalConfig();
     }
 
     public void ImportFromCSV()
@@ -137,5 +162,22 @@ public class LocalConfigHandler : MonoBehaviour
         SetCTTtimeScalarInputField(float.Parse(values[8]));
         SetCTTtimePrioritySlider(float.Parse(values[9]));
         SetCTTtimePriorityInputField(int.Parse(values[10]));
+
+        SetCTMScalarInputField(float.Parse(values[11]));
+        SetUTDScalarInputField(float.Parse(values[12]));
+
+        SetRAScalarInputField(float.Parse(values[13]));
+
+        ApplyValueToGlobalConfig();
+    }
+
+    void ApplyValueToGlobalConfig()
+    {
+        GlobalConfig.OTM_SCALAR = GetOTMScalarInputField();
+        GlobalConfig.OTM_PRIORITY = GetOTMPrioritySlider();
+        GlobalConfig.CTTtime_SCALAR = GetCTTtimeScalarInputField();
+        GlobalConfig.CTTtime_PRIORITY = GetCTTtimePriorityInputField();
+        GlobalConfig.CTM_SCALAR = GetCTMScalarInputField();
+        GlobalConfig.RA_ANGLE = GetRAScalarInputField();
     }
 }

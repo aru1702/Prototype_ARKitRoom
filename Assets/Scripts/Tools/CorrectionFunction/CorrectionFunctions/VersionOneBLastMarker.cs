@@ -16,7 +16,7 @@ namespace CorrectionFunctions
     /// </summary>
     public class VersionOneBLastMarker : MonoBehaviour
     {
-        List<MarkerLocation> m_Markers;
+        List<MarkerLocation> m_Markers = new();
         List<GameObject> m_Objects;
         List<GameObject> m_MarkersGroundTruth;
         List<Vector3> m_InitObjectsLocations;
@@ -35,12 +35,12 @@ namespace CorrectionFunctions
         float m_UpdateInterval = 1.0f;
 
         [SerializeField]
-        [Tooltip("Scalar multiplier for weight function.")]
-        float m_ScalarWeight = 1.0f;
+        [Tooltip("Scalar multiplier for object-to-marker weight function.")]
+        float m_ScalarObjectWeight = 1.0f;
 
         [SerializeField]
         [Tooltip("Threshold of rotation angle to update initial data.")]
-        float ANGLE_THRESHOLD = 0.1f;
+        float m_AngleThreshold = 0.1f;
 
         Quaternion previous_rotation;
 
@@ -55,10 +55,12 @@ namespace CorrectionFunctions
         private void OnEnable()
         {
             // initialization
-            m_Markers = new();
             OTM = new();
             previous_rotation = new();
             GetMarkerGroundTruth();
+
+            if (GlobalConfig.OTM_SCALAR != 0.0f) m_ScalarObjectWeight = GlobalConfig.OTM_SCALAR;
+            if (GlobalConfig.RA_ANGLE != 0.0f) m_AngleThreshold = GlobalConfig.RA_ANGLE;
 
             // please be know that this function only works with NewARScene case
             // check the called script (GetComponent) on each manager
@@ -102,7 +104,7 @@ namespace CorrectionFunctions
             List<CustomTransform> MCT = StaticFunctions.ExtractToCustomTransform(m_Markers);
             OTM.SetMarkers(MCT);
             OTM.SetObjects(m_Objects);
-            var weights = OTM.GetAllWeights(MathFunctions.SIGMOID, true, true, m_ScalarWeight);
+            var weights = OTM.GetAllWeights(MathFunctions.SIGMOID, true, true, m_ScalarObjectWeight);
 
             //GlobalDebugging.DebugLogListFloatArray(Test_OnlyAxisObjectGet.AxisForDec192022(weights),
             //    "Marker to Object weights on Version 1");
@@ -142,7 +144,7 @@ namespace CorrectionFunctions
                 Destroy(dummy_o);
 
                 // if rotating is necessary based on angle threshold (not locked by gimbal)
-                if (CheckAngleRotation(error_q, previous_rotation, ANGLE_THRESHOLD))
+                if (CheckAngleRotation(error_q, previous_rotation, m_AngleThreshold))
                     ImportObjectsNewARScene(true);
 
                 // save the error_q into previous_rotation
@@ -165,7 +167,10 @@ namespace CorrectionFunctions
             var temp_obj = new GameObject();
             var origin = GlobalConfig.PlaySpaceOriginGO;
             temp_obj.transform.SetParent(origin.transform);
-                        
+
+            Debug.Log("m_Markers: " + m_Markers.Count);
+            Debug.Log("markers: " + markers.Count);
+
             // add new marker into list
             if (m_Markers.Count < markers.Count)
             {
@@ -256,7 +261,7 @@ namespace CorrectionFunctions
             }
         }
 
-        bool CheckAngleRotation(Quaternion previous, Quaternion current, float angle_threshold = 5.0f)
+        bool CheckAngleRotation(Quaternion previous, Quaternion current, float m_AngleThreshold = 5.0f)
         {
             var q_diff = Quaternion.Inverse(previous) * current;
             float angle_in_rad = Mathf.Acos(q_diff.w);
@@ -264,7 +269,7 @@ namespace CorrectionFunctions
 
             //Debug.Log(q_diff + " " + angle_in_rad + " " + angle_in_degree);
 
-            if (angle_in_degree > angle_threshold) return true;
+            if (angle_in_degree > m_AngleThreshold) return true;
             return false;
         }
 
@@ -325,6 +330,11 @@ namespace CorrectionFunctions
             };
 
                 GlobalSaveData.WriteData(data);
+        }
+
+        public List<MarkerLocation> GetMarkerLocations()
+        {
+            return m_Markers;
         }
     }
 }

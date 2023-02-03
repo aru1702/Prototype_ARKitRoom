@@ -308,6 +308,24 @@ public class NewARSceneImageTrackingCorrection : MonoBehaviour
         SavingToGlobalSaveData(customTransform, null);
     }
 
+    public void UpdateInputData(CustomTransform customTransform)
+    {
+        foreach (var item in m_ImageTrackedList)
+        {
+            if (item.custom_name == customTransform.custom_name)
+            {
+                item.custom_position = customTransform.custom_position;
+                item.custom_euler_rotation = customTransform.custom_euler_rotation;
+                item.custom_q_rotation = customTransform.custom_q_rotation;
+                break;
+            }
+        }
+
+        m_NowMarkerTracked = customTransform.custom_name;
+
+        SavingToGlobalSaveData(customTransform, null);
+    }
+
     public void TestInputDataRemove(CustomTransform customTransform)
     {
         m_ImageTrackedListWithRemove.Add(customTransform);

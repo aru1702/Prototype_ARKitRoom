@@ -119,12 +119,18 @@ public class GlobalConfig : MonoBehaviour
     public static GameObject REPLICA_WORLD_CALIBRATION_OBJ;
     public static bool WORLD_CALIBRATION_ONOFF = false;
 
+    public enum VER { Version1, Version1BLast, Version1BAvg, Version2A };
     /// <summary>Use of correction function</summary>
     public static int CorrectionFunctionVersion = 1;
+
     public static float OTM_SCALAR = 1.0f;
     public static float OTM_PRIORITY = 1.0f;
     public static float CTTtime_SCALAR = 1.0f;
     public static float CTTtime_PRIORITY = 1.0f;
+    public static float CTM_SCALAR = 1.0f;
+    public static float UTD_SCALAR = 1.0f;
+    public static float RA_ANGLE = 1.0f;
+
 
     /// <summary>
     /// We get matrix4x4 of "from" gameObject by "reference" gameobject.

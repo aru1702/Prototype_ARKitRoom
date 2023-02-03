@@ -566,8 +566,9 @@ MonoBehaviour:
   m_LoadObjectManager: {fileID: 1048425736}
   m_ImageTrackingManager: {fileID: 100959371}
   m_UpdateInterval: 0.25
-  m_ScalarWeight: 1
-  ANGLE_THRESHOLD: 0.01
+  m_ScalarObjectWeight: 1
+  m_ScalarCameraWeight: 1
+  ANGLE_THRESHOLD: 1
 --- !u!114 &100959378
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -583,8 +584,8 @@ MonoBehaviour:
   m_LoadObjectManager: {fileID: 1048425736}
   m_ImageTrackingManager: {fileID: 100959371}
   m_UpdateInterval: 0.25
-  m_ScalarWeight: 1
-  ANGLE_THRESHOLD: 0.1
+  m_ScalarObjectWeight: 1
+  ANGLE_THRESHOLD: 1
 --- !u!1 &106830607
 GameObject:
   m_ObjectHideFlags: 0
@@ -4091,7 +4092,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 18
+    m_FontSize: 16
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 1
@@ -8004,6 +8005,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_MarkerStatusHandler: {fileID: 1313966051}
   m_ImageRecogCorrectionHandler: {fileID: 100959371}
+  m_VersionOneRot: {fileID: 100959371}
   m_IntervalDataUpdate: 0.5
 --- !u!114 &1313966054
 MonoBehaviour:
