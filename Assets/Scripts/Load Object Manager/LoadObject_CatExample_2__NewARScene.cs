@@ -593,19 +593,20 @@ public class LoadObject_CatExample_2__NewARScene : MonoBehaviour
 
     void UseCorrectionFunction()
     {
+        // marker tracking is enabled
+        m_CorrectionFunctionManager
+            .GetComponent<NewARSceneImageTrackingCorrection>().enabled = true;
+
+        // but if the correction function is disabled, no use the rest of code
         if (m_CorrectionFunctionManager == null) return;
 
         // VERSION 1:
-
         // desc:
         // - don't use previous marker result
         // - generate marker in testing phase runtime
         // how:
         // - use the NewARSceneCorrectionFunction to get and process marker data
         // - use the NewARSceneImageTrackingCorrection to get marker data
-
-        //m_CorrectionFunctionManager
-        //    .GetComponent<NewARSceneCorrectionFunction>().enabled = true;
 
         if (GlobalConfig.CorrectionFunctionVersion == 1)
             m_CorrectionFunctionManager
@@ -619,6 +620,10 @@ public class LoadObject_CatExample_2__NewARScene : MonoBehaviour
             m_CorrectionFunctionManager
                 .GetComponent<CorrectionFunctions.VersionOneBAvgWMarker>().enabled = true;
 
+        // VERSION 2:
+        // desc:
+        // - use marker to marker distance to get priority weight
+
         if (GlobalConfig.CorrectionFunctionVersion == 4)
             m_CorrectionFunctionManager
                 .GetComponent<CorrectionFunctions.VersionTwoA>().enabled = true;
@@ -626,10 +631,6 @@ public class LoadObject_CatExample_2__NewARScene : MonoBehaviour
         //if (GlobalConfig.CorrectionFunctionVersion == 5)
         //    m_CorrectionFunctionManager
         //        .GetComponent<CorrectionFunctions.VersionTwoB>().enabled = true;
-
-        m_CorrectionFunctionManager
-            .GetComponent<NewARSceneImageTrackingCorrection>().enabled = true;
-
 
         // VERSION 0:  result failed
 

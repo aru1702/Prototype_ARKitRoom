@@ -67,4 +67,24 @@ public class GlobalDebugging
         r += ")";
         return r;
     }
+
+    public static string LoggingStringArray(string[] strings, string divider = " ")
+    {
+        string s = "";
+        for (int i = 0; i < strings.Length; i++)
+        {
+            s += strings[i] + divider;
+        }
+        return s;
+    }
+
+    public static string LoggingListofStringArray(List<string[]> list_strings, string divider = " ")
+    {
+        string s = "";
+        foreach (var ss in list_strings)
+        {
+            s += LoggingStringArray(ss, divider) + "\n";
+        }
+        return s;
+    }
 }

@@ -568,7 +568,7 @@ MonoBehaviour:
   m_UpdateInterval: 0.25
   m_ScalarObjectWeight: 1
   m_ScalarCameraWeight: 1
-  ANGLE_THRESHOLD: 1
+  m_AngleThreshold: 0.1
 --- !u!114 &100959378
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -585,7 +585,7 @@ MonoBehaviour:
   m_ImageTrackingManager: {fileID: 100959371}
   m_UpdateInterval: 0.25
   m_ScalarObjectWeight: 1
-  ANGLE_THRESHOLD: 1
+  m_AngleThreshold: 0.1
 --- !u!1 &106830607
 GameObject:
   m_ObjectHideFlags: 0
@@ -10683,10 +10683,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ImageTrackingCorrection: {fileID: 100959371}
-  m_MarkerName: img_1
-  m_DesirePosition: {x: -1.017, y: -0.715, z: -2.94}
-  m_DesireRotation: {x: 0, y: 95, z: 0}
+  m_MarkerName0: img_0
+  m_DesirePosition0: {x: 0.004787229, y: 0.0003082752, z: -0.003568031}
+  m_DesireRotation0: {x: 359.78397, y: 356.53888, z: 0.38870567}
+  m_Update0: 0
+  m_MarkerName1: img_1
+  m_DesirePosition1: {x: -0.9634846, y: -0.7524229, z: -2.9355175}
+  m_DesireRotation1: {x: 5.919672, y: 89.5458, z: 341.3061}
   m_Update1: 0
+  m_MarkerName2: img_2
+  m_DesirePosition2: {x: -4.466812, y: -0.7692926, z: -2.859217}
+  m_DesireRotation2: {x: 6.2299504, y: 91.601685, z: 6.3743277}
+  m_Update2: 0
+  m_MarkerName3: img_3
+  m_DesirePosition3: {x: -3.9734674, y: -1.884747, z: 3.0909047}
+  m_DesireRotation3: {x: 4.888892, y: 92.20851, z: 9.878653}
+  m_Update3: 0
   m_MarkerName4: img_4
   m_DesirePosition4: {x: -1.015, y: -0.708, z: 10.49}
   m_DesireRotation4: {x: 0, y: 87, z: 0}

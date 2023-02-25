@@ -25,6 +25,10 @@ namespace CorrectionFunctions
         List<Vector3> m_InitObjectsLocations;
         ObjectToMarkers OTM;
 
+        List<GameObject> m_InitObjectsLocationsHelper = new();
+        GameObject center_helper;
+        GameObject root_helper;
+
         [SerializeField]
         [Tooltip("To get camera game object information.")]
         GameObject m_ARCamera;
@@ -67,6 +71,11 @@ namespace CorrectionFunctions
             // initialization
             OTM = new();
             previous_rotation = new();
+            center_helper = new("center_helper");
+            root_helper = new("root_helper");
+            root_helper.transform.SetPositionAndRotation(
+                GlobalConfig.PlaySpaceOriginGO.transform.position,
+                GlobalConfig.PlaySpaceOriginGO.transform.rotation);
             GetMarkerGroundTruth();
 
             if (GlobalConfig.OTM_SCALAR != 0.0f) m_ScalarObjectWeight = GlobalConfig.OTM_SCALAR;
@@ -88,6 +97,10 @@ namespace CorrectionFunctions
             }
         }
 
+        // The order of compensation:
+        // - Translation
+        // - Rotation
+        // - Update ground truth
         void Main()
         {
             // check if image tracking has detected a marker
@@ -105,6 +118,10 @@ namespace CorrectionFunctions
                 .GetComponent<NewARSceneImageTrackingCorrection>()
                 .GetImageTrackedList();
             if (markers_runtime.Count <= 0) { return; }
+
+            // reset root first
+            GlobalConfig.PlaySpaceOriginGO.transform.SetPositionAndRotation(
+                root_helper.transform.position, root_helper.transform.rotation);
 
             AddOrUpdateMarkerRuntime(markers_runtime);
 
@@ -146,7 +163,7 @@ namespace CorrectionFunctions
                 result = Quaternion.Slerp(result, error_q, cam_to_mark_ws[i]);
             }
 
-            // get nearest marker
+            // apply root rotation
             var marker_name = m_ImageTrackingManager
                 .GetComponent<NewARSceneImageTrackingCorrection>()
                 .GetNowMarkerTracked();
@@ -155,7 +172,7 @@ namespace CorrectionFunctions
                 // create dummy object on the marker position
                 GameObject dummy_o = new();
                 dummy_o.transform.position = f_marker.C_Position;
-                dummy_o.transform.rotation = previous_rotation;
+                //dummy_o.transform.rotation = previous_rotation;
 
                 // put the root under the dummy_o
                 GlobalConfig.PlaySpaceOriginGO.transform.parent = dummy_o.transform;
@@ -165,14 +182,16 @@ namespace CorrectionFunctions
 
                 // release the root and delete dummy_o
                 GlobalConfig.PlaySpaceOriginGO.transform.parent = null;
-                Destroy(dummy_o);
 
                 // if rotating is necessary based on angle threshold (not locked by gimbal)
-                if (CheckAngleRotation(result, previous_rotation, m_AngleThreshold))
-                    ImportObjectsNewARScene(true);
+                //if (CheckAngleRotation(error_q, previous_rotation, m_AngleThreshold))
+                //    ImportObjectsNewARScene(true);
+                //UpdateGroundTruthAfterRotation();
 
                 // save the error_q into previous_rotation
-                previous_rotation = result;
+                //previous_rotation = result;
+
+                Destroy(dummy_o);
             }
 
             //    only_once_rotation = true;
@@ -210,15 +229,15 @@ namespace CorrectionFunctions
                             //temp_obj.transform.localEulerAngles = GlobalConfig.GetEulerAngleFromM44(gt_m44);
                             temp_obj.transform.localRotation = GlobalConfig.GetRotationFromM44(gt_m44);
 
-                            temp_ml.GT_Position = ExtractVector3(temp_obj.transform.position);
-                            temp_ml.GT_EulerAngle = ExtractVector3(temp_obj.transform.eulerAngles);
+                            temp_ml.GT_Position = GlobalConfig.ExtractVector3(temp_obj.transform.position);
+                            temp_ml.GT_EulerAngle = GlobalConfig.ExtractVector3(temp_obj.transform.eulerAngles);
                             temp_ml.GT_Rotation = GlobalConfig.ExtractQuaternion(temp_obj.transform.rotation);
 
                             //temp_obj.transform.position = markers[i].custom_position;
                             //temp_obj.transform.eulerAngles = markers[i].custom_euler_rotation;
 
-                            temp_ml.C_Position = ExtractVector3(markers[i].custom_position);
-                            temp_ml.C_EulerAngle = ExtractVector3(markers[i].custom_euler_rotation);
+                            temp_ml.C_Position = GlobalConfig.ExtractVector3(markers[i].custom_position);
+                            temp_ml.C_EulerAngle = GlobalConfig.ExtractVector3(markers[i].custom_euler_rotation);
                             temp_ml.C_Rotation = GlobalConfig.ExtractQuaternion(markers[i].custom_q_rotation);
 
                             m_Markers.Add(temp_ml);
@@ -238,8 +257,8 @@ namespace CorrectionFunctions
                 {
                     if (Equals(markers[i].custom_name, m_Markers[j].Marker_name))
                     {
-                        m_Markers[j].C_Position = ExtractVector3(markers[i].custom_position);
-                        m_Markers[j].C_EulerAngle = ExtractVector3(markers[i].custom_euler_rotation);
+                        m_Markers[j].C_Position = GlobalConfig.ExtractVector3(markers[i].custom_position);
+                        m_Markers[j].C_EulerAngle = GlobalConfig.ExtractVector3(markers[i].custom_euler_rotation);
                         m_Markers[j].C_Rotation = GlobalConfig.ExtractQuaternion(markers[i].custom_q_rotation);
 
                         break;
@@ -262,23 +281,52 @@ namespace CorrectionFunctions
             Destroy(temp_obj);
         }
 
-        void ImportObjectsNewARScene(bool update = false)
+        /// <summary>
+        /// To import all game object before alteration as ground truth position.
+        /// It can also update the ground truth if the world coordinate system is alternated.
+        /// </summary>
+        /// <param name="update">Should the ground truth list need to be cleared.</param>
+        /// <param name="create_new_object">Create new game object for all ground truth as helper.
+        ///                                 Saved in m_InitObjectsLocationsHelper list.</param>
+        void ImportObjectsNewARScene(bool update = false, bool create_new_object = false)
         {
-            if (update)
-            {
-                m_InitObjectsLocations.Clear();
-            }
+            if (update) { m_InitObjectsLocations.Clear(); }
 
             m_Objects = m_LoadObjectManager
                 .GetComponent<LoadObject_CatExample_2__NewARScene>()
                 .GetMyObjects();
 
+            center_helper.transform.position = GlobalConfig.PlaySpaceOriginGO.transform.position;
+
             m_InitObjectsLocations = new();
             foreach (var o in m_Objects)
             {
-                var m44 = GlobalConfig.GetM44ByGameObjRef(o, GlobalConfig.PlaySpaceOriginGO);
-                //m_InitObjectsLocations.Add(ExtractVector3(m44.GetPosition()));
-                m_InitObjectsLocations.Add(ExtractVector3(o.transform.position));
+                m_InitObjectsLocations.Add(GlobalConfig.ExtractVector3(o.transform.position));
+
+                // now this function also create new object to custom
+                if (create_new_object)
+                {
+                    GameObject gameObject = new();
+                    gameObject.name = "cno_gameObject_" + o.name;
+                    gameObject.transform.position = GlobalConfig.ExtractVector3(o.transform.position);
+                    gameObject.transform.rotation = GlobalConfig.ExtractQuaternion(o.transform.rotation);
+                    gameObject.transform.SetParent(center_helper.transform);
+                    m_InitObjectsLocationsHelper.Add(gameObject);
+                }
+            }
+        }
+
+        /// <summary>
+        /// To update ground truth position after world coordinate system rotation (alternated):
+        /// 1. Clear the current ground truth data,
+        /// 2. Insert with the new one.
+        /// </summary>
+        void UpdateGroundTruthAfterRotation()
+        {
+            m_InitObjectsLocations.Clear();
+            foreach (var iolh in m_InitObjectsLocationsHelper)
+            {
+                m_InitObjectsLocations.Add(GlobalConfig.ExtractVector3(iolh.transform.position));
             }
         }
 
@@ -290,21 +338,11 @@ namespace CorrectionFunctions
 
             //Debug.Log(q_diff + " " + angle_in_rad + " " + angle_in_degree);
 
+            if (angle_in_degree == float.NaN) return true;
             if (angle_in_degree > m_AngleThreshold) return true;
             return false;
         }
 
-        void ExtractVector3(Vector3 v, out float x, out float y, out float z)
-        {
-            x = v.x;
-            y = v.x;
-            z = v.z;
-        }
-
-        Vector3 ExtractVector3(Vector3 v)
-        {
-            return new(v.x, v.y, v.z);
-        }
 
         /// TODO:
         /// - Implement this in every version of GetMarkerGroundTruth function

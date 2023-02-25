@@ -120,14 +120,14 @@ namespace CorrectionFunctions
                             temp_obj.transform.localPosition = GlobalConfig.GetPositionFromM44(gt_m44);
                             temp_obj.transform.localEulerAngles = GlobalConfig.GetEulerAngleFromM44(gt_m44);
 
-                            temp_ml.GT_Position = ExtractVector3(temp_obj.transform.position);
-                            temp_ml.GT_EulerAngle = ExtractVector3(temp_obj.transform.eulerAngles);
+                            temp_ml.GT_Position = GlobalConfig.ExtractVector3(temp_obj.transform.position);
+                            temp_ml.GT_EulerAngle = GlobalConfig.ExtractVector3(temp_obj.transform.eulerAngles);
 
                             //temp_obj.transform.position = markers[i].custom_position;
                             //temp_obj.transform.eulerAngles = markers[i].custom_euler_rotation;
 
-                            temp_ml.C_Position = ExtractVector3(markers[i].custom_position);
-                            temp_ml.C_EulerAngle = ExtractVector3(markers[i].custom_euler_rotation);
+                            temp_ml.C_Position = GlobalConfig.ExtractVector3(markers[i].custom_position);
+                            temp_ml.C_EulerAngle = GlobalConfig.ExtractVector3(markers[i].custom_euler_rotation);
 
                             m_Markers.Add(temp_ml);
                             break;
@@ -146,8 +146,8 @@ namespace CorrectionFunctions
                 {
                     if (Equals(markers[i].custom_name, m_Markers[j].Marker_name))
                     {
-                        m_Markers[j].C_Position = ExtractVector3(markers[i].custom_position);
-                        m_Markers[j].C_EulerAngle = ExtractVector3(markers[i].custom_euler_rotation);
+                        m_Markers[j].C_Position = GlobalConfig.ExtractVector3(markers[i].custom_position);
+                        m_Markers[j].C_EulerAngle = GlobalConfig.ExtractVector3(markers[i].custom_euler_rotation);
 
                         break;
                     }
@@ -178,21 +178,10 @@ namespace CorrectionFunctions
             m_InitObjectsLocations = new();
             foreach (var o in m_Objects)
             {
-                m_InitObjectsLocations.Add(ExtractVector3(o.transform.position));
+                m_InitObjectsLocations.Add(GlobalConfig.ExtractVector3(o.transform.position));
             }
         }
-
-        void ExtractVector3(Vector3 v, out float x, out float y, out float z)
-        {
-            x = v.x;
-            y = v.x;
-            z = v.z;
-        }
-
-        Vector3 ExtractVector3(Vector3 v)
-        {
-            return new(v.x, v.y, v.z);
-        }
+        
 
         /// TODO:
         /// - Implement this in every version of GetMarkerGroundTruth function
