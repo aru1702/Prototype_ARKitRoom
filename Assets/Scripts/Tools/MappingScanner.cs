@@ -471,7 +471,7 @@ public class MappingScanner : MonoBehaviour
         catch (System.Exception ex)
         {
             // do nothing, just skip
-            Debug.LogError("Subsystem: " + ex);
+            //Debug.LogError("Subsystem: " + ex);
         }
 #endif
 

@@ -111,16 +111,21 @@ public class MappingV2 : MonoBehaviour
         var m44 = GlobalConfig.GetM44ByGameObjRef(m_ARCamera, localWorldCoordinate);
         Vector3 pos = GlobalConfig.GetPositionFromM44(m44);
         Vector3 rot = GlobalConfig.GetEulerAngleFromM44(m44);
+        Quaternion rotq = GlobalConfig.GetRotationFromM44(m44);
 
         string[] data = new[]
         {
-            GlobalConfig.GetNowDateandTime(),   // 0
+            GlobalConfig.GetNowDateandTime(true),   // 0
             pos.x.ToString(),
             pos.y.ToString(),
             pos.z.ToString(),
             rot.x.ToString(),
             rot.y.ToString(),
-            rot.z.ToString()                    // 6
+            rot.z.ToString(),                    // 6
+            rotq.x.ToString(),
+            rotq.y.ToString(),
+            rotq.z.ToString(),
+            rotq.w.ToString(),
         };
 
         m_RecordedCameraData.Add(data);

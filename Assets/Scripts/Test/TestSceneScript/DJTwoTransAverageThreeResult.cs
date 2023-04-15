@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 /// <summary>
@@ -197,6 +198,93 @@ public class DJTwoTransAverageThreeResult : MonoBehaviour
         if (!debug) { DebugResultObject("SLERP"); debug = true; }
     }
 
+    // FOR EIGEN
+
+    /// <summary>
+    /// Quaternion Units to receive data from Eigen function
+    /// </summary>
+    public unsafe struct QuaternionUnits
+    {
+        public float x;
+        public float y;
+        public float z;
+        public float w;
+
+        public float[] Data
+        {
+            get
+            {
+                return new[] { x, y, z, w };
+            }
+        }
+
+        public override string ToString()
+        {
+            return x.ToString() + "\t" +
+                y.ToString() + "\t" +
+                z.ToString() + "\t" +
+                w.ToString();
+        }
+    }
+
+    /// <summary>
+    /// Calling GetAvgQuaternions function of Dll script from Eigen.
+    /// Pass all float parameter of Matrix4x4.
+    /// </summary>
+    /// <returns>QuaternionUnits data type</returns>
+    [DllImport("EigenToUnity11.dll", CallingConvention = CallingConvention.Cdecl)]
+    private static extern QuaternionUnits GetAvgQuaternions
+                                (float m00, float m01, float m02, float m03,
+                                float m10, float m11, float m12, float m13,
+                                float m20, float m21, float m22, float m23,
+                                float m30, float m31, float m32, float m33);
+
+    /// <summary>
+    /// Convert Matrix4x4 to get average quaternion from Eigen value
+    /// </summary>
+    /// <returns>Quaternion Unity data type</returns>
+    Quaternion Mat4x4ToAvgQuaternion (Matrix4x4 m)
+    {
+        QuaternionUnits q_units = GetAvgQuaternions(m.m00, m.m01, m.m02, m.m03,
+                                                    m.m10, m.m11, m.m12, m.m13,
+                                                    m.m20, m.m21, m.m22, m.m23,
+                                                    m.m30, m.m31, m.m32, m.m33);
+        return new Quaternion(q_units.x, q_units.y, q_units.z, q_units.w);
+    }
+
+    /// <summary>
+    /// OuterProduct of two quaternions, where q1 * q2^T.
+    /// </summary>
+    /// <param name="q1">Left quaternion</param>
+    /// <param name="q2">Right quaternion</param>
+    /// <returns>Matrix4x4 of outerproduct</returns>
+    Matrix4x4 OuterProduct(Quaternion q1, Quaternion q2)
+    {
+        // the order: x,y,z,w
+        // the direction is vertical
+        Vector4 v1 = new(q1.x * q2.x, q1.y * q2.x, q1.z * q2.x, q1.w * q2.x);
+        Vector4 v2 = new(q1.x * q2.y, q1.y * q2.y, q1.z * q2.y, q1.w * q2.y);
+        Vector4 v3 = new(q1.x * q2.z, q1.y * q2.z, q1.z * q2.z, q1.w * q2.z);
+        Vector4 v4 = new(q1.x * q2.w, q1.y * q2.w, q1.z * q2.w, q1.w * q2.w);
+
+        return new Matrix4x4(v1, v2, v3, v4);
+    }
+
+    /// <summary>
+    /// Sum of two Matrix4x4, arithmetic sum.
+    /// </summary>
+    /// <param name="m1">Left matrix</param>
+    /// <param name="m2">Right matrix</param>
+    /// <returns>Matrix4x4 of sum</returns>
+    Matrix4x4 SumOfMatrix4x4(Matrix4x4 m1, Matrix4x4 m2)
+    {
+        return new Matrix4x4(m1.GetRow(0) + m2.GetRow(0),
+                             m1.GetRow(1) + m2.GetRow(1),
+                             m1.GetRow(2) + m2.GetRow(2),
+                             m1.GetRow(3) + m2.GetRow(3));
+    }
+    // FOR EIGEN
+
     void Eigenvector()
     {
         PositionAveraging();
@@ -209,9 +297,20 @@ public class DJTwoTransAverageThreeResult : MonoBehaviour
         // we haven't include the dll library in here
 
         // the answers:
-        var r12 = new Quaternion(0, 0.194515f, 0, 0.980900f);
-        var r23 = new Quaternion(0, 0.939658f, 0, 0.342117f);
-        var r13 = new Quaternion(0, 0.806308f, 0, -0.591495f);
+        //var r12 = new Quaternion(0, 0.194515f, 0, 0.980900f);
+        //var r23 = new Quaternion(0, 0.939658f, 0, 0.342117f);
+        //var r13 = new Quaternion(0, 0.806308f, 0, -0.591495f);
+
+        // now we calculate using Eigen
+        // calculate Matrix4x4
+        Matrix4x4 m12 = SumOfMatrix4x4(OuterProduct(r1, r1), OuterProduct(r2, r2));
+        Matrix4x4 m23 = SumOfMatrix4x4(OuterProduct(r2, r2), OuterProduct(r3, r3));
+        Matrix4x4 m13 = SumOfMatrix4x4(OuterProduct(r1, r1), OuterProduct(r3, r3));
+
+        // pass to Eigen function
+        Quaternion r12 = Mat4x4ToAvgQuaternion(m12);
+        Quaternion r23 = Mat4x4ToAvgQuaternion(m23);
+        Quaternion r13 = Mat4x4ToAvgQuaternion(m13);
 
         Result12.transform.rotation = r12;
         Result23.transform.rotation = r23;

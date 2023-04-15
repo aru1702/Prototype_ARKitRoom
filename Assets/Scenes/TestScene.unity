@@ -540,7 +540,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 36683548}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0e0415ff23f5b47689713fd0fd26ca6d, type: 3}
   m_Name: 
@@ -566,7 +566,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 36683548}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8ceb1333c9502484b91bd3ebca482ed5, type: 3}
   m_Name: 
@@ -576,6 +576,15 @@ MonoBehaviour:
   m_One: {fileID: 1315603001}
   m_Two: {fileID: 545514967}
   m_Three: {fileID: 1696286699}
+  text2: === Activation button ===
+  start: 0
+  text3: === Others ===
+  speed: 1
+  slerp: 0
+  nlerp: 0
+  debug: 0
+  add: 0
+  rotY: 30
 --- !u!1 &37160869
 GameObject:
   m_ObjectHideFlags: 0
@@ -4998,7 +5007,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 545514967}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0.9659259, z: -0, w: -0.25881898}
   m_LocalPosition: {x: 1.32, y: 0, z: -8.75}
   m_LocalScale: {x: 0.7, y: 0.1, z: 0.7}
   m_ConstrainProportionsScale: 0
@@ -5006,7 +5015,7 @@ Transform:
   - {fileID: 1596684677}
   m_Father: {fileID: 36683550}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 210, z: 0}
 --- !u!1 &558306394
 GameObject:
   m_ObjectHideFlags: 0

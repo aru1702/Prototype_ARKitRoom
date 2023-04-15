@@ -7413,6 +7413,18 @@ MonoBehaviour:
           m_StringArgument: Marker and Obj in Order
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1670321752}
+        m_TargetAssemblyTypeName: CMOMMarkerData, Assembly-CSharp
+        m_MethodName: SaveDataCSV
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1233600550
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10728,6 +10740,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1670321750}
   - component: {fileID: 1670321751}
+  - component: {fileID: 1670321752}
   m_Layer: 0
   m_Name: MappingV2
   m_TagString: Untagged
@@ -10768,6 +10781,24 @@ MonoBehaviour:
   m_EnableCameraRecording: 0
   m_EnableMarkerRecording: 1
   m_CreateTrailPerSecond: 0.5
+--- !u!114 &1670321752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1670321749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b0606c012a9c497c982e92ad3505576, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ActiveForCM: 0
+  m_ActiveForOM: 1
+  m_ARSessionOrigin: {fileID: 1073739941}
+  m_ARCamera: {fileID: 1580354072}
+  m_LoadObjectManager: {fileID: 1048425736}
+  m_CameraUpdatePeriod: 1
 --- !u!1 &1706002984
 GameObject:
   m_ObjectHideFlags: 0

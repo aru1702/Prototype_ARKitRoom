@@ -1363,7 +1363,7 @@ Transform:
   - {fileID: 1222079197}
   - {fileID: 1180231736}
   m_Father: {fileID: 956583524}
-  m_RootOrder: 8
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &308834007
 GameObject:
@@ -1488,6 +1488,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1352895497}
         m_TargetAssemblyTypeName: Test_CameraTracksToMarker_AsSLAMPosition, Assembly-CSharp
         m_MethodName: MainNewSave
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1114156150}
+        m_TargetAssemblyTypeName: CMOMMarkerData, Assembly-CSharp
+        m_MethodName: SaveDataCSV
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3263,12 +3275,12 @@ Transform:
   - {fileID: 1546836197}
   - {fileID: 1405528556}
   - {fileID: 255059545}
-  - {fileID: 1352895494}
   - {fileID: 1515252888}
   - {fileID: 1591189521}
-  - {fileID: 285168561}
+  - {fileID: 1352895494}
   - {fileID: 1114156147}
   - {fileID: 1278656316}
+  - {fileID: 285168561}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3408,6 +3420,7 @@ GameObject:
   - component: {fileID: 1114156147}
   - component: {fileID: 1114156148}
   - component: {fileID: 1114156149}
+  - component: {fileID: 1114156150}
   m_Layer: 0
   m_Name: Mapping v2
   m_TagString: Untagged
@@ -3428,7 +3441,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 956583524}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1114156148
 MonoBehaviour:
@@ -3464,6 +3477,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_MappingV2: {fileID: 1114156146}
   m_UIManager: {fileID: 1405528555}
+--- !u!114 &1114156150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1114156146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b0606c012a9c497c982e92ad3505576, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ActiveForCM: 1
+  m_ActiveForOM: 0
+  m_ARSessionOrigin: {fileID: 615675909}
+  m_ARCamera: {fileID: 2137751307}
+  m_LoadObjectManager: {fileID: 1546836196}
+  m_CameraUpdatePeriod: 1
 --- !u!1 &1122146551
 GameObject:
   m_ObjectHideFlags: 0
@@ -4135,7 +4166,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 956583524}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1278656317
 MonoBehaviour:
@@ -4152,7 +4183,7 @@ MonoBehaviour:
   m_SaveMap: 0
   m_LoadMap: 0
   m_CorrectionVersion: 0
-  m_LoadObjectManager: {fileID: 0}
+  m_LoadObjectManager: {fileID: 1546836196}
   m_PanelUIs: []
 --- !u!1 &1330607216
 GameObject:
@@ -4400,7 +4431,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 956583524}
-  m_RootOrder: 5
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1352895495
 MonoBehaviour:
@@ -4829,7 +4860,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 956583524}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1515252889
 MonoBehaviour:
@@ -5123,7 +5154,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 956583524}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1591189522
 MonoBehaviour:

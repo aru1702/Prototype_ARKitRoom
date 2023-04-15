@@ -27,6 +27,14 @@ public class ImageRecognition_CatExample_2 : MonoBehaviour
 
     public List<CustomImgTarget> m_ImageTargetsTransform;
 
+
+    // Added on April 15th, 2023
+    Vector3 currentMarkerPosition;
+    Vector3 currentMarkerEuler;
+    Quaternion currentMarkerRotation;
+    string currentMarkerName = "na", previousMarkerName = "na";
+
+
     /**
      * Default methods
      */
@@ -252,4 +260,10 @@ public class ImageRecognition_CatExample_2 : MonoBehaviour
             this.transformObj = transformObj;
         }
     }
+
+    public Vector3 GetCurrentMarkerPosition() { return currentMarkerPosition; }
+    public Vector3 GetCurrentMarkerEuler() { return currentMarkerEuler; }
+    public Quaternion GetCurrentMarkerRotation() { return currentMarkerRotation; }
+    public string GetCurrentMarkerName() { return currentMarkerName; }
+    public string GetPreviousMarkerName() { return previousMarkerName; }
 }

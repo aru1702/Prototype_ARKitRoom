@@ -32,6 +32,8 @@ public class NewARSceneImageTrackingCorrection : MonoBehaviour
         // Debug.Log("enableImgTrck: " + m_EnableImageTrackingCorrection);
         if (!m_EnableThisFunction) return;
 
+        if (!GlobalConfig.UseCorrectionMethod) return;
+
         m_ARTrackedImageManager = FindObjectOfType<ARTrackedImageManager>();
     }
 
@@ -40,6 +42,8 @@ public class NewARSceneImageTrackingCorrection : MonoBehaviour
     {
         // Debug.Log("enableImgTrck: " + m_EnableImageTrackingCorrection);
         if (!m_EnableThisFunction) return;
+
+        if (!GlobalConfig.UseCorrectionMethod) return;
 
         m_ARTrackedImageManager.trackedImagesChanged += OnImageChanged;
 
@@ -50,6 +54,8 @@ public class NewARSceneImageTrackingCorrection : MonoBehaviour
     // OnDisable is called when script is deactivated
     void OnDisable()
     {
+        if (!GlobalConfig.UseCorrectionMethod) return;
+
         m_ARTrackedImageManager.trackedImagesChanged -= OnImageChanged;
 
         //m_HasUpdate = false;
