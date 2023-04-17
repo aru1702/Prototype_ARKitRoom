@@ -5,6 +5,9 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
+  - enabled: 0
+    path: Assets/Scenes/TestMarkerDetectionScene.unity
+    guid: e8fdbda72ed4e472c8b8d500b1cf0493
   - enabled: 1
     path: Assets/Scenes/MainMenuScene.unity
     guid: d6abd9a3d729046cbbb65c1e2fbe1066
