@@ -139,7 +139,8 @@ public class CMOMMarkerData : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(m_CameraUpdatePeriod);
-            UpdateCameraBehavior();
+            UpdateCameraBehaviorDistance();
+            UpdateCameraBehaviorTime(true);
 
             Debug.Log("current marker count: " + MarkerTableCount);
             Debug.Log("current gt data count: " + GTMarkerData.Count);
@@ -158,7 +159,7 @@ public class CMOMMarkerData : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     void UpdateGTMarkerData(string cur_marker_name)
@@ -223,16 +224,47 @@ public class CMOMMarkerData : MonoBehaviour
         }
     }
 
-    void UpdateCameraBehavior()
+    /// <summary>
+    /// This function can be called per any period
+    /// </summary>
+    void UpdateCameraBehaviorDistance()
     {
         var distance = Vector3.Distance(PreviousCameraPosition, m_ARCamera.transform.position);
-        var time = Time.deltaTime;
 
         CamDistFromStart += distance;
         CamDistFromLastMarker += distance;
-        CamTimeFromStart += time;
-        CamTimeFromLastMarker += time;
     }
+
+    /// <summary>
+    /// This function to update time per camera movement with two methods.
+    /// If use_delta_time is true, called it per frame, e.g., inside Update()
+    /// If use_delta_time is false, you can call it in any period
+    /// </summary>
+    /// <param name="use_delta_time">Use per delta time or per any period</param>
+    void UpdateCameraBehaviorTime(bool use_delta_time = true)
+    {
+        if (use_delta_time)
+        {
+            var time = Time.deltaTime;
+
+            CamTimeFromStart += time;
+            CamTimeFromLastMarker += time;
+        }
+
+        else
+        {
+            var current_time = Time.time;
+            var spend = Mathf.Abs(current_time - previous_time);
+
+            CamTimeFromStart += spend;
+            CamTimeFromLastMarker += spend;
+
+            previous_time = current_time;
+        }
+    }
+
+    float previous_time;
+
 
     void ResetCameraBehavior()
     {

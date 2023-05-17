@@ -1,0 +1,534 @@
+name,parent,pos_x,pos_y,pos_z,rot_x,rot_y,rot_z,comment
+imagetarget_img_0,root,0.116,0,0.1075,0,-90,0,Image target that used for positioning our root
+img_0,root,0.116,0,0.1075,0,-90,0,Img id is 100
+img_1,root,0.575,-0.715,-0.91,0,0,0,Img id is 0
+img_2,root,0.575,-0.715,-4.41,0,0,0,Img id is 1
+img_3,root,-3.425,-0.715,-2.41,0,0,0,Img id is 2
+img_4,root,-9.925,-0.715,-1.41,0,0,0,Img id is 3
+img_5,root,-7.925,-0.715,-4.41,0,0,0,Img id is 4
+img_6,root,-11.425,-0.715,-4.41,0,0,0,Img id is 5
+img_7,root,-10.425,-0.715,2.09,0,0,0,Img id is 6
+img_8,root,-9.925,-0.715,5.59,0,0,0,Img id is 7
+img_9,root,-4.925,-0.715,8.09,0,0,0,Img id is 8
+img_10,root,-5.925,-0.715,11.09,0,0,0,Img id is 9
+img_11,root,0.575,-0.715,5.59,0,0,0,Img id is 10
+img_12,root,0.575,-0.715,2.09,0,0,0,Img id is 11
+point_0,root,0.575,-0.715,-0.41,0,0,0,Point 0 is the beginning that below of my chair
+point_1,point_0,0,0,0,0,0,0,Same as point 0
+point_2,point_0,2.5,0,-0.5,0,0,0,Near bi and milano
+point_3,point_0,-2.5,0,-1,0,0,0,Near nagata right side
+point_4,point_0,-2.5,0,0,0,0,0,Near yoneyama left side
+point_5,point_0,-2,0,-4,0,0,0,Near sid
+point_6,point_0,2,0,-4,0,0,0,Near geert
+point_7,point_0,-4,0,0,0,0,0,Yoneyama to left near back alley
+point_8,point_0,-4.5,0,-4.5,0,0,0,Door at back alley
+point_9,point_0,-6.5,0,0,0,0,0,Front of back alley enter area II
+point_10,point_0,-6.5,0,-1.5,0,0,0,Near fumitaka
+point_11,point_0,-11.5,0,-1.5,0,0,0,Near ueda coffee machine
+point_12,point_0,-11.5,0,-0.5,0,0,0,Near taguchi and ray
+point_13,point_0,-11.5,0,-2.5,0,0,0,Threecrossing of coffee machine
+point_14,point_0,-13.5,0,-2.5,0,0,0,Most side of coffee machine
+point_15,point_0,-11.5,0,-4,0,0,0,Refreshment corner near hamza
+point_16,point_0,-6.5,0,3,0,0,0,Area III in front of whiteboard and liu jia
+point_17,point_0,-12,0,3,0,0,0,Tainaka and shen
+point_18,point_0,-6.5,0,6,0,0,0,Area III on sawabe sensei area
+point_19,point_0,-7.5,0,8,0,0,0,In front of kato sensei door
+point_20,point_0,-7,0,9.5,0,0,0,Ueno san desk
+point_21,point_0,-7,0,11.5,0,0,0,Ueno san shelf
+point_22,point_0,-4,0,11.5,0,0,0,Front door
+point_23,point_0,-4,0,6,0,0,0,Area IV on fujimoto sensei area
+point_24,point_0,-2.5,0,3.5,0,0,0,Enter area IV near shared desktop
+point_25,point_0,-1,0,3,0,0,0,Center of okami and kanda
+point_26,point_0,2.5,0,2.5,0,0,0,Near zhou
+aldy_desk,root,0,0,0,0,0,0,Aldy desk
+monitor_origin,aldy_desk,-0.02,0.14,0.395,0,-21,0,Tip left bottom of monitor and not include the stand
+echodot_origin,aldy_desk,0.525,0,0.54,0,0,0,Center of Amazon Echo Dot on the bottom
+cord_origin,aldy_desk,1.265,0,0.62,0,0,0,Tip left bottom of power cord
+bulb_origin,aldy_desk,0.9,0.52,0.62,0,0,0,Center of smart bulb house on the top
+echodot_btnLeft,echodot_origin,-0.025,0.04,0,0,0,0,Center down of left button
+echodot_btnUp,echodot_origin,0,0.04,0.025,0,0,0,Center down of up button
+echodot_btnRight,echodot_origin,0.025,0.04,0,0,0,0,Center down of right button
+echodot_btnDown,echodot_origin,0,0.04,-0.025,0,0,0,Center down of down button
+cord_input1,cord_origin,0.094,0.0325,0.01,0,0,0,Cord input on the most left
+cord_input2,cord_origin,0.134,0.0325,0.01,0,0,0,Cord input second on the left
+cord_input3,cord_origin,0.174,0.0325,0.01,0,0,0,Cord input on the center
+cord_input4,cord_origin,0.214,0.0325,0.01,0,0,0,Cord input second on the right
+cord_input5,cord_origin,0.254,0.0325,0.01,0,0,0,Cord input on the most right
+bulb_peekBulb,bulb_origin,0,-0.14,0,0,0,0,Light bulb on the center the most bottom part
+noniot__box,aldy_desk,0.795,0,0.455,0,0,0,none
+noniot__monitor,aldy_desk,0.205,0,0.4,0,-21,0,none
+noniot__dolls,aldy_desk,0.61,0,0.57,0,0,0,none
+noniot__doll_1,noniot__dolls,0,0,0,0,0,0,none
+noniot__doll_2,noniot__dolls,0.11,0,0,0,0,0,none
+noniot__doll_3,noniot__dolls,0.25,0.055,0,0,0,0,none
+noniot__doll_4,noniot__dolls,0.39,0,0,0,0,0,none
+noniot__doll_5,noniot__dolls,0.5,0,0,0,0,0,none
+noniot__bulbhouse,aldy_desk,0.9,0.52,0.62,0,0,0,none
+noniot__box2,aldy_desk,0.81,0,0.6,0,0,0,none
+noniot__macbook,aldy_desk,0.455,0.005,0.035,0,0,0,none
+aldy_workspace,root,0,-0.715,0,0,0,0,Aldy desk from BOTTOM
+noniot__table_aldy,aldy_workspace,0,0,0,0,0,0,Test big table
+noniot__chair_aldy,aldy_workspace,0.59,0,-0.05,0,90,0,Test big chair
+noniot__airpurifier,root,1.55,-0.715,-0.93,0,90,0,Air purifier with CUBE
+noniot__whiteboard_sm,root,1.99,-0.715,-0.93,0,90,0,Sm whiteboard with prefab
+bi_workspace,root,1.6,-0.715,0,0,0,0,Bi desk from BOTTOM
+noniot__table_bi,bi_workspace,0,0,0,0,0,0,Bi san table
+noniot__chair_bi,bi_workspace,0.59,0,-0.05,0,90,0,Bi san chair with 20cm distance from table origin
+bi_desk,bi_workspace,0,0.715,0,0,0,0,Bi san table but UP side
+noniot__bi_desktable,bi_desk,1.045,0,0.475,0,45,0,Bi san desk table
+noniot__bi_monitor,noniot__bi_desktable,0.18,0.08,0.045,0,0,0,Bi san monitor non iot
+bi_monitor_origin,noniot__bi_desktable,-0.04,0.22,0.122,0,0,0,Bi san monitor screen
+bi_cord_origin,bi_desk,1.24,0,0.615,0,0,0,Bi san cord origin
+bi_cord_input1,bi_cord_origin,0.05,0.035,0.015,0,0,0,Cord input 1
+bi_cord_input2,bi_cord_origin,0.085,0.035,0.015,0,0,0,Cord input 2
+bi_cord_input3,bi_cord_origin,0.12,0.035,0.015,0,0,0,Cord input 3
+bi_cord_input4,bi_cord_origin,0.155,0.035,0.015,0,0,0,Cord input 4
+bi_cord_input5,bi_cord_origin,0.19,0.035,0.015,0,0,0,Cord input 5
+bi_cord_input6,bi_cord_origin,0.225,0.035,0.015,0,0,0,Cord input 6
+bi_cord_input7,bi_cord_origin,0.26,0.035,0.015,0,0,0,Cord input 7
+yoneyama_workspace,root,-1.6,-0.715,0,0,0,0,Yoneyama desk from BOTTOM
+noniot__table_yoneyama,yoneyama_workspace,0,0,0,0,0,0,Yoneyama san table
+noniot__chair_yoneyama,yoneyama_workspace,0.59,0,-0.05,0,90,0,Yoneyama san chair with 20cm distance from table origin
+yoneyama_desk,yoneyama_workspace,0,0.715,0,0,0,0,Yoneyama san table but UP side
+noniot__yoneyama_monitor,yoneyama_desk,0.65,0,0.5,0,3,0,Yoneyama monitor non iot
+yoneyama_monitor_origin,yoneyama_desk,0.434,0.136,0.56,5,3,0,Yoneyama monitor screen
+nagata_workspace,root,0,-0.715,-2.19,0,180,0,Nagata desk from BOTTOM
+noniot__table_nagata,nagata_workspace,0,0,0,0,0,0,Nagata san table
+noniot__chair_nagata,nagata_workspace,0.59,0,-0.05,0,90,0,Nagata san chair with 20cm distance from table origin
+nagata_desk,nagata_workspace,0,0.715,0,0,0,0,Nagata san table but UP side
+noniot__nagata_monitor,nagata_desk,0.175,0,0.31,0,-40,0,Nagata monitor non iot
+nagata_monitor_origin,nagata_desk,-0.041,0.136,0.228,0,-40,0,Nagata monitor screen
+asada_workspace,root,1.6,-0.715,-2.19,0,180,0,Asada desk from BOTTOM
+noniot__table_asada,asada_workspace,0,0,0,0,0,0,Asada san table
+noniot__chair_asada,asada_workspace,0.59,0,-0.05,0,90,0,Asada san chair with 20cm distance from table origin
+asada_desk,asada_workspace,0,0.715,0,0,0,0,Asada san table but UP side
+noniot__asada_desktable,asada_desk,0.5,0,0.42,0,0,0,Asada san desktable for monitor 1 non iot
+noniot__asada_monitor_1,noniot__asada_desktable,0.145,0,0.0075,0,0,0,Asada san monitor 1 non iot
+asada_monitor_1_origin,noniot__asada_desktable,-0.08,0.135,0.083,0,0,0,Asada san monitor 1 screen
+noniot__asada_monitor_2,asada_desk,1.15,0,0.35,0,50,0,Asada san monitor 2 non iot
+asada_monitor_2_origin,asada_desk,1.056,0.137,0.554,5,50,0,Asada san monitor 2 screen
+asada_computer,asada_workspace,0.9,0,-0.04,0,0,0,Asada san computer origin
+asada_computer_upperperipheral,asada_computer,0,0.515,0.015,0,0,0,Asada san computer upper part of peripheral inputs
+asada_computer_usb_1,asada_computer_upperperipheral,0.058,0,0,0,0,0,Asada san computer usb 1
+asada_computer_usb_2,asada_computer_upperperipheral,0.088,0,0,0,0,0,Asada san computer usb 2
+asada_computer_usb_3,asada_computer_upperperipheral,0.144,0,0,0,0,0,Asada san computer usb 3
+asada_computer_usb_4,asada_computer_upperperipheral,0.1725,0,0,0,0,0,Asada san computer usb 4
+asada_computer_headphone_1,asada_computer_upperperipheral,0.108,0,0,0,0,0,Asada san computer headphone jack input 1
+asada_computer_headphone_2,asada_computer_upperperipheral,0.124,0,0,0,0,0,Asada san computer headphone jack input 2
+milano_workspace,root,3.2,-0.715,-2.19,0,180,0,Milano desk from BOTTOM
+noniot__table_milano,milano_workspace,0,0,0,0,0,0,Milano san table
+noniot__chair_milano,milano_workspace,0.59,0,-0.05,0,90,0,Milano san chair with 20cm distance from table origin
+milano_desk,milano_workspace,0,0.715,0,0,0,0,Milano san table but UP side
+noniot__refreshment_corner,root,-11.98,-0.715,-4.36,0,0,0,Refreshment corner bottom right leg
+refreshment_corner_tv,noniot__refreshment_corner,-0.47,0.68,0.73,0,0,0,Refreshment corner tv monitor
+sample_1,point_1,0.875,1.054,1.094,0,0,0,Sample 1
+sample_2,point_6,-0.84,1.36,-0.963,0,0,0,Sample 2
+sample_3,point_8,-0.006,1.335,-1.061,0,0,0,Sample 3
+sample_4,point_15,-1.205,1.29,-1.405,0,0,0,Sample 4
+sample_5,point_16,0.156,1.31,0.578,0,0,0,Sample 5
+sample_6,point_22,0.848,1.6,-1.601,0,0,0,Sample 6
+sample_7,point_26,0.2,1.255,-1.07,0,0,0,Sample 7
+point2_juritobi_1,yoneyama_desk,0,0,0,0,0,0,Edge origin
+point2_juritobi_2,yoneyama_desk,0,0,0.6,0,0,0,Edge origin
+point2_juritobi_3,aldy_desk,0,0,0,0,0,0,Edge origin
+point2_juritobi_4,aldy_desk,0,0,0.6,0,0,0,Edge origin
+point2_juritobi_5,bi_desk,0,0,0,0,0,0,Edge origin
+point2_juritobi_6,bi_desk,0,0,0.6,0,0,0,Edge origin
+point2_juritobi_7,bi_desk,1.6,0,0,0,0,0,Edge origin
+point2_juritobi_8,bi_desk,1.6,0,0.6,0,0,0,Edge origin
+point2_milanotonagata_1,milano_desk,0,0,0,0,0,0,Edge origin
+point2_milanotonagata_2,milano_desk,0,0,0.6,0,0,0,Edge origin
+point2_milanotonagata_3,asada_desk,0,0,0,0,0,0,Edge origin
+point2_milanotonagata_4,asada_desk,0,0,0.6,0,0,0,Edge origin
+point2_milanotonagata_5,nagata_desk,0,0,0,0,0,0,Edge origin
+point2_milanotonagata_6,nagata_desk,0,0,0.6,0,0,0,Edge origin
+point2_milanotonagata_7,nagata_desk,1.6,0,0,0,0,0,Edge origin
+point2_milanotonagata_8,nagata_desk,1.6,0,0.6,0,0,0,Edge origin
+sid_workspace,root,-1.6,-0.715,-3.59,0,0,0,Sid desk from BOTTOM
+sid_desk,sid_workspace,0,0.715,0,0,0,0,Sid table but UP side
+sara_workspace,root,0,-0.715,-3.59,0,0,0,Sara desk from BOTTOM
+sara_desk,sara_workspace,0,0.715,0,0,0,0,Sara table but UP side
+geert_workspace,root,1.6,-0.715,-3.59,0,0,0,Geert desk from BOTTOM
+geert_desk,geert_workspace,0,0.715,0,0,0,0,Geert table but UP side
+point2_sidtogeert_1,sid_desk,0,0,0,0,0,0,Edge origin
+point2_sidtogeert_2,sid_desk,0,0,0.6,0,0,0,Edge origin
+point2_sidtogeert_3,sara_desk,0,0,0,0,0,0,Edge origin
+point2_sidtogeert_4,sara_desk,0,0,0.6,0,0,0,Edge origin
+point2_sidtogeert_5,geert_desk,0,0,0,0,0,0,Edge origin
+point2_sidtogeert_6,geert_desk,0,0,0.6,0,0,0,Edge origin
+point2_sidtogeert_7,geert_desk,1.6,0,0,0,0,0,Edge origin
+point2_sidtogeert_8,geert_desk,1.6,0,0.6,0,0,0,Edge origin
+akiyoshi_workspace,point_9,-2.94,0,0.2375,0,0,0,Akiyoshi san desk from BOTTOM
+akiyoshi_desk,akiyoshi_workspace,0,0.715,0,0,0,0,Akiyoshi san table but UP side
+taguchi_workspace,point_9,-4.54,0,0.2375,0,0,0,Taguchi san desk from BOTTOM
+taguchi_desk,taguchi_workspace,0,0.715,0,0,0,0,Taguchi san table but UP side
+shimizu_workspace,point_9,-6.14,0,0.2375,0,0,0,Shimizu san desk from BOTTOM
+shimizu_desk,shimizu_workspace,0,0.715,0,0,0,0,Shimizu san table but UP side
+ray_workspace,point_9,-7.74,0,0.2375,0,0,0,Ray desk from BOTTOM
+ray_desk,ray_workspace,0,0.715,0,0,0,0,Ray table but UP side
+fumi_workspace,point_10,0.16,0,-0.545,0,180,0,Fumi san desk from BOTTOM
+fumi_desk,fumi_workspace,0,0.715,0,0,0,0,Fumi san table but UP side
+yamauchi_workspace,point_10,-1.44,0,-0.545,0,180,0,Yamauchi san desk from BOTTOM
+yamauchi_desk,yamauchi_workspace,0,0.715,0,0,0,0,Yamauchi san table but UP side
+ueda_workspace,point_10,-3.04,0,-0.545,0,180,0,Ueda san desk from BOTTOM
+ueda_desk,ueda_workspace,0,0.715,0,0,0,0,Fumi san table but UP side
+tanner_workspace,point_10,-1.44,0,-2.105,0,0,0,Tanner desk from BOTTOM
+tanner_desk,tanner_workspace,0,0.715,0,0,0,0,Tanner table but UP side
+kulik_workspace,point_10,-3.04,0,-2.105,0,0,0,Kulik desk from BOTTOM
+kulik_desk,kulik_workspace,0,0.715,0,0,0,0,Kulik table but UP side
+hamza_workspace,point_10,-4.64,0,-2.105,0,0,0,Hamza desk from BOTTOM
+hamza_desk,hamza_workspace,0,0.715,0,0,0,0,Hamza table but UP side
+point2_raytoakiyoshi_1,ray_desk,0,0,0,0,0,0,Edge origin
+point2_raytoakiyoshi_2,ray_desk,0,0,0.6,0,0,0,Edge origin
+point2_raytoakiyoshi_3,shimizu_desk,0,0,0,0,0,0,Edge origin
+point2_raytoakiyoshi_4,shimizu_desk,0,0,0.6,0,0,0,Edge origin
+point2_raytoakiyoshi_5,taguchi_desk,0,0,0,0,0,0,Edge origin
+point2_raytoakiyoshi_6,taguchi_desk,0,0,0.6,0,0,0,Edge origin
+point2_raytoakiyoshi_7,akiyoshi_desk,0,0,0,0,0,0,Edge origin
+point2_raytoakiyoshi_8,akiyoshi_desk,0,0,0.6,0,0,0,Edge origin
+point2_raytoakiyoshi_9,akiyoshi_desk,1.6,0,0,0,0,0,Edge origin
+point2_raytoakiyoshi_10,akiyoshi_desk,1.6,0,0.6,0,0,0,Edge origin
+point2_fumitoueda_1,fumi_desk,0,0,0,0,0,0,Edge origin
+point2_fumitoueda_2,fumi_desk,0,0,0.6,0,0,0,Edge origin
+point2_fumitoueda_3,yamauchi_desk,0,0,0,0,0,0,Edge origin
+point2_fumitoueda_4,yamauchi_desk,0,0,0.6,0,0,0,Edge origin
+point2_fumitoueda_5,ueda_desk,0,0,0,0,0,0,Edge origin
+point2_fumitoueda_6,ueda_desk,0,0,0.6,0,0,0,Edge origin
+point2_fumitoueda_7,ueda_desk,1.6,0,0,0,0,0,Edge origin
+point2_fumitoueda_8,ueda_desk,1.6,0,0.6,0,0,0,Edge origin
+point2_hamzatotanner_1,hamza_desk,0,0,0,0,0,0,Edge origin
+point2_hamzatotanner_2,hamza_desk,0,0,0.6,0,0,0,Edge origin
+point2_hamzatotanner_3,kulik_desk,0,0,0,0,0,0,Edge origin
+point2_hamzatotanner_4,kulik_desk,0,0,0.6,0,0,0,Edge origin
+point2_hamzatotanner_5,tanner_desk,0,0,0,0,0,0,Edge origin
+point2_hamzatotanner_6,tanner_desk,0,0,0.6,0,0,0,Edge origin
+point2_hamzatotanner_7,tanner_desk,1.6,0,0,0,0,0,Edge origin
+point2_hamzatotanner_8,tanner_desk,1.6,0,0.6,0,0,0,Edge origin
+point2_refreshmentcorner_desk_1,point_15,-1,0.68,-0.23,0,0,0,Refreshment corner - right back
+point2_refreshmentcorner_desk_2,point2_refreshmentcorner_desk_1,0,0,0.9,0,0,0,Refreshment corner - right front
+point2_refreshmentcorner_desk_3,point2_refreshmentcorner_desk_1,-1.8,0,0.9,0,0,0,Refreshment corner - left front
+point2_refreshmentcorner_desk_4,point2_refreshmentcorner_desk_1,-1.8,0,0,0,0,0,Refreshment corner - left back
+abe_workspace,point_9,-1.34,0,1.6375,0,180,0,Abe desk from BOTTOM
+abe_desk,abe_workspace,0,0.715,0,0,0,0,Abe table but UP side
+noguchi_workspace,point_9,-2.94,0,1.6375,0,180,0,Abe desk from BOTTOM
+noguchi_desk,noguchi_workspace,0,0.715,0,0,0,0,Abe table but UP side
+kawase_workspace,point_9,-4.54,0,1.6375,0,180,0,Abe desk from BOTTOM
+kawase_desk,kawase_workspace,0,0.715,0,0,0,0,Abe table but UP side
+shen_workspace,point_9,-6.14,0,1.6375,0,180,0,Abe desk from BOTTOM
+shen_desk,shen_workspace,0,0.715,0,0,0,0,Abe table but UP side
+liu_workspace,point_16,-3.465,0,0.73,0,0,0,Liu desk from BOTTOM
+liu_desk,liu_workspace,0,0.715,0,0,0,0,Liu table but UP side
+akira_workspace,point_16,-5.065,0,0.73,0,0,0,Liu desk from BOTTOM
+akira_desk,akira_workspace,0,0.715,0,0,0,0,Liu table but UP side
+tainaka_workspace,point_16,-6.665,0,0.73,0,0,0,Liu desk from BOTTOM
+tainaka_desk,tainaka_workspace,0,0.715,0,0,0,0,Liu table but UP side
+sawabe_1_workspace,point_16,-1.865,0,2.13,0,180,0,Sawabe desk from BOTTOM
+sawabe_1_desk,sawabe_1_workspace,0,0.715,0,0,0,0,Sawabe table but UP side
+sawabe_2_workspace,point_16,-3.465,0,2.13,0,180,0,Sawabe desk from BOTTOM
+sawabe_2_desk,sawabe_2_workspace,0,0.715,0,0,0,0,Sawabe table but UP side
+sawabe_3_workspace,point_16,-5.065,0,2.13,0,180,0,Sawabe desk from BOTTOM
+sawabe_3_desk,sawabe_3_workspace,0,0.715,0,0,0,0,Sawabe table but UP side
+point2_abetoshen_1,abe_desk,0,0,0,0,0,0,Edge origin
+point2_abetoshen_2,abe_desk,0,0,0.6,0,0,0,Edge origin
+point2_abetoshen_3,noguchi_desk,0,0,0,0,0,0,Edge origin
+point2_abetoshen_4,noguchi_desk,0,0,0.6,0,0,0,Edge origin
+point2_abetoshen_5,kawase_desk,0,0,0,0,0,0,Edge origin
+point2_abetoshen_6,kawase_desk,0,0,0.6,0,0,0,Edge origin
+point2_abetoshen_7,shen_desk,0,0,0,0,0,0,Edge origin
+point2_abetoshen_8,shen_desk,0,0,0.6,0,0,0,Edge origin
+point2_abetoshen_9,shen_desk,1.6,0,0,0,0,0,Edge origin
+point2_abetoshen_10,shen_desk,1.6,0,0.6,0,0,0,Edge origin
+point2_tainakatoakira_1,tainaka_desk,0,0,0,0,0,0,Edge origin
+point2_tainakatoakira_2,tainaka_desk,0,0,0.6,0,0,0,Edge origin
+point2_tainakatoakira_3,akira_desk,0,0,0,0,0,0,Edge origin
+point2_tainakatoakira_4,akira_desk,0,0,0.6,0,0,0,Edge origin
+point2_tainakatoakira_5,liu_desk,0,0,0,0,0,0,Edge origin
+point2_tainakatoakira_6,liu_desk,0,0,0.6,0,0,0,Edge origin
+point2_tainakatoakira_7,liu_desk,1.6,0,0,0,0,0,Edge origin
+point2_tainakatoakira_8,liu_desk,1.6,0,0.6,0,0,0,Edge origin
+point2_sawabedesk_1,sawabe_1_desk,0,0,0,0,0,0,Edge origin
+point2_sawabedesk_2,sawabe_1_desk,0,0,0.6,0,0,0,Edge origin
+point2_sawabedesk_3,sawabe_2_desk,0,0,0,0,0,0,Edge origin
+point2_sawabedesk_4,sawabe_2_desk,0,0,0.6,0,0,0,Edge origin
+point2_sawabedesk_5,sawabe_3_desk,0,0,0,0,0,0,Edge origin
+point2_sawabedesk_6,sawabe_3_desk,0,0,0.6,0,0,0,Edge origin
+point2_sawabedesk_7,sawabe_3_desk,1.6,0,0,0,0,0,Edge origin
+point2_sawabedesk_8,sawabe_3_desk,1.6,0,0.6,0,0,0,Edge origin
+bookstand_test20220812,point_9,0.11,0,-0.5,0,0,0,Book stand test on 20220812
+bookstand_LDF,bookstand_test20220812,0,0,0.025,0,0,0,Book stand point 1
+bookstand_RDF,bookstand_test20220812,0.5,0,0.025,0,0,0,Book stand point 2
+bookstand_LDB,bookstand_test20220812,0,0,-0.37,0,0,0,Book stand point 3
+bookstand_RDB,bookstand_test20220812,0.5,0,-0.37,0,0,0,Book stand point 4
+bookstand_LU,bookstand_test20220812,0,1.19,-0.37,0,0,0,Book stand point 5
+bookstand_RU,bookstand_test20220812,0.5,1.19,-0.37,0,0,0,Book stand point 6
+zhou2_workspace,root,3.2,-0.715,1.4,0,180,0,Desk from BOTTOM
+zhou2_desk,zhou2_workspace,0,0.715,0,0,0,0,Table but UP side
+yusaku_workspace,root,1.6,-0.715,1.4,0,180,0,Desk from BOTTOM
+yusaku_desk,yusaku_workspace,0,0.715,0,0,0,0,Table but UP side
+okami_workspace,root,0,-0.715,1.4,0,180,0,Desk from BOTTOM
+okami_desk,okami_workspace,0,0.715,0,0,0,0,Table but UP side
+point2_zhou2tookami_1,zhou2_desk,0,0,0,0,0,0,Edge origin
+point2_zhou2tookami_2,zhou2_desk,0,0,0.6,0,0,0,Edge origin
+point2_zhou2tookami_3,yusaku_desk,0,0,0,0,0,0,Edge origin
+point2_zhou2tookami_4,yusaku_desk,0,0,0.6,0,0,0,Edge origin
+point2_zhou2tookami_5,okami_desk,0,0,0,0,0,0,Edge origin
+point2_zhou2tookami_6,okami_desk,0,0,0.6,0,0,0,Edge origin
+point2_zhou2tookami_7,okami_desk,1.6,0,0,0,0,0,Edge origin
+point2_zhou2tookami_8,okami_desk,1.6,0,0.6,0,0,0,Edge origin
+pc_workspace,point_26,-4.59,0,1.155,0,0,0,Desk from BOTTOM
+pc_desk,pc_workspace,0,0.715,0,0,0,0,Table but UP side
+kanda_workspace,point_26,-2.99,0,1.155,0,0,0,Desk from BOTTOM
+kanda_desk,kanda_workspace,0,0.715,0,0,0,0,Table but UP side
+zhou_workspace,point_26,-1.39,0,1.155,0,0,0,Desk from BOTTOM
+zhou_desk,zhou_workspace,0,0.715,0,0,0,0,Table but UP side
+point2_pctozhou_1,pc_desk,0,0,0,0,0,0,Edge origin
+point2_pctozhou_2,pc_desk,0,0,0.6,0,0,0,Edge origin
+point2_pctozhou_3,kanda_desk,0,0,0,0,0,0,Edge origin
+point2_pctozhou_4,kanda_desk,0,0,0.6,0,0,0,Edge origin
+point2_pctozhou_5,zhou_desk,0,0,0,0,0,0,Edge origin
+point2_pctozhou_6,zhou_desk,0,0,0.6,0,0,0,Edge origin
+point2_pctozhou_7,zhou_desk,1.6,0,0,0,0,0,Edge origin
+point2_pctozhou_8,zhou_desk,1.6,0,0.6,0,0,0,Edge origin
+fujimoto_1_workspace,point_26,0.21,0,2.555,0,180,0,Desk from BOTTOM
+fujimoto_1_desk,fujimoto_1_workspace,0,0.715,0,0,0,0,Table but UP side
+fujimoto_2_workspace,point_26,-1.39,0,2.555,0,180,0,Desk from BOTTOM
+fujimoto_2_desk,fujimoto_2_workspace,0,0.715,0,0,0,0,Table but UP side
+fujimoto_3_workspace,point_26,-2.99,0,2.555,0,180,0,Desk from BOTTOM
+fujimoto_3_desk,fujimoto_3_workspace,0,0.715,0,0,0,0,Table but UP side
+point2_fujimotodesk_1,fujimoto_1_desk,0,0,0,0,0,0,Edge origin
+point2_fujimotodesk_2,fujimoto_1_desk,0,0,0.6,0,0,0,Edge origin
+point2_fujimotodesk_3,fujimoto_2_desk,0,0,0,0,0,0,Edge origin
+point2_fujimotodesk_4,fujimoto_2_desk,0,0,0.6,0,0,0,Edge origin
+point2_fujimotodesk_5,fujimoto_3_desk,0,0,0,0,0,0,Edge origin
+point2_fujimotodesk_6,fujimoto_3_desk,0,0,0.6,0,0,0,Edge origin
+point2_fujimotodesk_7,fujimoto_3_desk,1.6,0,0,0,0,0,Edge origin
+point2_fujimotodesk_8,fujimoto_3_desk,1.6,0,0.6,0,0,0,Edge origin
+noniot__table_sid,sid_workspace,0,0,0,0,0,0,Test big table
+noniot__table_sara,sara_workspace,0,0,0,0,0,0,Test big table
+noniot__table_geert,geert_workspace,0,0,0,0,0,0,Test big table
+noniot__table_akiyoshi,akiyoshi_workspace,0,0,0,0,0,0,Test big table
+noniot__table_taguchi,taguchi_workspace,0,0,0,0,0,0,Test big table
+noniot__table_shimizu,shimizu_workspace,0,0,0,0,0,0,Test big table
+noniot__table_ray,ray_workspace,0,0,0,0,0,0,Test big table
+noniot__table_fumi,fumi_workspace,0,0,0,0,0,0,Test big table
+noniot__table_yamauchi,yamauchi_workspace,0,0,0,0,0,0,Test big table
+noniot__table_ueda,ueda_workspace,0,0,0,0,0,0,Test big table
+noniot__table_tanner,tanner_workspace,0,0,0,0,0,0,Test big table
+noniot__table_kulik,kulik_workspace,0,0,0,0,0,0,Test big table
+noniot__table_hamza,hamza_workspace,0,0,0,0,0,0,Test big table
+noniot__table_abe,abe_workspace,0,0,0,0,0,0,Test big table
+noniot__table_noguchi,noguchi_workspace,0,0,0,0,0,0,Test big table
+noniot__table_kawase,kawase_workspace,0,0,0,0,0,0,Test big table
+noniot__table_shen,shen_workspace,0,0,0,0,0,0,Test big table
+noniot__table_liu,liu_workspace,0,0,0,0,0,0,Test big table
+noniot__table_akira,akira_workspace,0,0,0,0,0,0,Test big table
+noniot__table_tainaka,tainaka_workspace,0,0,0,0,0,0,Test big table
+noniot__table_sawabe_1,sawabe_1_workspace,0,0,0,0,0,0,Test big table
+noniot__table_sawabe_2,sawabe_2_workspace,0,0,0,0,0,0,Test big table
+noniot__table_sawabe_3,sawabe_3_workspace,0,0,0,0,0,0,Test big table
+noniot__table_zhou2,zhou2_workspace,0,0,0,0,0,0,Test big table
+noniot__table_yusaku,yusaku_workspace,0,0,0,0,0,0,Test big table
+noniot__table_okami,okami_workspace,0,0,0,0,0,0,Test big table
+noniot__table_pc,pc_workspace,0,0,0,0,0,0,Test big table
+noniot__table_kanda,kanda_workspace,0,0,0,0,0,0,Test big table
+noniot__table_zhou,zhou_workspace,0,0,0,0,0,0,Test big table
+noniot__table_fujimoto_1,fujimoto_1_workspace,0,0,0,0,0,0,Test big table
+noniot__table_fujimoto_2,fujimoto_2_workspace,0,0,0,0,0,0,Test big table
+noniot__table_fujimoto_3,fujimoto_3_workspace,0,0,0,0,0,0,Test big table
+noniot__ueno_deskhigh_1,point_19,0.506,0,0.505,0,0,0,Test big table
+noniot__ueno_deskhigh_2,point_19,1.59,0,2.12,0,90,0,Test big table
+noniot__ueno_deskhigh_3,point_19,1.59,0,3.37,0,90,0,Test big table
+noniot__ueno_desk,point_19,0.975,0,2.615,0,90,0,Test big table
+noniot__ueno_desk_drawer,point_19,0.975,0,3.015,0,90,0,Test big table
+noniot__ueno_tool_drawer_1,point_19,-0.47,0,0.9,0,0,0,Test big drawer
+noniot__ueno_tool_drawer_2,point_21,-0.04,0,0.516,0,0,0,Test big drawer
+noniot__refreshment_desk,point_15,-1.305,0,-0.265,0,0,0,Test big table
+noniot__backalleydrawer,point_7,0.487,0,-0.73,0,0,0,Test big drawer
+point2_uenohighdesk_1,noniot__ueno_deskhigh_1,0,0.99,0,0,0,0,Edge origin
+point2_uenohighdesk_2,noniot__ueno_deskhigh_1,0.95,0.99,0,0,0,0,Edge origin
+point2_uenohighdesk_3,noniot__ueno_deskhigh_2,0,0.99,0.5,0,0,0,Edge origin
+point2_uenohighdesk_4,noniot__ueno_deskhigh_2,0.95,0.99,0.5,0,0,0,Edge origin
+point2_uenohighdesk_5,noniot__ueno_deskhigh_3,0,0.99,0.5,0,0,0,Edge origin
+point2_uenohighdesk_6,noniot__ueno_deskhigh_3,1.25,0.99,0.5,0,0,0,Edge origin
+point2_uenodesk_1,noniot__ueno_desk,0,0.715,0,0,0,0,Edge origin
+point2_uenodesk_2,noniot__ueno_desk,1.4,0.715,0,0,0,0,Edge origin
+point2_uenodesk_3,noniot__ueno_desk_drawer,0,0.715,0,0,0,0,Edge origin
+point2_uenodesk_4,noniot__ueno_desk_drawer,0.4,0.715,0,0,0,0,Edge origin
+point2_backalleydrawer_1,noniot__backalleydrawer,0,1.16,0,0,0,0,Edge origin
+point2_backalleydrawer_2,noniot__backalleydrawer,0,1.16,-0.8,0,0,0,Edge origin
+point2_backalleydrawer_3,noniot__backalleydrawer,0,1.16,-1.6,0,0,0,Edge origin
+point2_backalleydrawer_4,noniot__backalleydrawer,0,1.16,-2.4,0,0,0,Edge origin
+point2_refdesk_1,noniot__refreshment_desk,0.35,0.68,-0.14,0,0,0,Edge origin
+point2_refdesk_2,noniot__refreshment_desk,0.35,0.68,0.76,0,0,0,Edge origin
+point2_refdesk_3,noniot__refreshment_desk,-1.45,0.68,0.76,0,0,0,Edge origin
+point2_refdesk_4,noniot__refreshment_desk,-1.45,0.68,-0.14,0,0,0,Edge origin
+axispoint_001,point2_juritobi_3,0,0,0,90,0,0,Axis point on desk or cabinet
+axispoint_002,point2_juritobi_1,0,0,0,90,0,0,Axis point on desk or cabinet
+axispoint_003,point2_juritobi_5,0,0,0,90,0,0,Axis point on desk or cabinet
+axispoint_004,point2_juritobi_7,0,0,0,90,0,90,Axis point on desk or cabinet
+axispoint_005,point2_milanotonagata_1,0,0,0,90,0,0,Axis point on desk or cabinet
+axispoint_006,point2_milanotonagata_3,0,0,0,90,0,0,Axis point on desk or cabinet
+axispoint_007,point2_milanotonagata_5,0,0,0,90,0,0,Axis point on desk or cabinet
+axispoint_008,point2_milanotonagata_7,0,0,0,90,0,90,Axis point on desk or cabinet
+axispoint_009,point2_sidtogeert_1,0,0,0,90,0,0,Axis point on desk or cabinet
+axispoint_010,point2_sidtogeert_3,0,0,0,90,0,0,Axis point on desk or cabinet
+axispoint_011,point2_sidtogeert_5,0,0,0,90,0,0,Axis point on desk or cabinet
+axispoint_012,point2_sidtogeert_7,0,0,0,90,0,90,Axis point on desk or cabinet
+axispoint_013,point2_backalleydrawer_1,0,0,0,90,0,-90,Axis point on desk or cabinet
+axispoint_014,point2_backalleydrawer_2,0,0,0,90,0,-90,Axis point on desk or cabinet
+axispoint_015,point2_backalleydrawer_3,0,0,0,90,0,-90,Axis point on desk or cabinet
+axispoint_016,point2_backalleydrawer_4,0,0,0,90,0,0,Axis point on desk or cabinet
+axispoint_017,point2_raytoakiyoshi_9,0,0,0,90,0,0,Axis point on desk or cabinet
+axispoint_018,point2_raytoakiyoshi_7,0,0,0,90,0,0,Axis point on desk or cabinet
+axispoint_019,point2_raytoakiyoshi_5,0,0,0,90,0,0,Axis point on desk or cabinet
+axispoint_020,point2_raytoakiyoshi_3,0,0,0,90,0,0,Axis point on desk or cabinet
+axispoint_021,point2_raytoakiyoshi_1,0,0,0,90,0,0,Axis point on desk or cabinet
+axispoint_022,point2_fumitoueda_1,0,0,0,90,0,0,Axis point on desk or cabinet
+axispoint_023,point2_fumitoueda_3,0,0,0,90,0,0,Axis point on desk or cabinet
+axispoint_024,point2_fumitoueda_5,0,0,0,90,0,0,Axis point on desk or cabinet
+axispoint_025,point2_fumitoueda_7,0,0,0,90,0,90,Axis point on desk or cabinet
+axispoint_026,point2_refdesk_2,0,0,0,90,0,180,Axis point on desk or cabinet
+axispoint_027,point2_refdesk_3,0,0,0,90,0,-90,Axis point on desk or cabinet
+axispoint_028,point2_refdesk_1,0,0,0,90,0,90,Axis point on desk or cabinet
+axispoint_029,point2_hamzatotanner_1,0,0,0,90,0,0,Axis point on desk or cabinet
+axispoint_030,point2_hamzatotanner_3,0,0,0,90,0,0,Axis point on desk or cabinet
+axispoint_031,point2_hamzatotanner_5,0,0,0,90,0,0,Axis point on desk or cabinet
+axispoint_032,point2_hamzatotanner_7,0,0,0,90,0,90,Axis point on desk or cabinet
+axispoint_033,point2_zhou2tookami_7,0,0,0,90,0,90,Axis point on desk or cabinet
+axispoint_034,point2_zhou2tookami_5,0,0,0,90,0,0,Axis point on desk or cabinet
+axispoint_035,point2_zhou2tookami_3,0,0,0,90,0,0,Axis point on desk or cabinet
+axispoint_036,point2_zhou2tookami_1,0,0,0,90,0,0,Axis point on desk or cabinet
+axispoint_037,point2_pctozhou_7,0,0,0,90,0,90,Axis point on desk or cabinet
+axispoint_038,point2_pctozhou_5,0,0,0,90,0,0,Axis point on desk or cabinet
+axispoint_039,point2_pctozhou_3,0,0,0,90,0,0,Axis point on desk or cabinet
+axispoint_040,point2_pctozhou_1,0,0,0,90,0,0,Axis point on desk or cabinet
+axispoint_041,point2_fujimotodesk_7,0,0,0,90,0,90,Axis point on desk or cabinet
+axispoint_042,point2_fujimotodesk_5,0,0,0,90,0,0,Axis point on desk or cabinet
+axispoint_043,point2_fujimotodesk_3,0,0,0,90,0,0,Axis point on desk or cabinet
+axispoint_044,point2_fujimotodesk_1,0,0,0,90,0,0,Axis point on desk or cabinet
+axispoint_045,point2_abetoshen_1,0,0,0,90,0,0,Axis point on desk or cabinet
+axispoint_046,point2_abetoshen_3,0,0,0,90,0,0,Axis point on desk or cabinet
+axispoint_047,point2_abetoshen_5,0,0,0,90,0,0,Axis point on desk or cabinet
+axispoint_048,point2_abetoshen_7,0,0,0,90,0,0,Axis point on desk or cabinet
+axispoint_049,point2_abetoshen_9,0,0,0,90,0,90,Axis point on desk or cabinet
+axispoint_050,point2_tainakatoakira_7,0,0,0,90,0,90,Axis point on desk or cabinet
+axispoint_051,point2_tainakatoakira_5,0,0,0,90,0,0,Axis point on desk or cabinet
+axispoint_052,point2_tainakatoakira_3,0,0,0,90,0,0,Axis point on desk or cabinet
+axispoint_053,point2_tainakatoakira_1,0,0,0,90,0,0,Axis point on desk or cabinet
+axispoint_054,point2_sawabedesk_7,0,0,0,90,0,90,Axis point on desk or cabinet
+axispoint_055,point2_sawabedesk_5,0,0,0,90,0,0,Axis point on desk or cabinet
+axispoint_056,point2_sawabedesk_3,0,0,0,90,0,0,Axis point on desk or cabinet
+axispoint_057,point2_sawabedesk_1,0,0,0,90,0,0,Axis point on desk or cabinet
+axispoint_058,point2_uenohighdesk_1,0,0,0,90,0,0,Axis point on desk or cabinet
+axispoint_059,point2_uenohighdesk_2,0,0,0,90,0,90,Axis point on desk or cabinet
+axispoint_060,point2_uenohighdesk_4,0,0,0,90,0,180,Axis point on desk or cabinet
+axispoint_061,point2_uenohighdesk_3,0,0,0,90,0,180,Axis point on desk or cabinet
+axispoint_062,point2_uenohighdesk_5,0,0,0,90,0,-90,Axis point on desk or cabinet
+axispoint_063,point2_uenodesk_3,0,0,0,90,0,0,Axis point on desk or cabinet
+axispoint_064,point2_uenodesk_1,0,0,0,90,0,0,Axis point on desk or cabinet
+axispoint_065,point2_uenodesk_2,0,0,0,90,0,90,Axis point on desk or cabinet
+dummy_1,root,0,0,0,0,0,0,Dummy
+dummy_2,root,-1.6,0,0,0,0,0,Dummy
+dummy_3,root,1.6,0,0,0,0,0,Dummy
+dummy_4,root,3.2,0,0,0,0,0,Dummy
+dummy_5,root,3.2,0,-2.25,0,0,0,Dummy
+dummy_6,root,1.6,0,-2.25,0,0,0,Dummy
+dummy_7,root,0,0,-2.25,0,0,0,Dummy
+dummy_8,root,-1.6,0,-2.25,0,0,0,Dummy
+dummy_9,root,-1.6,0,-3.65,0,0,0,Dummy
+dummy_10,root,0,0,-3.65,0,0,0,Dummy
+dummy_11,root,1.6,0,-3.65,0,0,0,Dummy
+dummy_12,root,3.2,0,-3.65,0,0,0,Dummy
+dummy_13,root,-2.938,0.445,-1.14,0,0,0,Dummy
+dummy_14,root,-2.938,0.445,-1.94,0,0,0,Dummy
+dummy_15,root,-2.938,0.445,-2.74,0,0,0,Dummy
+dummy_16,root,-2.938,0.445,-3.54,0,0,0,Dummy
+dummy_17,root,-7.265,0,0.105,0,0,0,Dummy
+dummy_18,root,-8.865,0,0.105,0,0,0,Dummy
+dummy_19,root,-10.465,0,0.105,0,0,0,Dummy
+dummy_20,root,-12.065,0,0.105,0,0,0,Dummy
+dummy_21,root,-13.665,0,0.105,0,0,0,Dummy
+dummy_22,root,-5.765,0,-2.455,0,0,0,Dummy
+dummy_23,root,-7.365,0,-2.455,0,0,0,Dummy
+dummy_24,root,-8.965,0,-2.455,0,0,0,Dummy
+dummy_25,root,-10.565,0,-2.455,0,0,0,Dummy
+dummy_26,root,-11.88,-0.035,-3.915,0,0,0,Dummy
+dummy_27,root,-13.68,-0.035,-3.915,0,0,0,Dummy
+dummy_28,root,-11.88,-0.035,-4.815,0,0,0,Dummy
+dummy_29,root,-10.565,0,-3.855,0,0,0,Dummy
+dummy_30,root,-8.965,0,-3.855,0,0,0,Dummy
+dummy_31,root,-7.365,0,-3.855,0,0,0,Dummy
+dummy_32,root,-5.765,0,-3.855,0,0,0,Dummy
+dummy_33,root,-1.6,0,1.4,0,0,0,Dummy
+dummy_34,root,0,0,1.4,0,0,0,Dummy
+dummy_35,root,1.6,0,1.4,0,0,0,Dummy
+dummy_36,root,3.2,0,1.4,0,0,0,Dummy
+dummy_37,root,3.285,0,3.245,0,0,0,Dummy
+dummy_38,root,1.685,0,3.245,0,0,0,Dummy
+dummy_39,root,0.085,0,3.245,0,0,0,Dummy
+dummy_40,root,-1.515,0,3.245,0,0,0,Dummy
+dummy_41,root,-1.515,0,4.645,0,0,0,Dummy
+dummy_42,root,0.085,0,4.645,0,0,0,Dummy
+dummy_43,root,1.685,0,4.645,0,0,0,Dummy
+dummy_44,root,3.285,0,4.645,0,0,0,Dummy
+dummy_45,root,-7.265,0,1.505,0,0,0,Dummy
+dummy_46,root,-8.865,0,1.505,0,0,0,Dummy
+dummy_47,root,-10.465,0,1.505,0,0,0,Dummy
+dummy_48,root,-12.065,0,1.505,0,0,0,Dummy
+dummy_49,root,-13.665,0,1.505,0,0,0,Dummy
+dummy_50,root,-7.79,0,3.32,0,0,0,Dummy
+dummy_51,root,-9.39,0,3.32,0,0,0,Dummy
+dummy_52,root,-10.99,0,3.32,0,0,0,Dummy
+dummy_53,root,-12.59,0,3.32,0,0,0,Dummy
+dummy_54,root,-12.59,0,4.719998,0,0,0,Dummy
+dummy_55,root,-10.99,0,4.719997,0,0,0,Dummy
+dummy_56,root,-9.39,0,4.719997,0,0,0,Dummy
+dummy_57,root,-7.79,0,4.719998,0,0,0,Dummy
+dummy_58,root,-6.419,0.275,8.094997,0,0,0,Dummy
+dummy_59,root,-5.469,0.275,8.094997,0,0,0,Dummy
+dummy_60,root,-4.835,0.275,8.759997,0,0,0,Dummy
+dummy_61,root,-4.835,0.275,9.709996,0,0,0,Dummy
+dummy_62,root,-4.835,0.275,10.96,0,0,0,Dummy
+dummy_63,root,-5.95,0,10.605,0,0,0,Dummy
+dummy_64,root,-5.95,0,10.205,0,0,0,Dummy
+dummy_65,root,-5.95,0,8.804996,0,0,0,Dummy
+pointimg__1,img_1,0,0,1,0,0,0,Axis point on img target based on clockwise from 12 oclock 1
+pointimg__2,img_1,0.5,0,0.5,0,0,0,Axis point on img target based on clockwise from 12 oclock 2
+pointimg__3,img_1,1,0,0,0,0,0,Axis point on img target based on clockwise from 12 oclock 3
+pointimg__4,img_1,0.5,0,-0.5,0,0,0,Axis point on img target based on clockwise from 12 oclock 4
+pointimg__5,img_1,0,0,-1,0,0,0,Axis point on img target based on clockwise from 12 oclock 5
+pointimg__6,img_1,-0.5,0,-0.5,0,0,0,Axis point on img target based on clockwise from 12 oclock 6
+pointimg__7,img_1,-1,0,0,0,0,0,Axis point on img target based on clockwise from 12 oclock 7
+pointimg__8,img_1,-0.5,0,0.5,0,0,0,Axis point on img target based on clockwise from 12 oclock 8
+pointimg__9,img_2,0,0,1,0,0,0,Axis point on img target based on clockwise from 12 oclock 9
+pointimg__10,img_2,0.5,0,0.5,0,0,0,Axis point on img target based on clockwise from 12 oclock 10
+pointimg__11,img_2,1,0,0,0,0,0,Axis point on img target based on clockwise from 12 oclock 11
+pointimg__12,img_2,0.5,0,-0.5,0,0,0,Axis point on img target based on clockwise from 12 oclock 12
+pointimg__13,img_2,0,0,-1,0,0,0,Axis point on img target based on clockwise from 12 oclock 13
+pointimg__14,img_2,-0.5,0,-0.5,0,0,0,Axis point on img target based on clockwise from 12 oclock 14
+pointimg__15,img_2,-1,0,0,0,0,0,Axis point on img target based on clockwise from 12 oclock 15
+pointimg__16,img_2,-0.5,0,0.5,0,0,0,Axis point on img target based on clockwise from 12 oclock 16
+pointimg__17,img_3,0,0,1,0,0,0,Axis point on img target based on clockwise from 12 oclock 17
+pointimg__18,img_3,0.5,0,0.5,0,0,0,Axis point on img target based on clockwise from 12 oclock 18
+pointimg__19,img_3,1,0,0,0,0,0,Axis point on img target based on clockwise from 12 oclock 19
+pointimg__20,img_3,0.5,0,-0.5,0,0,0,Axis point on img target based on clockwise from 12 oclock 20
+pointimg__21,img_3,0,0,-1,0,0,0,Axis point on img target based on clockwise from 12 oclock 21
+pointimg__22,img_3,-0.5,0,-0.5,0,0,0,Axis point on img target based on clockwise from 12 oclock 22
+pointimg__23,img_3,-1,0,0,0,0,0,Axis point on img target based on clockwise from 12 oclock 23
+pointimg__24,img_3,-0.5,0,0.5,0,0,0,Axis point on img target based on clockwise from 12 oclock 24
+pointimg__25,img_4,0,0,1,0,0,0,Axis point on img target based on clockwise from 12 oclock 25
+pointimg__26,img_4,0.5,0,0.5,0,0,0,Axis point on img target based on clockwise from 12 oclock 26
+pointimg__27,img_4,1,0,0,0,0,0,Axis point on img target based on clockwise from 12 oclock 27
+pointimg__28,img_4,0.5,0,-0.5,0,0,0,Axis point on img target based on clockwise from 12 oclock 28
+pointimg__29,img_4,0,0,-1,0,0,0,Axis point on img target based on clockwise from 12 oclock 29
+pointimg__30,img_4,-0.5,0,-0.5,0,0,0,Axis point on img target based on clockwise from 12 oclock 30
+pointimg__31,img_4,-1,0,0,0,0,0,Axis point on img target based on clockwise from 12 oclock 31
+pointimg__32,img_4,-0.5,0,0.5,0,0,0,Axis point on img target based on clockwise from 12 oclock 32
+pointimg__33,img_5,0,0,1,0,0,0,Axis point on img target based on clockwise from 12 oclock 33
+pointimg__34,img_5,0.5,0,0.5,0,0,0,Axis point on img target based on clockwise from 12 oclock 34
+pointimg__35,img_5,1,0,0,0,0,0,Axis point on img target based on clockwise from 12 oclock 35
+pointimg__36,img_5,0.5,0,-0.5,0,0,0,Axis point on img target based on clockwise from 12 oclock 36
+pointimg__37,img_5,0,0,-1,0,0,0,Axis point on img target based on clockwise from 12 oclock 37
+pointimg__38,img_5,-0.5,0,-0.5,0,0,0,Axis point on img target based on clockwise from 12 oclock 38
+pointimg__39,img_5,-1,0,0,0,0,0,Axis point on img target based on clockwise from 12 oclock 39
+pointimg__40,img_5,-0.5,0,0.5,0,0,0,Axis point on img target based on clockwise from 12 oclock 40

@@ -1,0 +1,145 @@
+name,coordinate_system,length,height,width,origin_type,origin_descriptor,virtualobject_type,virtualobject_special_parameter,virtualobject_special_position,iot_device_true,comment
+noniot__table_001,noniot__backalleydrawer,0.4,1.16,2.4,EDGE,LDF,CUBE,none,none,TRUE,Cube for back alley drawer
+noniot__table_002,noniot__table_sid,1,1,1,EDGE,LDB,SPECIAL,3,0;0;0,TRUE,Special virtual object doesnt need any scaling
+noniot__table_003,noniot__table_sara,1,1,1,EDGE,LDB,SPECIAL,3,0;0;0,TRUE,Special virtual object doesnt need any scaling
+noniot__table_004,noniot__table_geert,1,1,1,EDGE,LDB,SPECIAL,3,0;0;0,TRUE,Special virtual object doesnt need any scaling
+noniot__table_005,noniot__table_milano,1,1,1,EDGE,LDB,SPECIAL,3,0;0;0,TRUE,Special virtual object doesnt need any scaling
+noniot__table_006,noniot__table_asada,1,1,1,EDGE,LDB,SPECIAL,3,0;0;0,TRUE,Special virtual object doesnt need any scaling
+noniot__table_007,noniot__table_nagata,1,1,1,EDGE,LDB,SPECIAL,3,0;0;0,TRUE,Special virtual object doesnt need any scaling
+noniot__table_008,noniot__table_yoneyama,1,1,1,EDGE,LDB,SPECIAL,3,0;0;0,TRUE,Special virtual object doesnt need any scaling
+noniot__table_009,noniot__table_aldy,1,1,1,EDGE,LDB,SPECIAL,3,0;0;0,TRUE,Special virtual object doesnt need any scaling
+noniot__table_010,noniot__table_bi,1,1,1,EDGE,LDB,SPECIAL,3,0;0;0,TRUE,Special virtual object doesnt need any scaling
+noniot__table_011,noniot__table_zhou2,1,1,1,EDGE,LDB,SPECIAL,3,0;0;0,TRUE,Special virtual object doesnt need any scaling
+noniot__table_012,noniot__table_yusaku,1,1,1,EDGE,LDB,SPECIAL,3,0;0;0,TRUE,Special virtual object doesnt need any scaling
+noniot__table_013,noniot__table_okami,1,1,1,EDGE,LDB,SPECIAL,3,0;0;0,TRUE,Special virtual object doesnt need any scaling
+noniot__table_014,noniot__table_pc,1,1,1,EDGE,LDB,SPECIAL,3,0;0;0,TRUE,Special virtual object doesnt need any scaling
+noniot__table_015,noniot__table_kanda,1,1,1,EDGE,LDB,SPECIAL,3,0;0;0,TRUE,Special virtual object doesnt need any scaling
+noniot__table_016,noniot__table_zhou,1,1,1,EDGE,LDB,SPECIAL,3,0;0;0,TRUE,Special virtual object doesnt need any scaling
+noniot__table_017,noniot__table_fujimoto_1,1,1,1,EDGE,LDB,SPECIAL,3,0;0;0,TRUE,Special virtual object doesnt need any scaling
+noniot__table_018,noniot__table_fujimoto_2,1,1,1,EDGE,LDB,SPECIAL,3,0;0;0,TRUE,Special virtual object doesnt need any scaling
+noniot__table_019,noniot__table_fujimoto_3,1,1,1,EDGE,LDB,SPECIAL,3,0;0;0,TRUE,Special virtual object doesnt need any scaling
+noniot__table_020,noniot__ueno_deskhigh_2,1,1,1,EDGE,LDB,SPECIAL,9,0;0;0,TRUE,Special virtual object doesnt need any scaling
+noniot__table_021,noniot__ueno_deskhigh_3,1,1,1,EDGE,LDB,SPECIAL,13,0;0;0,TRUE,Special virtual object doesnt need any scaling
+noniot__table_022,noniot__ueno_tool_drawer_2,1.795,2.48,0.45,EDGE,LDB,CUBE,none,none,TRUE,Cube for ueno tool drawer
+noniot__table_023,noniot__ueno_desk_drawer,1,1,1,EDGE,LDB,SPECIAL,11,0;0;0,TRUE,Special virtual object doesnt need any scaling
+noniot__table_024,noniot__ueno_desk,1,1,1,EDGE,LDB,SPECIAL,10,0;0;0,TRUE,Special virtual object doesnt need any scaling
+noniot__table_025,noniot__ueno_tool_drawer_1,0.45,2.14,3.6,EDGE,RDB,CUBE,none,none,TRUE,Cube for ueno tool drawer
+noniot__table_026,noniot__ueno_deskhigh_1,1,1,1,EDGE,LDB,SPECIAL,9,0;0;0,TRUE,Special virtual object doesnt need any scaling
+noniot__table_027,noniot__table_sawabe_1,1,1,1,EDGE,LDB,SPECIAL,3,0;0;0,TRUE,Special virtual object doesnt need any scaling
+noniot__table_028,noniot__table_sawabe_2,1,1,1,EDGE,LDB,SPECIAL,3,0;0;0,TRUE,Special virtual object doesnt need any scaling
+noniot__table_029,noniot__table_sawabe_3,1,1,1,EDGE,LDB,SPECIAL,3,0;0;0,TRUE,Special virtual object doesnt need any scaling
+noniot__table_030,noniot__table_tainaka,1,1,1,EDGE,LDB,SPECIAL,3,0;0;0,TRUE,Special virtual object doesnt need any scaling
+noniot__table_031,noniot__table_akira,1,1,1,EDGE,LDB,SPECIAL,3,0;0;0,TRUE,Special virtual object doesnt need any scaling
+noniot__table_032,noniot__table_liu,1,1,1,EDGE,LDB,SPECIAL,3,0;0;0,TRUE,Special virtual object doesnt need any scaling
+noniot__table_033,noniot__table_abe,1,1,1,EDGE,LDB,SPECIAL,3,0;0;0,TRUE,Special virtual object doesnt need any scaling
+noniot__table_034,noniot__table_noguchi,1,1,1,EDGE,LDB,SPECIAL,3,0;0;0,TRUE,Special virtual object doesnt need any scaling
+noniot__table_035,noniot__table_kawase,1,1,1,EDGE,LDB,SPECIAL,3,0;0;0,TRUE,Special virtual object doesnt need any scaling
+noniot__table_036,noniot__table_shen,1,1,1,EDGE,LDB,SPECIAL,3,0;0;0,TRUE,Special virtual object doesnt need any scaling
+noniot__table_037,noniot__table_ray,1,1,1,EDGE,LDB,SPECIAL,3,0;0;0,TRUE,Special virtual object doesnt need any scaling
+noniot__table_038,noniot__table_shimizu,1,1,1,EDGE,LDB,SPECIAL,3,0;0;0,TRUE,Special virtual object doesnt need any scaling
+noniot__table_039,noniot__table_taguchi,1,1,1,EDGE,LDB,SPECIAL,3,0;0;0,TRUE,Special virtual object doesnt need any scaling
+noniot__table_040,noniot__table_akiyoshi,1,1,1,EDGE,LDB,SPECIAL,3,0;0;0,TRUE,Special virtual object doesnt need any scaling
+noniot__table_041,noniot__table_fumi,1,1,1,EDGE,LDB,SPECIAL,3,0;0;0,TRUE,Special virtual object doesnt need any scaling
+noniot__table_042,noniot__table_yamauchi,1,1,1,EDGE,LDB,SPECIAL,3,0;0;0,TRUE,Special virtual object doesnt need any scaling
+noniot__table_043,noniot__table_ueda,1,1,1,EDGE,LDB,SPECIAL,3,0;0;0,TRUE,Special virtual object doesnt need any scaling
+noniot__table_044,noniot__refreshment_desk,1,1,1,EDGE,LDB,SPECIAL,12,0;0;0,TRUE,Special virtual object doesnt need any scaling
+noniot__table_045,noniot__table_hamza,1,1,1,EDGE,LDB,SPECIAL,3,0;0;0,TRUE,Special virtual object doesnt need any scaling
+noniot__table_046,noniot__table_kulik,1,1,1,EDGE,LDB,SPECIAL,3,0;0;0,TRUE,Special virtual object doesnt need any scaling
+noniot__table_047,noniot__table_tanner,1,1,1,EDGE,LDB,SPECIAL,3,0;0;0,TRUE,Special virtual object doesnt need any scaling
+dummy_obj_001,axispoint_001,1,1,1,DIMENSIONCENTER,C,SPECIAL,14,0;0;0,TRUE,Anchor test on desk and above VC 14
+dummy_obj_002,axispoint_002,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Anchor test on desk and above VC 13
+dummy_obj_003,axispoint_003,1,1,1,DIMENSIONCENTER,C,SPECIAL,14,0;0;0,TRUE,Anchor test on desk and above VC 15
+dummy_obj_004,axispoint_004,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Anchor test on desk and above VC 16
+dummy_obj_005,axispoint_005,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Anchor test on desk and above VC 9
+dummy_obj_006,axispoint_006,1,1,1,DIMENSIONCENTER,C,SPECIAL,14,0;0;0,TRUE,Anchor test on desk and above VC 10
+dummy_obj_007,axispoint_007,1,1,1,DIMENSIONCENTER,C,SPECIAL,14,0;0;0,TRUE,Anchor test on desk and above VC 11
+dummy_obj_008,axispoint_008,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Anchor test on desk and above VC 12
+dummy_obj_009,axispoint_009,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Anchor test on desk and above VC 5
+dummy_obj_010,axispoint_010,1,1,1,DIMENSIONCENTER,C,SPECIAL,14,0;0;0,TRUE,Anchor test on desk and above VC 6
+dummy_obj_011,axispoint_011,1,1,1,DIMENSIONCENTER,C,SPECIAL,14,0;0;0,TRUE,Anchor test on desk and above VC 7
+dummy_obj_012,axispoint_012,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Anchor test on desk and above VC 8
+dummy_obj_013,axispoint_013,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Anchor test on desk and above VC 1
+dummy_obj_014,axispoint_014,1,1,1,DIMENSIONCENTER,C,SPECIAL,14,0;0;0,TRUE,Anchor test on desk and above VC 2
+dummy_obj_015,axispoint_015,1,1,1,DIMENSIONCENTER,C,SPECIAL,14,0;0;0,TRUE,Anchor test on desk and above VC 3
+dummy_obj_016,axispoint_016,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Anchor test on desk and above VC 4
+dummy_obj_017,axispoint_017,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Anchor test on desk and above VC 54
+dummy_obj_018,axispoint_018,1,1,1,DIMENSIONCENTER,C,SPECIAL,14,0;0;0,TRUE,Anchor test on desk and above VC 53
+dummy_obj_019,axispoint_019,1,1,1,DIMENSIONCENTER,C,SPECIAL,14,0;0;0,TRUE,Anchor test on desk and above VC 52
+dummy_obj_020,axispoint_020,1,1,1,DIMENSIONCENTER,C,SPECIAL,14,0;0;0,TRUE,Anchor test on desk and above VC 51
+dummy_obj_021,axispoint_021,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Anchor test on desk and above VC 50
+dummy_obj_022,axispoint_022,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Anchor test on desk and above VC 55
+dummy_obj_023,axispoint_023,1,1,1,DIMENSIONCENTER,C,SPECIAL,14,0;0;0,TRUE,Anchor test on desk and above VC 56
+dummy_obj_024,axispoint_024,1,1,1,DIMENSIONCENTER,C,SPECIAL,14,0;0;0,TRUE,Anchor test on desk and above VC 57
+dummy_obj_025,axispoint_025,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Anchor test on desk and above VC 58
+dummy_obj_026,axispoint_026,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Anchor test on desk and above VC 60
+dummy_obj_027,axispoint_027,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Anchor test on desk and above VC 61
+dummy_obj_028,axispoint_028,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Anchor test on desk and above VC 59
+dummy_obj_029,axispoint_029,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Anchor test on desk and above VC 62
+dummy_obj_030,axispoint_030,1,1,1,DIMENSIONCENTER,C,SPECIAL,14,0;0;0,TRUE,Anchor test on desk and above VC 63
+dummy_obj_031,axispoint_031,1,1,1,DIMENSIONCENTER,C,SPECIAL,14,0;0;0,TRUE,Anchor test on desk and above VC 64
+dummy_obj_032,axispoint_032,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Anchor test on desk and above VC 65
+dummy_obj_033,axispoint_033,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Anchor test on desk and above VC 20
+dummy_obj_034,axispoint_034,1,1,1,DIMENSIONCENTER,C,SPECIAL,14,0;0;0,TRUE,Anchor test on desk and above VC 19
+dummy_obj_035,axispoint_035,1,1,1,DIMENSIONCENTER,C,SPECIAL,14,0;0;0,TRUE,Anchor test on desk and above VC 18
+dummy_obj_036,axispoint_036,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Anchor test on desk and above VC 17
+dummy_obj_037,axispoint_037,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Anchor test on desk and above VC 24
+dummy_obj_038,axispoint_038,1,1,1,DIMENSIONCENTER,C,SPECIAL,14,0;0;0,TRUE,Anchor test on desk and above VC 23
+dummy_obj_039,axispoint_039,1,1,1,DIMENSIONCENTER,C,SPECIAL,14,0;0;0,TRUE,Anchor test on desk and above VC 22
+dummy_obj_040,axispoint_040,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Anchor test on desk and above VC 21
+dummy_obj_041,axispoint_041,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Anchor test on desk and above VC 28
+dummy_obj_042,axispoint_042,1,1,1,DIMENSIONCENTER,C,SPECIAL,14,0;0;0,TRUE,Anchor test on desk and above VC 27
+dummy_obj_043,axispoint_043,1,1,1,DIMENSIONCENTER,C,SPECIAL,14,0;0;0,TRUE,Anchor test on desk and above VC 26
+dummy_obj_044,axispoint_044,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Anchor test on desk and above VC 25
+dummy_obj_045,axispoint_045,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Anchor test on desk and above VC 45
+dummy_obj_046,axispoint_046,1,1,1,DIMENSIONCENTER,C,SPECIAL,14,0;0;0,TRUE,Anchor test on desk and above VC 46
+dummy_obj_047,axispoint_047,1,1,1,DIMENSIONCENTER,C,SPECIAL,14,0;0;0,TRUE,Anchor test on desk and above VC 47
+dummy_obj_048,axispoint_048,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Anchor test on desk and above VC 48
+dummy_obj_049,axispoint_049,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Anchor test on desk and above VC 49
+dummy_obj_050,axispoint_050,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Anchor test on desk and above VC 44
+dummy_obj_051,axispoint_051,1,1,1,DIMENSIONCENTER,C,SPECIAL,14,0;0;0,TRUE,Anchor test on desk and above VC 43
+dummy_obj_052,axispoint_052,1,1,1,DIMENSIONCENTER,C,SPECIAL,14,0;0;0,TRUE,Anchor test on desk and above VC 42
+dummy_obj_053,axispoint_053,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Anchor test on desk and above VC 41
+dummy_obj_054,axispoint_054,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Anchor test on desk and above VC 40
+dummy_obj_055,axispoint_055,1,1,1,DIMENSIONCENTER,C,SPECIAL,14,0;0;0,TRUE,Anchor test on desk and above VC 39
+dummy_obj_056,axispoint_056,1,1,1,DIMENSIONCENTER,C,SPECIAL,14,0;0;0,TRUE,Anchor test on desk and above VC 38
+dummy_obj_057,axispoint_057,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Anchor test on desk and above VC 37
+dummy_obj_058,axispoint_058,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Anchor test on desk and above VC 35
+dummy_obj_059,axispoint_059,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Anchor test on desk and above VC 36
+dummy_obj_060,axispoint_060,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Anchor test on desk and above VC 30
+dummy_obj_061,axispoint_061,1,1,1,DIMENSIONCENTER,C,SPECIAL,14,0;0;0,TRUE,Anchor test on desk and above VC 29
+dummy_obj_062,axispoint_062,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Anchor test on desk and above VC 31
+dummy_obj_063,axispoint_063,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Anchor test on desk and above VC 34
+dummy_obj_064,axispoint_064,1,1,1,DIMENSIONCENTER,C,SPECIAL,14,0;0;0,TRUE,Anchor test on desk and above VC 32
+dummy_obj_065,axispoint_065,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Anchor test on desk and above VC 33
+img_obj_0,img_0,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Axis on img target 0
+img_obj_1,img_1,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Axis on img target 1
+img_obj_2,img_2,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Axis on img target 2
+img_obj_3,img_3,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Axis on img target 3
+img_obj_4,img_4,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Axis on img target 4
+img_obj_5,img_5,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Axis on img target 5
+img_obj_6,img_6,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Axis on img target 6
+img_obj_7,img_7,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Axis on img target 7
+img_obj_8,img_8,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Axis on img target 8
+img_obj_9,img_9,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Axis on img target 9
+img_obj_10,img_10,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Axis on img target 10
+img_obj_11,img_11,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Axis on img target 11
+img_obj_12,img_12,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Axis on img target 12
+dummy_onmarker_obj_001,pointimg__6,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Axis on X pattern on img target 1
+dummy_onmarker_obj_002,pointimg__7,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Axis on X pattern on img target 2
+dummy_onmarker_obj_003,pointimg__8,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Axis on X pattern on img target 3
+dummy_onmarker_obj_004,pointimg__14,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Axis on X pattern on img target 4
+dummy_onmarker_obj_005,pointimg__15,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Axis on X pattern on img target 4
+dummy_onmarker_obj_006,pointimg__16,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Axis on X pattern on img target 5
+dummy_onmarker_obj_007,pointimg__21,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Axis on X pattern on img target 6
+dummy_onmarker_obj_008,pointimg__22,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Axis on X pattern on img target 7
+dummy_onmarker_obj_009,pointimg__23,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Axis on X pattern on img target 8
+dummy_onmarker_obj_010,pointimg__24,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Axis on X pattern on img target 9
+dummy_onmarker_obj_011,pointimg__26,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Axis on X pattern on img target 10
+dummy_onmarker_obj_012,pointimg__27,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Axis on X pattern on img target 11
+dummy_onmarker_obj_013,pointimg__28,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Axis on X pattern on img target 12
+dummy_onmarker_obj_014,pointimg__29,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Axis on X pattern on img target 13
+dummy_onmarker_obj_015,pointimg__30,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Axis on X pattern on img target 14
+dummy_onmarker_obj_016,pointimg__31,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Axis on X pattern on img target 15
+dummy_onmarker_obj_017,pointimg__32,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Axis on X pattern on img target 16
+dummy_onmarker_obj_018,pointimg__35,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Axis on X pattern on img target 17
+dummy_onmarker_obj_019,pointimg__39,1,1,1,DIMENSIONCENTER,C,SPECIAL,8,0;0;0,TRUE,Axis on X pattern on img target 18
