@@ -79,9 +79,51 @@ namespace WeightFunction
                                              inverted,
                                              normalized,
                                              a);
-                float[] w = new float[temp_w.Count];
-                for (int j = 0; j < temp_w.Count; j++) { w[j] = temp_w[j]; }
-                weights.Add(w);
+                //float[] w = new float[temp_w.Count];
+                //for (int j = 0; j < temp_w.Count; j++) { w[j] = temp_w[j]; }
+                weights.Add(temp_w.ToArray());
+            }
+
+            return weights;
+        }
+
+        /// <summary>
+        /// New weight with threshold to remove unnecessary weight.
+        /// </summary>
+        /// <param name="weight_function"></param>
+        /// <param name="inverted"></param>
+        /// <param name="normalized"></param>
+        /// <param name="a"></param>
+        /// <param name="threshold"></param>
+        /// <returns></returns>
+        public List<float[]> GetAllWeightsThreshold(string weight_function,
+                                                    bool inverted = true,
+                                                    bool normalized = true,
+                                                    float a = 1.0f,
+                                                    float threshold = 0.85f)
+        {
+            List<float[]> weights = new();
+
+            for (int i = 0; i < m_Objects.Count; i++)
+            {
+                List<float> temp_w = GetSingleWeight(m_Objects[i].transform.position,
+                                             weight_function,
+                                             inverted,
+                                             normalized,
+                                             a);
+                //float[] w = new float[temp_w.Count];
+                //for (int j = 0; j < temp_w.Count; j++) { w[j] = temp_w[j]; }
+
+                // remove unnecessary weight
+                float max = Mathf.Max(temp_w.ToArray());
+                for (int j = 0; j < weights.Count; j++)
+                {
+                    float cur_w = Mathf.Exp(-(max - temp_w[j]));
+                    if (cur_w < threshold) temp_w[j] = 0;
+                }
+                temp_w = MathFunctions.NormalizedMany(temp_w);
+
+                weights.Add(temp_w.ToArray());
             }
 
             return weights;

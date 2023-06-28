@@ -55,7 +55,11 @@ public class EigenMacHelper
     // currently in latest build dylib, we use libEigenToUnityForMac03
     // import file name can be changed depends on prefered build
 
+#if UNITY_IOS && !UNITY_EDITOR
+    [DllImport("__Internal")]
+#else
     [DllImport("libEigenToUnityForMac03")]
+#endif
     public static extern QuaternionUnits GetAvgQuaternionsFloats
         (float m00, float m01, float m02, float m03,
         float m10, float m11, float m12, float m13,

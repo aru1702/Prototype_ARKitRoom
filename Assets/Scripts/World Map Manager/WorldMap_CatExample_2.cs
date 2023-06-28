@@ -6,9 +6,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
-//#if UNITY_IOS
+#if UNITY_IOS
 using UnityEngine.XR.ARKit;
-//#endif
+#endif
 
 /// <summary>
 /// This script implements in MappingConfiguration

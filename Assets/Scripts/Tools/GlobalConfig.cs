@@ -71,7 +71,7 @@ public class GlobalConfig : MonoBehaviour
     /// This method return string which better for naming format (yyyy-mm-dd-hh-mm-ss)
     /// </summary>
     /// <returns>String in (yyyy-mm-dd-hh-mm-ss) format</returns>
-    public static string GetNowDateandTime(bool in_two_zero_format = false)
+    public static string GetNowDateandTime(bool in_two_zero_format = false, bool date_only = false, bool time_only = false)
     {
         string y = System.DateTime.Now.Year.ToString();
         string mo = System.DateTime.Now.Month.ToString();
@@ -89,6 +89,9 @@ public class GlobalConfig : MonoBehaviour
             if (mi.Length < 2) mi = "0" + mi;
             if (s.Length < 2) s = "0" + s;
         }
+
+        if (date_only) return y + "-" + mo + "-" + d;
+        if (time_only) return h + "-" + mi + "-" + s;
 
         return y + "-" + mo + "-" + d + "-" + h + "-" + mi + "-" + s;
     }
@@ -112,6 +115,7 @@ public class GlobalConfig : MonoBehaviour
     // But now can differentially save and load different map number
     public static int SAVE_INTO_MAP = 0;
     public static int LOAD_MAP = 0;
+    public static bool NO_MAP = false;
 
 
     public static GameObject DESK_RAYCAST_OBJ;
@@ -183,6 +187,21 @@ public class GlobalConfig : MonoBehaviour
     public static Quaternion ExtractQuaternion(Quaternion q)
     {
         return new(q.x, q.y, q.z, q.w);
+    }
+
+    public static Matrix4x4 ExtractMatrix4x4(Matrix4x4 m)
+    {
+        Vector4 v0 = ExtractVector4(m.GetColumn(0));
+        Vector4 v1 = ExtractVector4(m.GetColumn(1));
+        Vector4 v2 = ExtractVector4(m.GetColumn(2));
+        Vector4 v3 = ExtractVector4(m.GetColumn(3));
+
+        return new(v0, v1, v2, v3);
+    }
+
+    public static Vector4 ExtractVector4(Vector4 v)
+    {
+        return new(v.x, v.y, v.z, v.w);
     }
 
     /// <summary>

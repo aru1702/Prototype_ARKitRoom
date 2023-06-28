@@ -27,4 +27,7 @@ public class MarkerLocation
     }
 
     public MarkerLocation() { }
+
+    public Vector3 Vector3Diff { get; set; }
+    public Quaternion QuaternionDiff { get; set; }
 }

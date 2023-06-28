@@ -20,6 +20,8 @@ public class NewARSceneImageTrackingCorrection : MonoBehaviour
     List<CustomTransform> m_ImageTrackedList = new();
     List<CustomTransform> m_ImageTrackedListWithRemove = new();
 
+    CustomTransform marker_on_tracked;
+
     string m_NowMarkerTracked, m_PreviousMarkerTracked = "na";      // necessary for GlobalSaveData
 
     List<CustomTransform> m_MarkerList = new();
@@ -125,6 +127,11 @@ public class NewARSceneImageTrackingCorrection : MonoBehaviour
                 m_PreviousMarkerTracked = updatedImage.referenceImage.name;
                 m_HasUpdate = false;
 
+                // reset marker on tracked
+                CustomTransform ct = new();
+                ct.custom_name = "none";        // give noticable flag
+                marker_on_tracked = ct;
+
                 return;
             }
             // UPDATE: we don't need to remove the marker from list
@@ -159,15 +166,23 @@ public class NewARSceneImageTrackingCorrection : MonoBehaviour
                 //    }
                 //}
 
+                // update marker on tracked
+                CustomTransform newImgTgt = new();
+                newImgTgt.custom_name = updatedImage.referenceImage.name;
+                newImgTgt.custom_position = updatedImage.transform.position;
+                newImgTgt.custom_q_rotation = updatedImage.transform.rotation;
+                newImgTgt.custom_euler_rotation = newImgTgt.custom_q_rotation.eulerAngles;
+                marker_on_tracked = newImgTgt;
+
                 // if the tracked img is new data
                 if (is_new_data)
                 {
-                    CustomTransform newImgTgt = new();
+                    //CustomTransform newImgTgt = new();
 
-                    newImgTgt.custom_name = updatedImage.referenceImage.name;
-                    newImgTgt.custom_position = updatedImage.transform.position;
-                    newImgTgt.custom_q_rotation = updatedImage.transform.rotation;
-                    newImgTgt.custom_euler_rotation = newImgTgt.custom_q_rotation.eulerAngles;
+                    //newImgTgt.custom_name = updatedImage.referenceImage.name;
+                    //newImgTgt.custom_position = updatedImage.transform.position;
+                    //newImgTgt.custom_q_rotation = updatedImage.transform.rotation;
+                    //newImgTgt.custom_euler_rotation = newImgTgt.custom_q_rotation.eulerAngles;
 
                     m_ImageTrackedList.Add(newImgTgt);
 
@@ -191,6 +206,8 @@ public class NewARSceneImageTrackingCorrection : MonoBehaviour
 
             m_NowMarkerTracked = updatedImage.referenceImage.name;
             m_HasUpdate = true;
+
+
         }
     }
 
@@ -379,6 +396,8 @@ public class NewARSceneImageTrackingCorrection : MonoBehaviour
     {
         return m_NowMarkerTracked;
     }
+
+    public CustomTransform GetMarkerOnTracked() { return marker_on_tracked; }
 
     /// <summary>
     /// Get string of previous tracked image target.

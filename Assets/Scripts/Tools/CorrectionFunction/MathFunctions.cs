@@ -59,8 +59,15 @@ public class MathFunctions : MonoBehaviour
         return inverted ? (1 - result) : result;
     }
 
+    public static float Exp(float value, bool inverted = false, float exp_scale = 1.0f)
+    {
+        float scalar = inverted ? (-1) * exp_scale : exp_scale;
+        return Mathf.Exp(scalar * value);
+    }
+
     public static string SIGMOID = "sigmoid";
     public static string TANH = "tanh";
+    public static string EXP = "exp";
 
     /// <summary>
     /// Normalized one value over list form array.

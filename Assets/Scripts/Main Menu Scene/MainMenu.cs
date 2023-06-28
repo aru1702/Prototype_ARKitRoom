@@ -43,6 +43,12 @@ public class MainMenu : MonoBehaviour
 
     public void UserRoleButtonPressed()
     {
+        // bypass if the correction is applied and chosen number 4
+        // correction number 4 is for Ver 3 where no map needed
+        bool corr_status = GlobalConfig.UseCorrectionMethod;
+        int corr_number = GlobalConfig.CorrectionFunctionVersion;
+        if (corr_status && corr_number == 4) { LoadScene("NewARScene"); }
+
         ApplyMapsNumber();
 
         if (CheckIfMapAvailable())

@@ -52,7 +52,7 @@ public class LoadObject_CatExample_2__NewARScene : MonoBehaviour
         rotQ = GlobalConfig.ITT_QuatRot;
 
         StartCoroutine(CheckInternet());
-        StartCoroutine(RenderMyOriginData(pos, rot));
+        StartCoroutine(RenderMyOriginData(pos, rot, GlobalConfig.NO_MAP));
         
     }
 
@@ -82,7 +82,7 @@ public class LoadObject_CatExample_2__NewARScene : MonoBehaviour
         www.Dispose();
     }
 
-    IEnumerator RenderMyOriginData(Vector3 markerPos, Vector3 markerRot)
+    IEnumerator RenderMyOriginData(Vector3 markerPos, Vector3 markerRot, bool skip_root_search = false)
     {
         Debug.Log("enter RenderMyOriginData");
 
@@ -115,7 +115,7 @@ public class LoadObject_CatExample_2__NewARScene : MonoBehaviour
                 string firstStr = strSplit[0];              // contained name always in [0]
 
                 // if it's the root
-                if (firstStr == "imagetarget")
+                if (firstStr == "imagetarget" && !skip_root_search)
                 {
                     // NEW MECHANIC: 2022-06-07
                     // See also: Test_InverseImageToOrigin.cs - MyMethod()
@@ -592,13 +592,51 @@ public class LoadObject_CatExample_2__NewARScene : MonoBehaviour
     }
 
     void UseCorrectionFunction()
-    {
-        // marker tracking is enabled
-        m_CorrectionFunctionManager
-            .GetComponent<NewARSceneImageTrackingCorrection>().enabled = true;
-
+    {        
         // but if the correction function is disabled, no use the rest of code
         if (m_CorrectionFunctionManager == null) return;
+
+        /////////
+        /// UPDATE ON 2023-06-11
+        /////////
+        ///
+        int corr_num = GlobalConfig.CorrectionFunctionVersion;
+
+        // Ver 0:  no correction
+        // just no correction activated
+
+        // Ver 1:  object to sc transform, marker on runtime
+        if (corr_num == 1)
+        {
+            m_CorrectionFunctionManager.GetComponent<CorrectionFunctions.VersionOne>().enabled = true;
+            EnableNewARSceneImageTrackingCorrection();
+            return;
+        }
+
+        // Ver 1b: wc to sc transform, marker on runtime(or adapt with camera movement)
+        // has var 2 where camera movement adapt
+        if (corr_num == 2)
+        {
+            m_CorrectionFunctionManager.GetComponent<CorrectionFunctions.VersionOneWithRotation>().enabled = true;
+            EnableNewARSceneImageTrackingCorrection();
+            return;
+        }
+
+        // Ver 2:  object to sc transform, marker pre load from data
+        if (corr_num == 3)
+        {
+            m_CorrectionFunctionManager.GetComponent<CorrectionFunctions.VersionTwoPreload>().enabled = true;
+            return;
+        }
+
+        // Ver 3:  no map reload, active init marker, object to sc transform, marker on runtime
+        if (corr_num == 4)
+        {
+            m_CorrectionFunctionManager.GetComponent<CorrectionFunctions.VersionThreeNoMap>().enabled = true;
+            return;
+        }
+
+
 
         // VERSION 1:
         // desc:
@@ -608,25 +646,29 @@ public class LoadObject_CatExample_2__NewARScene : MonoBehaviour
         // - use the NewARSceneCorrectionFunction to get and process marker data
         // - use the NewARSceneImageTrackingCorrection to get marker data
 
-        if (GlobalConfig.CorrectionFunctionVersion == 1)
-            m_CorrectionFunctionManager
-                .GetComponent<CorrectionFunctions.VersionOne>().enabled = true;
+        //if (GlobalConfig.CorrectionFunctionVersion == 1)
+        //    m_CorrectionFunctionManager
+        //        .GetComponent<CorrectionFunctions.VersionOne>().enabled = true;
 
-        if (GlobalConfig.CorrectionFunctionVersion == 2)
-            m_CorrectionFunctionManager
-                .GetComponent<CorrectionFunctions.VersionOneBLastMarker>().enabled = true;
+        //if (GlobalConfig.CorrectionFunctionVersion == 2)
+        //    m_CorrectionFunctionManager
+        //        .GetComponent<CorrectionFunctions.VersionOneWithRotation>().enabled = true;
 
-        if (GlobalConfig.CorrectionFunctionVersion == 3)
-            m_CorrectionFunctionManager
-                .GetComponent<CorrectionFunctions.VersionOneBAvgWMarker>().enabled = true;
+        //if (GlobalConfig.CorrectionFunctionVersion == 2)
+        //    m_CorrectionFunctionManager
+        //        .GetComponent<CorrectionFunctions.VersionOneBLastMarker>().enabled = true;
+
+        //if (GlobalConfig.CorrectionFunctionVersion == 3)
+        //    m_CorrectionFunctionManager
+        //        .GetComponent<CorrectionFunctions.VersionOneBAvgWMarker>().enabled = true;
 
         // VERSION 2:
         // desc:
         // - use marker to marker distance to get priority weight
 
-        if (GlobalConfig.CorrectionFunctionVersion == 4)
-            m_CorrectionFunctionManager
-                .GetComponent<CorrectionFunctions.VersionTwoA>().enabled = true;
+        //if (GlobalConfig.CorrectionFunctionVersion == 4)
+        //    m_CorrectionFunctionManager
+        //        .GetComponent<CorrectionFunctions.VersionTwoA>().enabled = true;
 
         //if (GlobalConfig.CorrectionFunctionVersion == 5)
         //    m_CorrectionFunctionManager
@@ -663,5 +705,11 @@ public class LoadObject_CatExample_2__NewARScene : MonoBehaviour
         var file = date + "_AllObjPosition_" + map + ".csv";
         var path = System.IO.Path.Combine(Application.persistentDataPath, file);
         ExportCSV.exportData(path, pos_list);
+    }
+
+    public void EnableNewARSceneImageTrackingCorrection()
+    {
+        // marker tracking is enabled
+        m_CorrectionFunctionManager.GetComponent<NewARSceneImageTrackingCorrection>().enabled = true;
     }
 }

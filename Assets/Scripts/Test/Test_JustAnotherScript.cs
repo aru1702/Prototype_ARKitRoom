@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Test_JustAnotherScript : MonoBehaviour
 {
-    enum Ver { Version1, Version1BLast, Version1BAvg, Version2A };
+    enum Ver { Version1, Version1B, Version2, Version3 };
 
     [SerializeField]
     int m_SaveMap = 0;

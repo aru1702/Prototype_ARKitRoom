@@ -102,7 +102,7 @@ public class CMOMMarkerData : MonoBehaviour
                 UpdateGTMarkerData(CurrentMarkerName);
 
                 int index = (int)MarkerTableData[CurrentMarkerName];
-                Debug.Log("index: " + index);
+                //Debug.Log("index: " + index);
 
                 var GTData = GTMarkerData[index];
 
@@ -142,8 +142,8 @@ public class CMOMMarkerData : MonoBehaviour
             UpdateCameraBehaviorDistance();
             UpdateCameraBehaviorTime(true);
 
-            Debug.Log("current marker count: " + MarkerTableCount);
-            Debug.Log("current gt data count: " + GTMarkerData.Count);
+            //Debug.Log("current marker count: " + MarkerTableCount);
+            //Debug.Log("current gt data count: " + GTMarkerData.Count);
         }
     }
 
@@ -164,16 +164,16 @@ public class CMOMMarkerData : MonoBehaviour
 
     void UpdateGTMarkerData(string cur_marker_name)
     {
-        Debug.Log("UpdateGTMarkerData");
+        //Debug.Log("UpdateGTMarkerData");
         // empty or no related data
         if (!MarkerTableData.ContainsKey(cur_marker_name))
         {
-            Debug.Log("no marker data");
+            //Debug.Log("no marker data");
 
             // for calibration mode
             if (m_ActiveForCM)
             {
-                Debug.Log("CM data");
+                //Debug.Log("CM data");
                 var load_obj = m_LoadObjectManager.GetComponent<LoadObject_CatExample_2>();
                 var all_objs = load_obj.GetMyParents();
 
@@ -182,7 +182,7 @@ public class CMOMMarkerData : MonoBehaviour
                 {
                     if (o.name == cur_marker_name)
                     {
-                        Debug.Log("found: " + o.name);
+                        //Debug.Log("found: " + o.name);
 
                         // add recognition data to hashtable
                         MarkerTableData.Add(cur_marker_name, MarkerTableCount);
@@ -199,7 +199,7 @@ public class CMOMMarkerData : MonoBehaviour
             // for observation mode
             if (m_ActiveForOM)
             {
-                Debug.Log("OM data");
+                //Debug.Log("OM data");
                 var load_obj = m_LoadObjectManager.GetComponent<LoadObject_CatExample_2__NewARScene>();
                 var all_objs = load_obj.GetMyParents();
 
@@ -208,7 +208,7 @@ public class CMOMMarkerData : MonoBehaviour
                 {
                     if (o.name == cur_marker_name)
                     {
-                        Debug.Log("found: " + o.name);
+                        //Debug.Log("found: " + o.name);
 
                         // add recognition data to hashtable
                         MarkerTableData.Add(cur_marker_name, MarkerTableCount);

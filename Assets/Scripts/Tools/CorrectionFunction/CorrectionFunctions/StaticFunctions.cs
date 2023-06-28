@@ -41,7 +41,7 @@ namespace CorrectionFunctions
                         null,
                         m.GT_Position,
                         m.GT_EulerAngle,
-                        Quaternion.Euler(m.GT_EulerAngle)
+                        m.GT_Rotation
                     ));
             }
             return ct;

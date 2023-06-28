@@ -26,6 +26,8 @@ public class MappingV2 : MonoBehaviour
     List<string[]> m_RecordedMarkerData = new();
     GameObject localWorldCoordinate;
 
+    List<MarkerLocation> m_RecordedMarkerLocation = new();
+
     // enabler (on/off) in Editor
     [SerializeField]
     bool m_EnableCameraRecording = true;
@@ -257,6 +259,39 @@ public class MappingV2 : MonoBehaviour
                     m_RecordedMarkerData.Add(data);
                     marker_next = imageTracked.name;
 
+                    //////
+
+                    Vector3 gt_pos_by_wc = gT_m44.GetPosition();
+                    Vector3 rt_pos_by_wc = cR_m44.GetPosition();
+                    Vector3 gt_to_rt_vec = rt_pos_by_wc - gt_pos_by_wc;
+
+                    Quaternion gt_rot_by_wc = gT_m44.rotation;
+                    Quaternion rt_rot_by_wc = cR_m44.rotation;
+                    Quaternion gt_to_rt_qua = Quaternion.Inverse(gt_rot_by_wc) * rt_rot_by_wc;
+
+                    MarkerLocation ML = new MarkerLocation();
+                    ML.Marker_name = imageTracked.name;
+                    ML.GT_Position = gt_pos_by_wc;
+                    ML.GT_Rotation = gt_rot_by_wc;
+                    ML.C_Position = rt_pos_by_wc;
+                    ML.C_Rotation = rt_rot_by_wc;
+                    ML.Vector3Diff = gt_to_rt_vec;
+                    ML.QuaternionDiff = gt_to_rt_qua;
+
+                    int count = 0;
+                    for (int i = 0; i < m_RecordedMarkerLocation.Count; i++)
+                    {
+                        if (imageTracked.name == m_RecordedMarkerLocation[i].Marker_name)
+                        {
+                            m_RecordedMarkerLocation[i] = ML;
+                            break;
+                        }
+                        ++count;
+                    }
+                    if (count >= m_RecordedMarkerLocation.Count) m_RecordedMarkerLocation.Add(ML);
+
+                    ////////////
+
                     //Destroy(gT);
 
                     // DEBUGGING ONLY, CHECK NAME AND TRANSFORM INFORMATION
@@ -299,6 +334,37 @@ public class MappingV2 : MonoBehaviour
         fileName = time + "_RecordedMarkerDataV2__Maps_" + map + ".csv";
         path = Path.Combine(Application.persistentDataPath, fileName);
         ExportCSV.exportData(path, m_RecordedMarkerData);
+
+        // new data process
+        List<string[]> new_data = new List<string[]>();
+        string[] title = new[]
+            {
+                "name",
+                "gt_pos_x", "gt_pos_y", "gt_pos_z",
+                "gt_rot_x", "gt_rot_y", "gt_rot_z", "gt_rot_w",
+                "rt_pos_x", "rt_pos_y", "rt_pos_z",
+                "rt_rot_x", "rt_rot_y", "rt_rot_z", "rt_rot_w",
+                "diff_pos_x", "diff_pos_y", "diff_pos_z",
+                "diff_rot_x", "diff_rot_y", "diff_rot_z", "diff_rot_w",
+            };
+        new_data.Add(title);
+        foreach (var rml in m_RecordedMarkerLocation)
+        {
+            string[] data = new[]
+            {
+                rml.Marker_name,
+                rml.GT_Position.x.ToString(), rml.GT_Position.y.ToString(), rml.GT_Position.z.ToString(),
+                rml.GT_Rotation.x.ToString(), rml.GT_Rotation.y.ToString(), rml.GT_Rotation.z.ToString(), rml.GT_Rotation.w.ToString(),
+                rml.C_Position.x.ToString(), rml.C_Position.y.ToString(), rml.C_Position.z.ToString(),
+                rml.C_Rotation.x.ToString(), rml.C_Rotation.y.ToString(), rml.C_Rotation.z.ToString(), rml.C_Rotation.w.ToString(),
+                rml.Vector3Diff.x.ToString(), rml.Vector3Diff.y.ToString(), rml.Vector3Diff.z.ToString(),
+                rml.QuaternionDiff.x.ToString(), rml.QuaternionDiff.y.ToString(), rml.QuaternionDiff.z.ToString(), rml.QuaternionDiff.w.ToString(),
+            };
+            new_data.Add(data);
+        }
+        fileName = "MarkerCalibration_New__Maps_" + map + ".csv";
+        path = Path.Combine(Application.persistentDataPath, fileName);
+        ExportCSV.exportData(path, new_data);
     }
 
     public static string GetCameraTrajectoryFileName(string map)

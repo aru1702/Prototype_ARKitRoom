@@ -25,6 +25,9 @@ public class MainMenu_2 : MonoBehaviour
     [SerializeField]
     GameObject m_LocalConfigHandler;
 
+    //[SerializeField]
+    //bool m_EnableNoMap99 = false;
+
     string mapName;
 
     void OnEnable()
@@ -55,11 +58,26 @@ public class MainMenu_2 : MonoBehaviour
         ApplyMapsNumber();
         ApplyCorrectionFunctionVersion();
 
+        // bypass if the correction is applied and chosen number 4
+        // correction number 4 is for Ver 3 where no map needed
+        bool corr_status = GlobalConfig.UseCorrectionMethod;
+        int corr_number = GlobalConfig.CorrectionFunctionVersion;
+        if (corr_status && corr_number == 4)
+        {
+            GlobalConfig.NO_MAP = true;
+            LoadScene("NewARScene");
+            return;
+        }
+
         if (CheckIfMapAvailable())
         {
             LoadScene("NewARScene");
-            //Debug.Log("Enter AR system");
         }
+        //else if (m_EnableNoMap99 && GlobalConfig.LOAD_MAP == 99)
+        //{
+        //    LoadScene("NewARScene");
+        //    GlobalConfig.NO_MAP = true;
+        //}
         else
         {
             m_errorText.gameObject.SetActive(true);
