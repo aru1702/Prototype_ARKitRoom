@@ -52,9 +52,14 @@ public class ImageRecognition_CatExample_2 : MonoBehaviour
             m_ARSessionOrigin.GetComponent<ARTrackedImageManager>().enabled = true;
         }
 
-        CanvasCat.SetActive(true);
+        //CanvasCat.SetActive(true);
 
         m_ImageTargetsTransform = new();
+
+        // July 11
+        GlobalConfig.TempOriginGO = new GameObject();
+        GlobalConfig.PlaySpaceOriginGO = new GameObject();
+        if (m_LoadObjectManager) m_LoadObjectManager.SetActive(true);
     }
 
     private void OnDisable() { _arTrackedImageManager.trackedImagesChanged -= OnImageChanged; }
@@ -70,7 +75,8 @@ public class ImageRecognition_CatExample_2 : MonoBehaviour
         foreach (var updatedImage in args.updated)
         {
             // DEBUGGING
-            //Debug.Log("name: " + trackedImage.referenceImage.name);
+            Debug.Log("name: " + updatedImage.referenceImage.name + ", status: " + updatedImage.trackingState.ToString());
+
             //Debug.Log("updatedImage name: " + updatedImage.referenceImage.name +
             //          "\nupdatedImage loc: " + updatedImage.transform.position.ToString());
             //Debug.Log("ref: " + updatedImage.referenceImage.name);
@@ -127,6 +133,7 @@ public class ImageRecognition_CatExample_2 : MonoBehaviour
         // DEBUGGING
         //Debug.Log("count: " + _arTrackedImageManager.trackables.count);
 
+        /*
         if (_arTrackedImageManager.trackables.count > 0)
         {
             foreach (var trackedImage in _arTrackedImageManager.trackables)
@@ -201,6 +208,7 @@ public class ImageRecognition_CatExample_2 : MonoBehaviour
                 }
             }
         }
+        */
     }
 
     public void HideCanvas()

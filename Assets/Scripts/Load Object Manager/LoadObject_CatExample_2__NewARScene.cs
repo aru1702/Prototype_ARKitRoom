@@ -117,55 +117,62 @@ public class LoadObject_CatExample_2__NewARScene : MonoBehaviour
                 // if it's the root
                 if (firstStr == "imagetarget" && !skip_root_search)
                 {
-                    // NEW MECHANIC: 2022-06-07
-                    // See also: Test_InverseImageToOrigin.cs - MyMethod()
-
-                    // ================== //
-                    // 1. create our root based on imagetarget
                     GameObject root = new("root");
-                    root.transform.SetParent(GlobalConfig.TempOriginGO.transform, false);
+
+                    // ANOTHER MECHANIC THAT DOESN'T NEED ORIGIN
+                    // 2023-08-27
+                    if (GlobalConfig.TempOriginGO.transform.position != Vector3.zero)
+                    {
+
+                        // NEW MECHANIC: 2022-06-07
+                        // See also: Test_InverseImageToOrigin.cs - MyMethod()
+
+                        // ================== //
+                        // 1. create our root based on imagetarget
+                        root.transform.SetParent(GlobalConfig.TempOriginGO.transform, false);
 
 
-                    // ================== //
-                    // 2. make dummy object to inverse the transformation
-                    GameObject dummy = new();
+                        // ================== //
+                        // 2. make dummy object to inverse the transformation
+                        GameObject dummy = new();
 
-                    // rotate with our root to image target ROTATION data
-                    dummy = GlobalConfig.RotateOneByOne(dummy, item.euler_rotation);
+                        // rotate with our root to image target ROTATION data
+                        dummy = GlobalConfig.RotateOneByOne(dummy, item.euler_rotation);
 
-                    // get its inverse of rotation
-                    Quaternion imageTarget_rotinv = Quaternion.Inverse(dummy.transform.rotation);
+                        // get its inverse of rotation
+                        Quaternion imageTarget_rotinv = Quaternion.Inverse(dummy.transform.rotation);
 
-                    // apply to our root
-                    root.transform.localRotation = imageTarget_rotinv;
-
-
-                    // ================== //
-                    // 3. calculate our position with calculating the localToWorldMatrix
-
-                    // make our dummy to use the inverse rotation too
-                    dummy.transform.rotation = imageTarget_rotinv;
-
-                    // get the M4x4 matrix of from local to world of our dummy after rotation
-                    Matrix4x4 mat4 = dummy.transform.localToWorldMatrix;
-
-                    // vector multiplication with our root to image target POSITION DATA
-                    Vector3 vec3 = mat4 * item.position;
-
-                    // apply to our root, but inverse it (-)
-                    root.transform.localPosition = -vec3;
+                        // apply to our root
+                        root.transform.localRotation = imageTarget_rotinv;
 
 
-                    // ================== //
-                    // 4. make our root become ROOT now
-                    root.transform.SetParent(null);
-                    //imageTarget.transform.SetParent(ourRoot.transform);
+                        // ================== //
+                        // 3. calculate our position with calculating the localToWorldMatrix
 
-                    // ================== //
-                    // 5. finishing
+                        // make our dummy to use the inverse rotation too
+                        dummy.transform.rotation = imageTarget_rotinv;
 
-                    // destroy the dummy object
-                    Destroy(dummy);
+                        // get the M4x4 matrix of from local to world of our dummy after rotation
+                        Matrix4x4 mat4 = dummy.transform.localToWorldMatrix;
+
+                        // vector multiplication with our root to image target POSITION DATA
+                        Vector3 vec3 = mat4 * item.position;
+
+                        // apply to our root, but inverse it (-)
+                        root.transform.localPosition = -vec3;
+
+
+                        // ================== //
+                        // 4. make our root become ROOT now
+                        root.transform.SetParent(null);
+                        //imageTarget.transform.SetParent(ourRoot.transform);
+
+                        // ================== //
+                        // 5. finishing
+
+                        // destroy the dummy object
+                        Destroy(dummy);
+                    }
 
                     // Instantiate the root to become origin child
                     originChild = Instantiate(root, GlobalConfig.TempOriginGO.transform, true);
@@ -633,6 +640,12 @@ public class LoadObject_CatExample_2__NewARScene : MonoBehaviour
         if (corr_num == 4)
         {
             m_CorrectionFunctionManager.GetComponent<CorrectionFunctions.VersionThreeNoMap>().enabled = true;
+            return;
+        }
+
+        if (corr_num >= 5 && corr_num <= 8)
+        {
+            m_CorrectionFunctionManager.GetComponent<VersionFourThesis>().enabled = true;
             return;
         }
 

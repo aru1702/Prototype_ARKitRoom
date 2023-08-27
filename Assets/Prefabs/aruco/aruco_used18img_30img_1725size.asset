@@ -1,0 +1,569 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 848409ee8ba454f42a5ddff137688a27, type: 3}
+  m_Name: aruco_used18img_30img_1725size
+  m_EditorClassIdentifier: 
+  m_GuidLow: 5486643514377423075
+  m_GuidHigh: 5272135050726269570
+  m_DataStore:
+    m_Storage: []
+  m_Images:
+  - m_SerializedGuid:
+      m_GuidLow: 4749598690032171474
+      m_GuidHigh: 9163448045450928830
+    m_SerializedTextureGuid:
+      m_GuidLow: 4970384166338576862
+      m_GuidHigh: 4982454025588678747
+    m_Size: {x: 0.1725, y: 0.1725}
+    m_SpecifySize: 1
+    m_Name: img_0
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 5502001771368319807
+      m_GuidHigh: 2918866570498564998
+    m_SerializedTextureGuid:
+      m_GuidLow: 11874393456315387144
+      m_GuidHigh: 2744578966332553659
+    m_Size: {x: 0.1725, y: 0.1725}
+    m_SpecifySize: 1
+    m_Name: img_1
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 5333912175562406325
+      m_GuidHigh: 1213627088001362589
+    m_SerializedTextureGuid:
+      m_GuidLow: 321832095075913239
+      m_GuidHigh: 10907098236530239864
+    m_Size: {x: 0.1725, y: 0.1725}
+    m_SpecifySize: 1
+    m_Name: img_2
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 5497324912876580111
+      m_GuidHigh: 9858237462028016319
+    m_SerializedTextureGuid:
+      m_GuidLow: 2659258101491204331
+      m_GuidHigh: 15306513260417215578
+    m_Size: {x: 0.1725, y: 0.1725}
+    m_SpecifySize: 1
+    m_Name: img_3
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 4743806207273226154
+      m_GuidHigh: 9156151038231920301
+    m_SerializedTextureGuid:
+      m_GuidLow: 17601706874474815088
+      m_GuidHigh: 7908021833403403608
+    m_Size: {x: 0.1725, y: 0.1725}
+    m_SpecifySize: 1
+    m_Name: img_4
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 5215692321586443684
+      m_GuidHigh: 9051962861945616057
+    m_SerializedTextureGuid:
+      m_GuidLow: 14182427580037433047
+      m_GuidHigh: 2838747908052664616
+    m_Size: {x: 0.1725, y: 0.1725}
+    m_SpecifySize: 1
+    m_Name: img_5
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 4661205948893547857
+      m_GuidHigh: 13710035806280081550
+    m_SerializedTextureGuid:
+      m_GuidLow: 15291682596320595689
+      m_GuidHigh: 16352495448288439545
+    m_Size: {x: 0.1725, y: 0.1725}
+    m_SpecifySize: 1
+    m_Name: img_6
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 4757624010514294263
+      m_GuidHigh: 5638015810425540772
+    m_SerializedTextureGuid:
+      m_GuidLow: 16451552111871407943
+      m_GuidHigh: 7910212863145727753
+    m_Size: {x: 0.1725, y: 0.1725}
+    m_SpecifySize: 1
+    m_Name: img_7
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 5065848061467392323
+      m_GuidHigh: 3767105853548558750
+    m_SerializedTextureGuid:
+      m_GuidLow: 16448244130285752391
+      m_GuidHigh: 3112457626352230952
+    m_Size: {x: 0.1725, y: 0.1725}
+    m_SpecifySize: 1
+    m_Name: img_8
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 4894799032775287758
+      m_GuidHigh: 2315817357686343353
+    m_SerializedTextureGuid:
+      m_GuidLow: 15287852227662724681
+      m_GuidHigh: 12812101718812445976
+    m_Size: {x: 0.1725, y: 0.1725}
+    m_SpecifySize: 1
+    m_Name: img_9
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 4975334169483180955
+      m_GuidHigh: 15079028860005398951
+    m_SerializedTextureGuid:
+      m_GuidLow: 330820989776573254
+      m_GuidHigh: 9900021504793835995
+    m_Size: {x: 0.1725, y: 0.1725}
+    m_SpecifySize: 1
+    m_Name: img_10
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 4932126703701843790
+      m_GuidHigh: 2436015047039170485
+    m_SerializedTextureGuid:
+      m_GuidLow: 8394914727681421928
+      m_GuidHigh: 6097762165912661787
+    m_Size: {x: 0.1725, y: 0.1725}
+    m_SpecifySize: 1
+    m_Name: img_11
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 4967470830805396314
+      m_GuidHigh: 7233922104796499866
+    m_SerializedTextureGuid:
+      m_GuidLow: 11859883845356076239
+      m_GuidHigh: 14529916664557022505
+    m_Size: {x: 0.1725, y: 0.1725}
+    m_SpecifySize: 1
+    m_Name: img_12
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 5369026024303008293
+      m_GuidHigh: 6705369805803014076
+    m_SerializedTextureGuid:
+      m_GuidLow: 8397032097600337827
+      m_GuidHigh: 379190118928764634
+    m_Size: {x: 0.1725, y: 0.1725}
+    m_SpecifySize: 1
+    m_Name: img_13
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 5666255051860780244
+      m_GuidHigh: 10083708873993636240
+    m_SerializedTextureGuid:
+      m_GuidLow: 2606888128039893380
+      m_GuidHigh: 820910856167179977
+    m_Size: {x: 0.1725, y: 0.1725}
+    m_SpecifySize: 1
+    m_Name: img_14
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 5237648940923084310
+      m_GuidHigh: 11164987501433811378
+    m_SerializedTextureGuid:
+      m_GuidLow: 304134654345412654
+      m_GuidHigh: 10366595166355577465
+    m_Size: {x: 0.1725, y: 0.1725}
+    m_SpecifySize: 1
+    m_Name: img_15
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 4891030024397893994
+      m_GuidHigh: 14227782353021097110
+    m_SerializedTextureGuid:
+      m_GuidLow: 15286201690915454366
+      m_GuidHigh: 950109257367712584
+    m_Size: {x: 0.1725, y: 0.1725}
+    m_SpecifySize: 1
+    m_Name: img_16
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 5748645951704681033
+      m_GuidHigh: 6678302892675472831
+    m_SerializedTextureGuid:
+      m_GuidLow: 2663251454453699776
+      m_GuidHigh: 15560096988391471288
+    m_Size: {x: 0.1725, y: 0.1725}
+    m_SpecifySize: 1
+    m_Name: img_17
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 5666024073438132914
+      m_GuidHigh: 5780149874056331392
+    m_SerializedTextureGuid:
+      m_GuidLow: 15339280083143562132
+      m_GuidHigh: 8045856024902348699
+    m_Size: {x: 0.1725, y: 0.1725}
+    m_SpecifySize: 1
+    m_Name: img_18
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 4848423389451056563
+      m_GuidHigh: 11274105105453749659
+    m_SerializedTextureGuid:
+      m_GuidLow: 3757982471961332948
+      m_GuidHigh: 2112780899874522296
+    m_Size: {x: 0.1725, y: 0.1725}
+    m_SpecifySize: 1
+    m_Name: img_19
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 4663046378077803428
+      m_GuidHigh: 10370241666412775600
+    m_SerializedTextureGuid:
+      m_GuidLow: 6104391066503175605
+      m_GuidHigh: 4352621089393420344
+    m_Size: {x: 0.1725, y: 0.1725}
+    m_SpecifySize: 1
+    m_Name: img_20
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 5476708033319660051
+      m_GuidHigh: 18336694742091657613
+    m_SerializedTextureGuid:
+      m_GuidLow: 3766444396238244150
+      m_GuidHigh: 12186489944948591898
+    m_Size: {x: 0.1725, y: 0.1725}
+    m_SpecifySize: 1
+    m_Name: img_21
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 4985815423644147583
+      m_GuidHigh: 17262462059921467325
+    m_SerializedTextureGuid:
+      m_GuidLow: 7231618580331475898
+      m_GuidHigh: 6598529028748327705
+    m_Size: {x: 0.1725, y: 0.1725}
+    m_SpecifySize: 1
+    m_Name: img_22
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 4855322279728742310
+      m_GuidHigh: 17179448889927111578
+    m_SerializedTextureGuid:
+      m_GuidLow: 4921668358152944545
+      m_GuidHigh: 5925616581143961707
+    m_Size: {x: 0.1725, y: 0.1725}
+    m_SpecifySize: 1
+    m_Name: img_23
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 4945354399634910693
+      m_GuidHigh: 116892452200357272
+    m_SerializedTextureGuid:
+      m_GuidLow: 16447258335536014437
+      m_GuidHigh: 10016970624129473355
+    m_Size: {x: 0.1725, y: 0.1725}
+    m_SpecifySize: 1
+    m_Name: img_24
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 4739342122242731778
+      m_GuidHigh: 18049120048199312047
+    m_SerializedTextureGuid:
+      m_GuidLow: 7267537876218251714
+      m_GuidHigh: 6366902688713449304
+    m_Size: {x: 0.1725, y: 0.1725}
+    m_SpecifySize: 1
+    m_Name: img_25
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 5129805211529327469
+      m_GuidHigh: 16995319016514677429
+    m_SerializedTextureGuid:
+      m_GuidLow: 2640346950049173886
+      m_GuidHigh: 108005498837499624
+    m_Size: {x: 0.1725, y: 0.1725}
+    m_SpecifySize: 1
+    m_Name: img_26
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 4903405839611197768
+      m_GuidHigh: 15249941933420744126
+    m_SerializedTextureGuid:
+      m_GuidLow: 14168812315535485664
+      m_GuidHigh: 17571215632638505258
+    m_Size: {x: 0.1725, y: 0.1725}
+    m_SpecifySize: 1
+    m_Name: img_27
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 5090659747210943079
+      m_GuidHigh: 1424058406990287539
+    m_SerializedTextureGuid:
+      m_GuidLow: 3749074598337866750
+      m_GuidHigh: 17787845255818570283
+    m_Size: {x: 0.1725, y: 0.1725}
+    m_SpecifySize: 1
+    m_Name: img_28
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 5701542192037949321
+      m_GuidHigh: 1583233518112347807
+    m_SerializedTextureGuid:
+      m_GuidLow: 2629683775451773494
+      m_GuidHigh: 11228741790069131482
+    m_Size: {x: 0.1725, y: 0.1725}
+    m_SpecifySize: 1
+    m_Name: img_29
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 5386686893434475439
+      m_GuidHigh: 4551066576728710297
+    m_SerializedTextureGuid:
+      m_GuidLow: 17620899746424037709
+      m_GuidHigh: 8908447289196732683
+    m_Size: {x: 0.1725, y: 0.1725}
+    m_SpecifySize: 1
+    m_Name: img_30
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 5556047503049839615
+      m_GuidHigh: 11023248629305536940
+    m_SerializedTextureGuid:
+      m_GuidLow: 3800940875798082105
+      m_GuidHigh: 8482427513252835034
+    m_Size: {x: 0.1725, y: 0.1725}
+    m_SpecifySize: 1
+    m_Name: img_31
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 5348321460074224542
+      m_GuidHigh: 5834108693171356071
+    m_SerializedTextureGuid:
+      m_GuidLow: 7254426731032371581
+      m_GuidHigh: 7188829128322206042
+    m_Size: {x: 0.1725, y: 0.1725}
+    m_SpecifySize: 1
+    m_Name: img_32
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 5411429666087352267
+      m_GuidHigh: 2367108159235202198
+    m_SerializedTextureGuid:
+      m_GuidLow: 8375341424812173466
+      m_GuidHigh: 15673830744346814427
+    m_Size: {x: 0.056, y: 0.056}
+    m_SpecifySize: 1
+    m_Name: img_201
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 5506444457376402879
+      m_GuidHigh: 6563460826326818997
+    m_SerializedTextureGuid:
+      m_GuidLow: 15343361125116124716
+      m_GuidHigh: 13988056837814057754
+    m_Size: {x: 0.056, y: 0.056}
+    m_SpecifySize: 1
+    m_Name: img_202
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 4833551794479985555
+      m_GuidHigh: 11614110364451641479
+    m_SerializedTextureGuid:
+      m_GuidLow: 4912624223057880816
+      m_GuidHigh: 16267303723922786056
+    m_Size: {x: 0.056, y: 0.056}
+    m_SpecifySize: 1
+    m_Name: img_203
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 5552546435762609960
+      m_GuidHigh: 6838793329852785855
+    m_SerializedTextureGuid:
+      m_GuidLow: 2603342651407083287
+      m_GuidHigh: 1832274267689749529
+    m_Size: {x: 0.056, y: 0.056}
+    m_SpecifySize: 1
+    m_Name: img_204
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 5571372326283908511
+      m_GuidHigh: 167217292699919775
+    m_SerializedTextureGuid:
+      m_GuidLow: 11877513850650982532
+      m_GuidHigh: 13584643246726223867
+    m_Size: {x: 0.056, y: 0.056}
+    m_SpecifySize: 1
+    m_Name: img_205
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 5169185680218767908
+      m_GuidHigh: 5726916195160193968
+    m_SerializedTextureGuid:
+      m_GuidLow: 6113182372370636425
+      m_GuidHigh: 17306793135011240394
+    m_Size: {x: 0.056, y: 0.056}
+    m_SpecifySize: 1
+    m_Name: img_206
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 5409884863958949986
+      m_GuidHigh: 6864601361267938999
+    m_SerializedTextureGuid:
+      m_GuidLow: 17634767935030804255
+      m_GuidHigh: 14303358416617550363
+    m_Size: {x: 0.056, y: 0.056}
+    m_SpecifySize: 1
+    m_Name: img_207
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 4696052635101515938
+      m_GuidHigh: 13480831152878471859
+    m_SerializedTextureGuid:
+      m_GuidLow: 15307775001878124046
+      m_GuidHigh: 5254928155910585034
+    m_Size: {x: 0.056, y: 0.056}
+    m_SpecifySize: 1
+    m_Name: img_208
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 4808408969619497259
+      m_GuidHigh: 6424048319364828815
+    m_SerializedTextureGuid:
+      m_GuidLow: 3777704396905292470
+      m_GuidHigh: 5258345788359587099
+    m_Size: {x: 0.056, y: 0.056}
+    m_SpecifySize: 1
+    m_Name: img_209
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 5317009600802174657
+      m_GuidHigh: 7494458973275430283
+    m_SerializedTextureGuid:
+      m_GuidLow: 3764947731018059782
+      m_GuidHigh: 7337020104101027963
+    m_Size: {x: 0.056, y: 0.056}
+    m_SpecifySize: 1
+    m_Name: img_210
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 4612937085581089129
+      m_GuidHigh: 7818380948107766677
+    m_SerializedTextureGuid:
+      m_GuidLow: 14153886971258279706
+      m_GuidHigh: 17221751387596633432
+    m_Size: {x: 0.056, y: 0.056}
+    m_SpecifySize: 1
+    m_Name: img_211
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 5379931559786517001
+      m_GuidHigh: 17561458136182797717
+    m_SerializedTextureGuid:
+      m_GuidLow: 12977848493662484330
+      m_GuidHigh: 9769892579989210442
+    m_Size: {x: 0.056, y: 0.056}
+    m_SpecifySize: 1
+    m_Name: img_212
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 5695945335714819098
+      m_GuidHigh: 6300098438045520523
+    m_SerializedTextureGuid:
+      m_GuidLow: 17596240197022053652
+      m_GuidHigh: 16254111129492962200
+    m_Size: {x: 0.1725, y: 0.1725}
+    m_SpecifySize: 1
+    m_Name: img_33
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 5360666779059152316
+      m_GuidHigh: 8195715725917988016
+    m_SerializedTextureGuid:
+      m_GuidLow: 7274517555379959636
+      m_GuidHigh: 13186775448221095593
+    m_Size: {x: 0.1725, y: 0.1725}
+    m_SpecifySize: 1
+    m_Name: img_34
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 5044005142230579780
+      m_GuidHigh: 9167966994887630724
+    m_SerializedTextureGuid:
+      m_GuidLow: 1469819289045563709
+      m_GuidHigh: 8798598998523794889
+    m_Size: {x: 0.1725, y: 0.1725}
+    m_SpecifySize: 1
+    m_Name: img_35
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 4675661908447347091
+      m_GuidHigh: 4217938340857264006
+    m_SerializedTextureGuid:
+      m_GuidLow: 17588156117723840392
+      m_GuidHigh: 445923163396300280
+    m_Size: {x: 0.1725, y: 0.1725}
+    m_SpecifySize: 1
+    m_Name: img_36
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 5314655138644512908
+      m_GuidHigh: 5216381574905235600
+    m_SerializedTextureGuid:
+      m_GuidLow: 15332052123274114615
+      m_GuidHigh: 4524461308378814120
+    m_Size: {x: 0.1725, y: 0.1725}
+    m_SpecifySize: 1
+    m_Name: img_37
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 5681410569510232111
+      m_GuidHigh: 13009059661705063078
+    m_SerializedTextureGuid:
+      m_GuidLow: 14140505564201208484
+      m_GuidHigh: 15467068603675581768
+    m_Size: {x: 0.1725, y: 0.1725}
+    m_SpecifySize: 1
+    m_Name: img_38
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 5066441737896261800
+      m_GuidHigh: 15556061115005321090
+    m_SerializedTextureGuid:
+      m_GuidLow: 16488768634673033869
+      m_GuidHigh: 17260487252584781449
+    m_Size: {x: 0.1725, y: 0.1725}
+    m_SpecifySize: 1
+    m_Name: img_39
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 4930665726761181475
+      m_GuidHigh: 2819282488814624953
+    m_SerializedTextureGuid:
+      m_GuidLow: 17603214009396470618
+      m_GuidHigh: 17565662563534116075
+    m_Size: {x: 0.1725, y: 0.1725}
+    m_SpecifySize: 1
+    m_Name: img_40
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 4725211261602659842
+      m_GuidHigh: 18204027301880301963
+    m_SerializedTextureGuid:
+      m_GuidLow: 15283835085870042268
+      m_GuidHigh: 9817087666244949193
+    m_Size: {x: 0.1725, y: 0.1725}
+    m_SpecifySize: 1
+    m_Name: img_41
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 5442422677553270716
+      m_GuidHigh: 8433107086075570311
+    m_SerializedTextureGuid:
+      m_GuidLow: 9564705989990554845
+      m_GuidHigh: 2516006998939746328
+    m_Size: {x: 0.1725, y: 0.1725}
+    m_SpecifySize: 1
+    m_Name: img_42
+    m_Texture: {fileID: 0}

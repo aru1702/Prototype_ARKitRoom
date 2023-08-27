@@ -1,0 +1,139 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 848409ee8ba454f42a5ddff137688a27, type: 3}
+  m_Name: aruco_sm_12img_565size
+  m_EditorClassIdentifier: 
+  m_GuidLow: 4880214472660618715
+  m_GuidHigh: 11166257307207590045
+  m_DataStore:
+    m_Storage: []
+  m_Images:
+  - m_SerializedGuid:
+      m_GuidLow: 4824173067310133491
+      m_GuidHigh: 2304489610675814581
+    m_SerializedTextureGuid:
+      m_GuidLow: 8375341424812173466
+      m_GuidHigh: 15673830744346814427
+    m_Size: {x: 0.0565, y: 0.0565}
+    m_SpecifySize: 1
+    m_Name: img_201
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 5066080963295642197
+      m_GuidHigh: 10012229892690328752
+    m_SerializedTextureGuid:
+      m_GuidLow: 15343361125116124716
+      m_GuidHigh: 13988056837814057754
+    m_Size: {x: 0.0565, y: 0.0565}
+    m_SpecifySize: 1
+    m_Name: img_202
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 4742870374904199813
+      m_GuidHigh: 6054115627133221249
+    m_SerializedTextureGuid:
+      m_GuidLow: 4912624223057880816
+      m_GuidHigh: 16267303723922786056
+    m_Size: {x: 0.0565, y: 0.0565}
+    m_SpecifySize: 1
+    m_Name: img_203
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 5180079018338752240
+      m_GuidHigh: 6730605377923585161
+    m_SerializedTextureGuid:
+      m_GuidLow: 2603342651407083287
+      m_GuidHigh: 1832274267689749529
+    m_Size: {x: 0.0565, y: 0.0565}
+    m_SpecifySize: 1
+    m_Name: img_204
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 5383203324717738438
+      m_GuidHigh: 149773859150936971
+    m_SerializedTextureGuid:
+      m_GuidLow: 11877513850650982532
+      m_GuidHigh: 13584643246726223867
+    m_Size: {x: 0.0565, y: 0.0565}
+    m_SpecifySize: 1
+    m_Name: img_205
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 4699665727051079031
+      m_GuidHigh: 14116124227762472082
+    m_SerializedTextureGuid:
+      m_GuidLow: 6113182372370636425
+      m_GuidHigh: 17306793135011240394
+    m_Size: {x: 0.0565, y: 0.0565}
+    m_SpecifySize: 1
+    m_Name: img_206
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 4827887178213745646
+      m_GuidHigh: 11197638029936062647
+    m_SerializedTextureGuid:
+      m_GuidLow: 17634767935030804255
+      m_GuidHigh: 14303358416617550363
+    m_Size: {x: 0.0565, y: 0.0565}
+    m_SpecifySize: 1
+    m_Name: img_207
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 4713189395656955137
+      m_GuidHigh: 14790914898912987059
+    m_SerializedTextureGuid:
+      m_GuidLow: 15307775001878124046
+      m_GuidHigh: 5254928155910585034
+    m_Size: {x: 0.0565, y: 0.0565}
+    m_SpecifySize: 1
+    m_Name: img_208
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 5274661257280360238
+      m_GuidHigh: 8418385319865217172
+    m_SerializedTextureGuid:
+      m_GuidLow: 3777704396905292470
+      m_GuidHigh: 5258345788359587099
+    m_Size: {x: 0.0565, y: 0.0565}
+    m_SpecifySize: 1
+    m_Name: img_209
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 5462958008355207627
+      m_GuidHigh: 14468488016924040069
+    m_SerializedTextureGuid:
+      m_GuidLow: 3764947731018059782
+      m_GuidHigh: 7337020104101027963
+    m_Size: {x: 0.0565, y: 0.0565}
+    m_SpecifySize: 1
+    m_Name: img_210
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 5341092507065758124
+      m_GuidHigh: 15412739635690338198
+    m_SerializedTextureGuid:
+      m_GuidLow: 14153886971258279706
+      m_GuidHigh: 17221751387596633432
+    m_Size: {x: 0.0565, y: 0.0565}
+    m_SpecifySize: 1
+    m_Name: img_211
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 5144908253439330346
+      m_GuidHigh: 705575092028080528
+    m_SerializedTextureGuid:
+      m_GuidLow: 12977848493662484330
+      m_GuidHigh: 9769892579989210442
+    m_Size: {x: 0.0565, y: 0.0565}
+    m_SpecifySize: 1
+    m_Name: img_212
+    m_Texture: {fileID: 0}

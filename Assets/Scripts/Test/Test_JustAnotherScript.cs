@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class Test_JustAnotherScript : MonoBehaviour
 {
-    enum Ver { Version1, Version1B, Version2, Version3 };
+    enum Ver { Version1, Version1B, Version2, Version3, Ver4a, Ver4b, Ver4c, Ver4d };
 
     [SerializeField]
     int m_SaveMap = 0;
 
     [SerializeField]
     int m_LoadMap = 0;
+
+    [SerializeField]
+    bool m_UseCorretionFunction = false;
 
     [SerializeField]
     Ver m_CorrectionVersion;
@@ -43,7 +46,7 @@ public class Test_JustAnotherScript : MonoBehaviour
         GlobalConfig.LOAD_MAP = m_LoadMap;
         GlobalConfig.TempOriginGO = new();
         GlobalConfig.TEST_MODE = true;
-        GlobalConfig.CorrectionFunctionVersion = ((int)m_CorrectionVersion) + 1;
+        if (m_UseCorretionFunction) GlobalConfig.CorrectionFunctionVersion = ((int)m_CorrectionVersion) + 1;
 
         m_LoadObjectManager.SetActive(true);
 

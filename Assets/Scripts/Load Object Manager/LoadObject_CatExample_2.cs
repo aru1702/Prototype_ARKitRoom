@@ -12,6 +12,11 @@ public class LoadObject_CatExample_2 : MonoBehaviour
     List<GameObject> _parents = new();
     List<GameObject> _objects = new();
 
+    // July 11
+    [SerializeField]
+    [Tooltip("Check this if LoadObjectManager is necessary active but the object is not necessary rendered.")]
+    bool m_RenderObjects = true;
+
     [SerializeField, TextArea(2, 5)]
     string m_MyOriginURL, m_MyObjectURL;
 
@@ -416,6 +421,12 @@ public class LoadObject_CatExample_2 : MonoBehaviour
         if (test_loadCameraTrail)
         {
             saveAndLoad.LoadCameraTrailData(cameraTrails);
+        }
+
+        // July 11
+        if (!m_RenderObjects)
+        {
+            GlobalConfig.PlaySpaceOriginGO.SetActive(false);
         }
     }
 

@@ -854,6 +854,14 @@ MonoBehaviour:
       m_Image: {fileID: 0}
     - m_Text: Version 3
       m_Image: {fileID: 0}
+    - m_Text: Version 4 (SM)
+      m_Image: {fileID: 0}
+    - m_Text: Version 4 (MA)
+      m_Image: {fileID: 0}
+    - m_Text: Version 4 (NM)
+      m_Image: {fileID: 0}
+    - m_Text: Version 4 (DBWA)
+      m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -9035,7 +9043,6 @@ MonoBehaviour:
   m_LoadMapInputField: {fileID: 1059815004}
   m_DrdCorrectionVersion: {fileID: 108689176}
   m_LocalConfigHandler: {fileID: 571617422}
-  m_EnableNoMap99: 0
 --- !u!1 &2094938808
 GameObject:
   m_ObjectHideFlags: 0

@@ -35,6 +35,9 @@ public class MappingV2 : MonoBehaviour
     [SerializeField]
     bool m_EnableMarkerRecording = true;
 
+    [SerializeField]
+    GameObject m_MarkerInformationPanel;
+
     string marker_before = "na";
     string marker_next = "na";
 
@@ -66,6 +69,8 @@ public class MappingV2 : MonoBehaviour
             "before"
         };
         m_RecordedMarkerData.Add(header);
+
+        MarkersInformationPanelMethod();
 
         StartCoroutine(TickPerPeriod());
     }
@@ -191,7 +196,7 @@ public class MappingV2 : MonoBehaviour
 
         var imageTrackedList = scriptI.GetAllImageTargetsTranform();
 
-        //Debug.Log("how many IT: " + transforms.Count);
+        //Debug.Log("how many IT: " + imageTrackedList.Count);
 
         // check if no data
         if (imageTrackedList.Count <= 0)
@@ -202,7 +207,7 @@ public class MappingV2 : MonoBehaviour
 
         foreach (var imageTracked in imageTrackedList)
         {
-            //Debug.Log("item name: " + item.name);
+            Debug.Log("item name: " + imageTracked.name);
 
             // data based on online
             if (m_MarkerGroundTruth.Count <= 0) GetMarkerGroundTruth();
@@ -306,6 +311,23 @@ public class MappingV2 : MonoBehaviour
                 }
             }
         }
+
+        MarkersInformationPanelMethod();
+    }
+
+    public void MarkersInformationPanelMethod()
+    {
+        string s = "";
+        for (int i = 0; i < m_RecordedMarkerLocation.Count; i++)
+        {
+            var name = m_RecordedMarkerLocation[i].Marker_name;
+            var pos = m_RecordedMarkerLocation[i].C_Position;
+            s += name + ":\t" + pos.ToString() + "\n";
+        }
+        var mip = m_MarkerInformationPanel.GetComponent<MarkersInformationPanel>();
+        var h = mip.CalculateTextHeight(s);
+        mip.SetScrollViewHeight(h);
+        mip.SetText(s);
     }
 
     /// <summary>
@@ -430,5 +452,10 @@ public class MappingV2 : MonoBehaviour
         m_MappingConfigurationUI
             .GetComponent<MappingConfigurationUI_CatExample>()
             .ToggleRelocateARCamera();
+    }
+
+    public void AddNewMarkerLocation(MarkerLocation m)
+    {
+        m_RecordedMarkerLocation.Add(m);
     }
 }

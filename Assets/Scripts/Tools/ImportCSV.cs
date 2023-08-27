@@ -42,6 +42,15 @@ public class ImportCSV
         return data;
     }
 
+    /// <summary>
+    /// Read whole csv from outside of game self-import (e.g., from persistentDataPath)
+    /// Path should be string, e.g., filename = XXXXXX.csv, fullpath = persistentData/XXXXXX.csv
+    /// Check online document how to combine filename with persistentDataPath
+    /// </summary>
+    /// <param name="path">Path to persistentDataPath csv file</param>
+    /// <param name="skipFirstLine">Skip the title</param>
+    /// <param name="splitStr">Delimiter</param>
+    /// <returns></returns>
     public static List<string[]> getDataOutsource(string path, bool skipFirstLine = false, string splitStr = ",")
     {
         if (path == "")
