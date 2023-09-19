@@ -1,9 +1,10 @@
 ﻿name,parent,pos_x,pos_y,pos_z,rot_x,rot_y,rot_z,comment
-root,none,-0.1075,0,0.116,0,90,0,Root of all object with X to right Y to up and Z to forward
-monitor_origin,root,-0.02,0.14,0.395,0,-21,0,Tip left bottom of monitor and not include the stand
-echodot_origin,root,0.525,0,0.54,0,0,0,Center of Amazon Echo Dot on the bottom
-cord_origin,root,1.265,0,0.62,0,0,0,Tip left bottom of power cord
-bulb_origin,root,0.9,0.52,0.62,0,0,0,Center of smart bulb house on the top
+imagetarget_catExample,root,0.116,0,0.1075,0,-90,0,Image target that used for positioning our root
+aldy_desk,root,0,0,0,0,0,0,Aldy desk
+monitor_origin,aldy_desk,-0.02,0.14,0.395,0,-21,0,Tip left bottom of monitor and not include the stand
+echodot_origin,aldy_desk,0.525,0,0.54,0,0,0,Center of Amazon Echo Dot on the bottom
+cord_origin,aldy_desk,1.265,0,0.62,0,0,0,Tip left bottom of power cord
+bulb_origin,aldy_desk,0.9,0.52,0.62,0,0,0,Center of smart bulb house on the top
 echodot_btnLeft,echodot_origin,-0.025,0.04,0,0,0,0,Center down of left button
 echodot_btnUp,echodot_origin,0,0.04,0.025,0,0,0,Center down of up button
 echodot_btnRight,echodot_origin,0.025,0.04,0,0,0,0,Center down of right button
@@ -14,15 +15,67 @@ cord_input3,cord_origin,0.174,0.0325,0.01,0,0,0,Cord input on the center
 cord_input4,cord_origin,0.214,0.0325,0.01,0,0,0,Cord input second on the right
 cord_input5,cord_origin,0.254,0.0325,0.01,0,0,0,Cord input on the most right
 bulb_peekBulb,bulb_origin,0,-0.14,0,0,0,0,Light bulb on the center the most bottom part
-static_root,root,0,0,0,0,0,0,none
-static_box,static_root,0.795,0,0.455,0,0,0,none
-static_monitor,static_root,0.59,0.505,0.575,0,-21,0,none
-static_dolls,static_root,0.61,0,0.57,0,0,0,none
-static_doll_1,static_dolls,0,0,0,0,0,0,none
-static_doll_2,static_dolls,0.11,0,0,0,0,0,none
-static_doll_3,static_dolls,0.25,0.055,0,0,0,0,none
-static_doll_4,static_dolls,0.39,0,0,0,0,0,none
-static_doll_5,static_dolls,0.5,0,0,0,0,0,none
-static_bulbhouse,static_root,0.9,0.52,0.62,0,0,0,none
-static_box2,static_root,0.81,0,0.6,0,0,0,none
-static_macbook,static_root,0.455,0.005,0.035,0,0,0,none
+noniot__box,aldy_desk,0.795,0,0.455,0,0,0,none
+noniot__monitor,aldy_desk,0.205,0,0.4,0,-21,0,none
+noniot__dolls,aldy_desk,0.61,0,0.57,0,0,0,none
+noniot__doll_1,noniot__dolls,0,0,0,0,0,0,none
+noniot__doll_2,noniot__dolls,0.11,0,0,0,0,0,none
+noniot__doll_3,noniot__dolls,0.25,0.055,0,0,0,0,none
+noniot__doll_4,noniot__dolls,0.39,0,0,0,0,0,none
+noniot__doll_5,noniot__dolls,0.5,0,0,0,0,0,none
+noniot__bulbhouse,aldy_desk,0.9,0.52,0.62,0,0,0,none
+noniot__box2,aldy_desk,0.81,0,0.6,0,0,0,none
+noniot__macbook,aldy_desk,0.455,0.005,0.035,0,0,0,none
+aldy_workspace,root,0,-0.715,0,0,0,0,Aldy desk from BOTTOM
+noniot__table_aldy,aldy_workspace,0,0,0,0,0,0,Test big table
+noniot__chair_aldy,aldy_workspace,0.59,0,-0.05,0,90,0,Test big chair
+noniot__airpurifier,root,1.55,-0.715,-0.93,0,90,0,Air purifier with CUBE
+noniot__whiteboard_sm,root,1.99,-0.715,-0.93,0,90,0,Sm whiteboard with prefab
+bi_workspace,root,1.6,-0.715,0,0,0,0,Bi desk from BOTTOM
+noniot__table_bi,bi_workspace,0,0,0,0,0,0,Bi san table
+noniot__chair_bi,bi_workspace,0.59,0,-0.05,0,90,0,Bi san chair with 20cm distance from table origin
+bi_desk,bi_workspace,0,0.715,0,0,0,0,Bi san table but UP side
+noniot__bi_desktable,bi_desk,1.045,0,0.475,0,45,0,Bi san desk table
+noniot__bi_monitor,noniot__bi_desktable,0.18,0.08,0.045,0,0,0,Bi san monitor non iot
+bi_monitor_origin,noniot__bi_desktable,-0.04,0.22,0.122,0,0,0,Bi san monitor screen
+bi_cord_origin,bi_desk,1.24,0,0.615,0,0,0,Bi san cord origin
+bi_cord_input1,bi_cord_origin,0.05,0.035,0.015,0,0,0,Cord input 1
+bi_cord_input2,bi_cord_origin,0.085,0.035,0.015,0,0,0,Cord input 2
+bi_cord_input3,bi_cord_origin,0.12,0.035,0.015,0,0,0,Cord input 3
+bi_cord_input4,bi_cord_origin,0.155,0.035,0.015,0,0,0,Cord input 4
+bi_cord_input5,bi_cord_origin,0.19,0.035,0.015,0,0,0,Cord input 5
+bi_cord_input6,bi_cord_origin,0.225,0.035,0.015,0,0,0,Cord input 6
+bi_cord_input7,bi_cord_origin,0.26,0.035,0.015,0,0,0,Cord input 7
+yoneyama_workspace,root,-1.6,-0.715,0,0,0,0,Yoneyama desk from BOTTOM
+noniot__table_yoneyama,yoneyama_workspace,0,0,0,0,0,0,Yoneyama san table
+noniot__chair_yoneyama,yoneyama_workspace,0.59,0,-0.05,0,90,0,Yoneyama san chair with 20cm distance from table origin
+yoneyama_desk,yoneyama_workspace,0,0.715,0,0,0,0,Yoneyama san table but UP side
+noniot__yoneyama_monitor,yoneyama_desk,0.65,0,0.5,0,3,0,Yoneyama monitor non iot
+yoneyama_monitor_origin,yoneyama_desk,0.434,0.136,0.56,5,3,0,Yoneyama monitor screen
+nagata_workspace,root,0,-0.715,-2.25,0,180,0,Nagata desk from BOTTOM
+noniot__table_nagata,nagata_workspace,0,0,0,0,0,0,Nagata san table
+noniot__chair_nagata,nagata_workspace,0.59,0,-0.05,0,90,0,Nagata san chair with 20cm distance from table origin
+nagata_desk,nagata_workspace,0,0.715,0,0,0,0,Nagata san table but UP side
+noniot__nagata_monitor,nagata_desk,0.175,0,0.31,0,-40,0,Nagata monitor non iot
+nagata_monitor_origin,nagata_desk,-0.041,0.136,0.228,0,-40,0,Nagata monitor screen
+asada_workspace,root,1.6,-0.715,-2.25,0,180,0,Asada desk from BOTTOM
+noniot__table_asada,asada_workspace,0,0,0,0,0,0,Asada san table
+noniot__chair_asada,asada_workspace,0.59,0,-0.05,0,90,0,Asada san chair with 20cm distance from table origin
+asada_desk,asada_workspace,0,0.715,0,0,0,0,Asada san table but UP side
+noniot__asada_desktable,asada_desk,0.5,0,0.42,0,0,0,Asada san desktable for monitor 1 non iot
+noniot__asada_monitor_1,noniot__asada_desktable,0.145,0,0.0075,0,0,0,Asada san monitor 1 non iot
+asada_monitor_1_origin,noniot__asada_desktable,-0.08,0.135,0.083,0,0,0,Asada san monitor 1 screen
+noniot__asada_monitor_2,asada_desk,1.15,0,0.35,0,50,0,Asada san monitor 2 non iot
+asada_monitor_2_origin,asada_desk,1.056,0.137,0.554,5,50,0,Asada san monitor 2 screen
+asada_computer,asada_workspace,0.9,0,-0.04,0,0,0,Asada san computer origin
+asada_computer_upperperipheral,asada_computer,0,0.515,0.015,0,0,0,Asada san computer upper part of peripheral inputs
+asada_computer_usb_1,asada_computer_upperperipheral,0.058,0,0,0,0,0,Asada san computer usb 1
+asada_computer_usb_2,asada_computer_upperperipheral,0.088,0,0,0,0,0,Asada san computer usb 2
+asada_computer_usb_3,asada_computer_upperperipheral,0.144,0,0,0,0,0,Asada san computer usb 3
+asada_computer_usb_4,asada_computer_upperperipheral,0.1725,0,0,0,0,0,Asada san computer usb 4
+asada_computer_headphone_1,asada_computer_upperperipheral,0.108,0,0,0,0,0,Asada san computer headphone jack input 1
+asada_computer_headphone_2,asada_computer_upperperipheral,0.124,0,0,0,0,0,Asada san computer headphone jack input 2
+milano_workspace,root,3.2,-0.715,-2.25,0,180,0,Milano desk from BOTTOM
+noniot__table_milano,milano_workspace,0,0,0,0,0,0,Milano san table
+noniot__chair_milano,milano_workspace,0.59,0,-0.05,0,90,0,Milano san chair with 20cm distance from table origin
+milano_desk,milano_workspace,0,0.715,0,0,0,0,Milano san table but UP side

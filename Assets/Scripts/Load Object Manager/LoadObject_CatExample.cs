@@ -1,10 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class LoadObject_CatExample : MonoBehaviour
 {
     List<GameObject> _parents = new();
+
+    string front_url = "https://docs.google.com/spreadsheets/d/e/";
+    string back_url = "/pub?gid=0&single=true&output=csv";
+
+    string myorigin_id = "2PACX-1vSro1d6_-qq849bGCdHpk1G3GJFEbN3HVTebeU9YyGRzeoscFmJkDapQ0ShaFdJ9y5njwW84FWOwBE0";
+    string myobject_id = "2PACX-1vTycxJw3OJkgI2xyqWdGIkRaSsNkknLJdYUcswSWOqeF5Gfde7pLrShwgxWxHAWxsuXrnL8GWW1DMS9";
 
     [SerializeField]
     float _alpha = 0.3f;
@@ -18,8 +25,13 @@ public class LoadObject_CatExample : MonoBehaviour
     [SerializeField]
     GameObject specialPrefabList;
 
+    [SerializeField]
+    bool dontUseZBuffer = false;
+
     Vector3 pos, rot;
     Quaternion rotQ;
+
+    GameObject originChild;
 
     void OnEnable()
     {
@@ -29,8 +41,8 @@ public class LoadObject_CatExample : MonoBehaviour
         rot = GlobalConfig.ITT_EAngleRot;
         rotQ = GlobalConfig.ITT_QuatRot;
 
-        RenderMyOriginData(pos, rot);
-        RenderMyObjectData();
+        StartCoroutine(RenderMyOriginData(pos, rot));
+        StartCoroutine(RenderMyObjectData());
     }
 
     // Update is called once per frame
@@ -43,192 +55,292 @@ public class LoadObject_CatExample : MonoBehaviour
         UpdateWorldCoordinate(pos, rot);
     }
 
-    private void RenderMyOriginData(Vector3 markerPos, Vector3 markerRot)
+    IEnumerator RenderMyOriginData(Vector3 markerPos, Vector3 markerRot)
     {
         // import MyOrigin data from csv
-        List<MyOrigin> myOrigins = Import_FromOrigin.GetMyOriginsList();
+        //List<MyOrigin> myOrigins = Import_FromOrigin.GetMyOriginsList();
 
-        // do foreach in csv data
-        foreach (var item in myOrigins)
+        // import fro google sheet
+        // need to do this one by one, still don't know how to make it dynamic call
+        string full_url = front_url + myorigin_id + back_url;
+        UnityWebRequest www = new(full_url) { downloadHandler = new DownloadHandlerBuffer() };
+        yield return www.SendWebRequest();
+
+        if (www.result != UnityWebRequest.Result.Success) { Debug.Log(www.error); }
+        else
         {
-            // if it's the root
-            if (item.parent == "none")
+            var result = www.downloadHandler.text;
+            List<MyOrigin> myOrigins = Import_FromOrigin.ConvertFromListString(
+                    ImportCSV.GetDataFromRawString(result, true)
+                );
+
+            // do foreach in csv data
+            foreach (var item in myOrigins)
             {
-                GameObject gameObject = new(item.name);
+                // check if name contains of imagetarget
+                string[] strSplit = item.name.Split("_");   // delimiter always "_"
+                string firstStr = strSplit[0];              // contained name always in [0]
 
-                Debug.Log("root 0:");
-                Debug.Log(gameObject.transform.localPosition.ToString());
-                Debug.Log(gameObject.transform.localEulerAngles.ToString());
-                Debug.Log(gameObject.transform.eulerAngles.ToString());
-
-                gameObject.transform.SetParent(GlobalConfig.TempOriginGO.transform, false);
-
-                Debug.Log("temp origin go:");
-                Debug.Log(GlobalConfig.TempOriginGO.transform.position.ToString());
-                Debug.Log(GlobalConfig.TempOriginGO.transform.eulerAngles.ToString());
-                Debug.Log(GlobalConfig.TempOriginGO.transform.rotation.ToString());
-
-                Debug.Log("root 1:");
-                Debug.Log(gameObject.transform.localPosition.ToString());
-                Debug.Log(gameObject.transform.localEulerAngles.ToString());
-                Debug.Log(gameObject.transform.eulerAngles.ToString());
-
-                //gameObject.transform.localPosition = Vector3.zero;
-                //gameObject.transform.localEulerAngles = Vector3.zero;
-
-                //Debug.Log("root 2:");
-                //Debug.Log(gameObject.transform.localPosition.ToString());
-                //Debug.Log(gameObject.transform.localEulerAngles.ToString());
-                //Debug.Log(gameObject.transform.eulerAngles.ToString());
-
-                gameObject.transform.localPosition += item.position;
-                gameObject.transform.Rotate(item.euler_rotation);
-
-                Debug.Log("root 3:");
-                Debug.Log(gameObject.transform.localPosition.ToString());
-                Debug.Log(gameObject.transform.localEulerAngles.ToString());
-                Debug.Log(gameObject.transform.eulerAngles.ToString());
-
-                // insert into parents so assigning parent will likely easier
-                if (!CheckIfParentsExists(_parents, item.name)) { _parents.Add(gameObject); }
-
-                // add into global config --> MyObjectList
-                GlobalConfig.MyObjectList.Add(gameObject);
-
-                // put into GlobalConfig as root parent
-                GlobalConfig.PlaySpaceMyOrigin = item;
-                GlobalConfig.PlaySpaceOriginGO = gameObject;
-
-                // create anchor prefab
-                if (createAnchor) { CreateWorldAnchor(gameObject); }
-            }
-
-            // if it's under root
-            else
-            {
-                GameObject gameObject = new(item.name);
-
-                // assign to each parents
-                foreach (var parent in _parents)
+                // if it's the root
+                if (firstStr == "imagetarget")
                 {
-                    if (parent.name == item.parent)
+                    // NEW MECHANIC: 2022-06-07
+                    // See also: Test_InverseImageToOrigin.cs - MyMethod()
+
+                    // ================== //
+                    // 1. create our root based on imagetarget
+                    GameObject root = new("root");
+                    root.transform.SetParent(GlobalConfig.TempOriginGO.transform, false);
+
+
+                    // ================== //
+                    // 2. make dummy object to inverse the transformation
+                    GameObject dummy = new();
+
+                    // rotate with our root to image target ROTATION data
+                    dummy = GlobalConfig.RotateOneByOne(dummy, item.euler_rotation);
+
+                    // get its inverse of rotation
+                    Quaternion imageTarget_rotinv = Quaternion.Inverse(dummy.transform.rotation);
+
+                    // apply to our root
+                    root.transform.localRotation = imageTarget_rotinv;
+
+
+                    // ================== //
+                    // 3. calculate our position with calculating the localToWorldMatrix
+
+                    // make our dummy to use the inverse rotation too
+                    dummy.transform.rotation = imageTarget_rotinv;
+
+                    // get the M4x4 matrix of from local to world of our dummy after rotation
+                    Matrix4x4 mat4 = dummy.transform.localToWorldMatrix;
+
+                    // vector multiplication with our root to image target POSITION DATA
+                    Vector3 vec3 = mat4 * item.position;
+
+                    // apply to our root, but inverse it (-)
+                    root.transform.localPosition = -vec3;
+
+
+                    // ================== //
+                    // 4. make our root become ROOT now
+                    root.transform.SetParent(null);
+                    //imageTarget.transform.SetParent(ourRoot.transform);
+
+                    // ================== //
+                    // 5. finishing
+
+                    // destroy the dummy object
+                    Destroy(dummy);
+
+                    // Instantiate the root to become origin child
+                    originChild = Instantiate(root, GlobalConfig.TempOriginGO.transform, true);
+                    originChild.name = "originChild";
+
+                    // OLD MECHANIC
+                /**
+                    GameObject gameObject = new(item.name);
+
+                    Debug.Log("root 0:");
+                    Debug.Log(gameObject.transform.localPosition.ToString());
+                    Debug.Log(gameObject.transform.localEulerAngles.ToString());
+                    Debug.Log(gameObject.transform.eulerAngles.ToString());
+
+                    gameObject.transform.SetParent(GlobalConfig.TempOriginGO.transform, false);
+
+                    Debug.Log("temp origin go:");
+                    Debug.Log(GlobalConfig.TempOriginGO.transform.position.ToString());
+                    Debug.Log(GlobalConfig.TempOriginGO.transform.eulerAngles.ToString());
+                    Debug.Log(GlobalConfig.TempOriginGO.transform.rotation.ToString());
+
+                    Debug.Log("root 1:");
+                    Debug.Log(gameObject.transform.localPosition.ToString());
+                    Debug.Log(gameObject.transform.localEulerAngles.ToString());
+                    Debug.Log(gameObject.transform.eulerAngles.ToString());
+
+                    //gameObject.transform.localPosition = Vector3.zero;
+                    //gameObject.transform.localEulerAngles = Vector3.zero;
+
+                    //Debug.Log("root 2:");
+                    //Debug.Log(gameObject.transform.localPosition.ToString());
+                    //Debug.Log(gameObject.transform.localEulerAngles.ToString());
+                    //Debug.Log(gameObject.transform.eulerAngles.ToString());
+
+                    gameObject.transform.localPosition += item.position;
+                    gameObject.transform.Rotate(item.euler_rotation);
+
+                    Debug.Log("root 3:");
+                    Debug.Log(gameObject.transform.localPosition.ToString());
+                    Debug.Log(gameObject.transform.localEulerAngles.ToString());
+                    Debug.Log(gameObject.transform.eulerAngles.ToString());
+                */
+
+                    // insert into parents so assigning parent will likely easier
+                    if (!CheckIfParentsExists(_parents, root.name)) { _parents.Add(root); }
+
+                    // add into global config --> MyObjectList
+                    GlobalConfig.MyObjectList.Add(root);
+
+                    // put into GlobalConfig as root parent
+                    //GlobalConfig.PlaySpaceMyOrigin = item;
+                    GlobalConfig.PlaySpaceOriginGO = root;
+
+                    // create anchor prefab
+                    if (createAnchor) { CreateWorldAnchor(root); }
+                }
+
+                // if it's under root
+                else
+                {
+                    GameObject childGameObject = new(item.name);
+
+                    // assign to each parents
+                    foreach (var parent in _parents)
                     {
-                        gameObject.transform.parent = parent.transform;
-                        break;
+                        if (parent.name == item.parent)
+                        {
+                            childGameObject.transform.parent = parent.transform;
+                            break;
+                        }
                     }
+
+                    // assign the orientation
+                    childGameObject.transform.localPosition = item.position;
+                    childGameObject.transform.localRotation = Quaternion.identity;
+                    childGameObject.transform.Rotate(item.euler_rotation);
+                    //GlobalConfig.RotateOneByOne(childGameObject, item.euler_rotation);
+
+                    // insert into parents
+                    if (!CheckIfParentsExists(_parents, item.name))
+                    {
+                        _parents.Add(childGameObject);
+                    }
+
+                    // add into global config --> thingslist
+                    GlobalConfig.MyObjectList.Add(childGameObject);
+
+                    // create anchor prefab
+                    if (createAnchor) { CreateWorldAnchor(childGameObject); }
                 }
-
-                // assign the orientation
-                gameObject.transform.localPosition = item.position;
-                gameObject.transform.localRotation = Quaternion.identity;
-                gameObject.transform.Rotate(item.euler_rotation);
-
-                // insert into parents
-                if (!CheckIfParentsExists(_parents, item.name))
-                {
-                    _parents.Add(gameObject);
-                }
-
-                // add into global config --> thingslist
-                GlobalConfig.MyObjectList.Add(gameObject);
-
-                // create anchor prefab
-                if (createAnchor) { CreateWorldAnchor(gameObject); }
             }
         }
     }
 
-    private void RenderMyObjectData()
+    IEnumerator RenderMyObjectData()
     {
         // import MyObject data from csv
-        List<MyObject> myObjects = Import_FromObject.GetMyObjectsList();
+        //List<MyObject> myObjects = Import_FromObject.GetMyObjectsList();
 
-        // do foreach data in the csv
-        foreach (var item in myObjects)
+        // import fro google sheet
+        // need to do this one by one, still don't know how to make it dynamic call
+        string full_url = front_url + myobject_id + back_url;
+        UnityWebRequest www = new(full_url) { downloadHandler = new DownloadHandlerBuffer() };
+        yield return www.SendWebRequest();
+
+        if (www.result != UnityWebRequest.Result.Success) { Debug.Log(www.error); }
+        else
         {
-            // initialize gameobject
-            GameObject gameObject;
-            string prefabtype = item.prefab_type;
+            var result = www.downloadHandler.text;
+            List<MyObject> myObjects = Import_FromObject.ConvertFromListString(
+                    ImportCSV.GetDataFromRawString(result, true)
+                );
 
-            // choose gameobject type
-            if (prefabtype == MyObject.PrefabType.CUBE) { gameObject = GameObject.CreatePrimitive(PrimitiveType.Cube); }
-            else if (prefabtype == MyObject.PrefabType.SPHERE) { gameObject = GameObject.CreatePrimitive(PrimitiveType.Sphere); }
-            else if (prefabtype == MyObject.PrefabType.CYLINDER) { gameObject = GameObject.CreatePrimitive(PrimitiveType.Cylinder); }
-            else if (prefabtype == MyObject.PrefabType.SPECIAL) { gameObject = CreateSpecialPrefab(item.prefab_special); }
-            else { gameObject = new GameObject(); }
-
-            // check if game object is not null
-            if (gameObject == null)
+            // do foreach data in the csv
+            foreach (var item in myObjects)
             {
-                Debug.Log("No game object created, skip the data!");
-            }
-            else
-            {
+                // initialize gameobject
+                GameObject newGameObject;
+                string prefabtype = item.virtualObject.type;
 
-                // set gameobject name
-                gameObject.name = item.name;
+                // choose gameobject type
+                if (prefabtype == MyObject.PrefabType.CUBE) { newGameObject = GameObject.CreatePrimitive(PrimitiveType.Cube); }
+                else if (prefabtype == MyObject.PrefabType.SPHERE) { newGameObject = GameObject.CreatePrimitive(PrimitiveType.Sphere); }
+                else if (prefabtype == MyObject.PrefabType.CYLINDER) { newGameObject = GameObject.CreatePrimitive(PrimitiveType.Cylinder); }
+                else if (prefabtype == MyObject.PrefabType.SPECIAL) { newGameObject = CreateSpecialPrefab(item.virtualObject); }
+                else { newGameObject = new GameObject(); }
 
-                // set gameobject parent
-                foreach (var parent in _parents)
+                // check if game object is not null
+                if (newGameObject == null)
                 {
-                    if (parent.name == item.parent)
-                    {
-                        gameObject.transform.parent = parent.transform;
-                        break;
-                    }
-                }
-
-                // calculate myObject dimension to its given origin position
-                MyObject.MyObject_LHW tempLHW = new(item.length, item.height, item.width);
-                tempLHW = OriginCalculator.Calculate(tempLHW, item.origin_type, item.origin_descriptor);
-                Vector3 newOrigin = new(tempLHW.L, tempLHW.H, tempLHW.W);
-
-                // if only the object with special prefab, some abnormality
-                // we still put the correct position on item.comment
-                // we put their dimension as exact (1,1,1), not describe as 1 meter each
-                if (prefabtype == MyObject.PrefabType.SPECIAL)
-                {
-                    newOrigin = OriginCalculator.CalculateAbnormalOrigin(item.comment);
-                }
-
-                // assign orientation using the csv data transformation
-                gameObject.transform.localPosition = newOrigin;
-                gameObject.transform.localRotation = Quaternion.identity;
-                gameObject.transform.localScale = new Vector3(item.length, item.height, item.width);
-
-                // insert into parents
-                if (!CheckIfParentsExists(_parents, item.name))
-                {
-                    _parents.Add(gameObject);
-                }
-
-                // render with normal rendering if not static prefab
-
-                if (!item.static_object)
-                {
-                    // add into global config --> thingslist
-                    GlobalConfig.MyObjectList.Add(gameObject);
-
-                    // assign ColorManager
-                    gameObject.AddComponent<ColorManager>();
-
-                    // assign DataManager
-                    gameObject.AddComponent<DataManager>();
-
-                    // START PLAYING COLOR DATA
-                    gameObject.GetComponent<DataManager>().testingOnly = true;
-                    gameObject.GetComponent<DataManager>().Test_AssignHiLoValue();
-                    StartCoroutine(Loop(gameObject));
+                    Debug.Log("No game object created, skip the data!");
                 }
                 else
                 {
-                    // assign StaticPrefabManager
-                    gameObject.AddComponent<StaticPrefabManager>();
 
-                    // if not special static
-                    if (item.prefab_type != MyObject.PrefabType.SPECIAL)
+                    // set gameobject name
+                    newGameObject.name = item.name;
+
+                    // set gameobject parent
+                    foreach (var parent in _parents)
                     {
-                        gameObject.GetComponent<StaticPrefabManager>().AssignMaterial();
+                        if (parent.name == item.coordinate_system)
+                        {
+                            newGameObject.transform.parent = parent.transform;
+                            break;
+                        }
+                    }
+
+                    // calculate myObject dimension to its given origin position
+                    MyObject.MyObject_LHW tempLHW = new(item.length, item.height, item.width);
+                    tempLHW = OriginCalculator.Calculate(tempLHW, item.origin.type, item.origin.descriptor);
+                    Vector3 newOrigin = new(tempLHW.L, tempLHW.H, tempLHW.W);
+
+                    // if only the object with special prefab, some abnormality
+                    // we still put the correct position on item.comment
+                    // we put their dimension as exact (1,1,1), not describe as 1 meter each
+                    if (prefabtype == MyObject.PrefabType.SPECIAL)
+                    {
+                        newOrigin = OriginCalculator.CalculateAbnormalOrigin(item.virtualObject.special.position);
+                    }
+
+                    // assign orientation using the csv data transformation
+                    newGameObject.transform.localPosition = newOrigin;
+                    newGameObject.transform.localRotation = Quaternion.identity;
+                    newGameObject.transform.localScale = new Vector3(item.length, item.height, item.width);
+
+                    // insert into parents
+                    if (!CheckIfParentsExists(_parents, item.name))
+                    {
+                        _parents.Add(newGameObject);
+                    }
+
+                    // render normal colorize if it's IoT device
+                    if (item.iotDevice_true)
+                    {
+                        // add into global config --> thingslist
+                        GlobalConfig.MyObjectList.Add(newGameObject);
+
+                        // assign ColorManager
+                        newGameObject.AddComponent<ColorManager>();
+
+                        // assign DataManager
+                        newGameObject.AddComponent<DataManager>();
+
+                        // START PLAYING COLOR DATA
+                        newGameObject.GetComponent<DataManager>().testingOnly = true;
+                        newGameObject.GetComponent<DataManager>().Test_AssignHiLoValue();
+                        StartCoroutine(Loop(newGameObject));
+                    }
+                    else
+                    {
+                        // testing z buffer ACTIVE/NO ACTIVE
+                        if (!dontUseZBuffer)
+                        {
+                            // assign StaticPrefabManager
+                            newGameObject.AddComponent<NonIoTDeviceManager>();
+
+                            // if not special static
+                            if (item.virtualObject.type != MyObject.PrefabType.SPECIAL)
+                            {
+                                newGameObject.GetComponent<NonIoTDeviceManager>().AssignMaterial();
+                            }
+                            else
+                            {
+                                // check for every part that has renderer or mesh renderer
+                                SetAllChildIntoZBuffer(newGameObject);
+                            }
+                        }
                     }
                 }
             }
@@ -264,21 +376,21 @@ public class LoadObject_CatExample : MonoBehaviour
         }
     }
 
-    private GameObject CreateSpecialPrefab(string prefab_special_path)
+    private GameObject CreateSpecialPrefab(MyObject.VirtualObject virtualObject)
     {
+        // if only it is special prefab, already defined on Editor the number of custom prefab
+        // that inside the array of SpecialPrefab_CatExample
         try
         {
-            int prefab_number = int.Parse(prefab_special_path);
-            //Debug.Log(prefab_number);
+            int prefab_number = int.Parse(virtualObject.special.parameter);
             GameObject prefab = specialPrefabList.GetComponent<SpecialPrefab_CatExample>().GetPrefab(prefab_number);
-            //Debug.Log(prefab.name);
             GameObject prefab_obj = Instantiate(prefab);
-            //Debug.Log(prefab_obj.name);
             return prefab_obj;
         }
         catch (System.Exception ex)
         {
             // it's normal prefab
+            // maybe with Resource path, etc.
             // ... dunno
 
             Debug.LogError(ex);
@@ -287,14 +399,47 @@ public class LoadObject_CatExample : MonoBehaviour
         return gameObject;
     }
 
+    /**
+     * <summary>This only when image target is active</summary>
+     */
     private void UpdateWorldCoordinate(Vector3 markerPos, Vector3 markerRot)
     {
+        // OLD MECHANIC
         //GlobalConfig.PlaySpaceOriginGO.transform.position = markerPos + GlobalConfig.PlaySpaceMyOrigin.position;
         //GlobalConfig.PlaySpaceOriginGO.transform.rotation = Quaternion.identity;
         //GlobalConfig.PlaySpaceOriginGO.transform.Rotate(markerRot + GlobalConfig.PlaySpaceMyOrigin.euler_rotation);
         //GlobalConfig.OurWorldOrigin_MyOrigin_GameObject.transform.localScale = GlobalConfig.OurWorldOrigin_Things.scale.GetScale();
 
-        GlobalConfig.TempOriginGO.transform.SetPositionAndRotation(pos, rotQ);
+        // NEW MECHANIC
+        // task:
+        // - if worldmap used, nothing has change since no reference updated at this time
+        //
+        // - if imageTarget used, get image target position as reference point
+        // - re calculate the root with NEW MECHANIC
+        // - since NEW MECHANIC always create new GO (dummy object for reference)
+        //   - does it really cost?
+        //   - e.g., in every frames per seconds (30 fps), 30 times create and recalculate
+        // - we need another technique for this
+        //
+        // Idea is:
+        // - 1: get the image target pos, rot (which always updated when detected)
+        // - 2: tell this script, or system, that there is an update of point of reference
+        //
+        // - why don't do the same technique?
+        //   - origin object from imageTarget still active (not destroyed) (A)
+        //   - Instantiate our root gameobject, put as child of origin object (B)
+        //   - change pos, rot of root based on (B) localtoworldcoordinate
+
+        // transform our root based on originChild
+        if (!originChild) return;
+
+        Vector3 tempPos = originChild.transform.position;
+        Quaternion tempRot = originChild.transform.rotation;
+        GlobalConfig.PlaySpaceOriginGO.transform.SetPositionAndRotation(tempPos, tempRot);
+
+        //Debug.Log(string.Format("In loadObject\n\nPos: {0}\nRot: {1}",
+        //                    originChild.transform.parent.transform.position,
+        //                    originChild.transform.parent.transform.rotation));
     }
 
     private void UpdatingColorManager(GameObject gameObject, float value)
@@ -323,6 +468,32 @@ public class LoadObject_CatExample : MonoBehaviour
 
         // update color data
         UpdatingColorManager(gameObject, next_value);
+    }
+
+    void SetAllChildIntoZBuffer(GameObject prefab_gameObject)
+    {
+        // check if gameobject has renderer
+        if (NonIoTDeviceManager.CheckIfHasRenderer(prefab_gameObject))
+        {
+            prefab_gameObject.GetComponent<NonIoTDeviceManager>().AssignMaterial();
+        }
+
+        int child = prefab_gameObject.transform.childCount;
+        for (int i = 0; i < child; i++)
+        {
+            GameObject childGameObject = prefab_gameObject.transform.GetChild(i).gameObject;
+
+            // do recursive call
+            if (childGameObject.transform.childCount > 0)
+                SetAllChildIntoZBuffer(childGameObject);
+
+            // check if child has renderer
+            if (NonIoTDeviceManager.CheckIfHasRenderer(childGameObject))
+            {
+                childGameObject.AddComponent<NonIoTDeviceManager>();
+                childGameObject.GetComponent<NonIoTDeviceManager>().AssignMaterial();
+            }
+        }
     }
 
     //////////////////////////////

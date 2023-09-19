@@ -185,7 +185,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             GlobalConfig.AlreadyRender = false;
 
             GlobalConfig.MyObjectList.Clear();
-            GlobalConfig.PlaySpaceMyOrigin = null;
+            //GlobalConfig.PlaySpaceMyOrigin = null;
             GlobalConfig.PlaySpaceOriginGO = null;
 
             ImageRecognitionManager
@@ -232,6 +232,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
             set { m_ARCameraLocationText = value; }
         }
 
+        [SerializeField]
+        GameObject UIManager;
+
         /**
          * Performed if loading map is failed
          * Automatically active image recognition manager
@@ -240,6 +243,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         void CannotLoadMap()
         {
             Log("Cannot load map, enter image recognition mode");
+            GetComponent<UIManager_CatExample>().MapStatus.text = "Load map failed!";
 
             // load image target Manager (same implementation
             OnImageTargetButton();
@@ -254,6 +258,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
          */
         IEnumerator Save()
         {
+            // open panel
+            UIManager.GetComponent<UIManager_CatExample>().OpenPanel();
+            UIManager.GetComponent<UIManager_CatExample>().MapStatus.text = "Saving map, please wait...";
+
             var sessionSubsystem = (ARKitSessionSubsystem)m_ARSession.subsystem;
             if (sessionSubsystem == null)
             {
@@ -280,6 +288,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
             // At this moment, the map should be saved into the defined path
             // It saves the AR Session Origin, which means our AR origin (0,0,0)
             Debug.Log("Map saved!");
+
+            UIManager.GetComponent<UIManager_CatExample>().MapStatus.text = "Map saved!";
         }
 
         /**
@@ -290,6 +300,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
          */
         IEnumerator Load()
         {
+            // open panel
+            UIManager.GetComponent<UIManager_CatExample>().OpenPanel();
+            UIManager.GetComponent<UIManager_CatExample>().MapStatus.text = "Loading map, please wait...";
+
             // if only no session subsystem
             var sessionSubsystem = (ARKitSessionSubsystem)m_ARSession.subsystem;
             if (sessionSubsystem == null)
@@ -363,9 +377,13 @@ namespace UnityEngine.XR.ARFoundation.Samples
             // this because we don't need imageTarget as reference anymore
             Debug.Log("Map loaded!");
 
+            UIManager.GetComponent<UIManager_CatExample>().MapStatus.text = "Map loaded!";
+
             LoadObjectManager
                     .GetComponent<LoadObject_CatExample>()
                     .enabled = true;
+
+            SetActive(saveButton, true);
 
             GlobalConfig.AlreadyRender = true;
         }
@@ -442,10 +460,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
             GlobalConfig.ITT_EAngleRot = eRot;
             GlobalConfig.ITT_QuatRot = rot;
 
-            Debug.Log("after load:");
-            Debug.Log(pos.ToString());
-            Debug.Log(eRot.ToString());
-            Debug.Log(rot.ToString());
+            //Debug.Log("after load:");
+            //Debug.Log(pos.ToString());
+            //Debug.Log(eRot.ToString());
+            //Debug.Log(rot.ToString());
 
             GameObject origin = new GameObject("tempOrigin");
             GlobalConfig.TempOriginGO = origin;
@@ -529,12 +547,12 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 SetActive(saveButton, false);
             }
 
-            // now image target is no no, and save and load button is OK
+            // now image target is no no, and save is OK
             else
             {
                 SetActive(imageTargetButton, false);
                 SetActive(saveButton, true);
-                SetActive(loadButton, true);
+                SetActive(loadButton, false);
             }
 
             // ar loc debug

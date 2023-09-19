@@ -20,10 +20,12 @@ public class Test_ImportData_MyOrigin : MonoBehaviour
     void Start()
     {
         // summon myOrigin
-        DoStuffs(position, rotation);
+// DISABLE OLD MECHANIC
+        //DoStuffs(position, rotation);
 
         // summon myObject
-        DoStuffsObjects();
+// DISABLE OLD MECHANIC
+        //DoStuffsObjects();
 
         // do color stuffs per second
         //StartCoroutine(Loop());
@@ -38,7 +40,8 @@ public class Test_ImportData_MyOrigin : MonoBehaviour
         // playing with color controller
         foreach (var gameObject in _allObject_test)
         {
-            UpdatingColorManager(gameObject, color_picking);
+// DISABLE OLD MECHANIC
+            //UpdatingColorManager(gameObject, color_picking);
         }
     }
 
@@ -56,12 +59,14 @@ public class Test_ImportData_MyOrigin : MonoBehaviour
                 // set DataManager
                 if (gO.GetComponent<DataManager>() != null)
                 {
-                    UpdatingDataManager(gO);
+// DISABLE OLD MECHANIC
+                    //UpdatingDataManager(gO);
                 }
             }
         }
     }
-
+// OLD MECHANIC
+/**
     private void DoStuffs(Vector3 markerPos, Vector3 markerRot)
     {
         Debug.Log("marker position: " + markerPos);
@@ -306,4 +311,5 @@ public class Test_ImportData_MyOrigin : MonoBehaviour
     {
         return gameObject;
     }
+*/
 }

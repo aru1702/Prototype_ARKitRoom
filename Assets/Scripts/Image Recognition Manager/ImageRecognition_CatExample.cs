@@ -13,9 +13,6 @@ public class ImageRecognition_CatExample : MonoBehaviour
     //[SerializeField]
     GameObject originPrefabInstantiate;
 
-    //[SerializeField]
-    bool createAnchor = false;
-
     [SerializeField]
     ARSessionOrigin m_ARSessionOrigin;
 
@@ -90,6 +87,10 @@ public class ImageRecognition_CatExample : MonoBehaviour
                 if (trackedImage.referenceImage.name != _imgSource_name) { return; }
                 else
                 {
+                    // wait for 3 seconds
+                    //HoldStillText.SetActive(true);
+                    //StartCoroutine(CountDown());
+
                     // check if first time rendering already done
                     if (!GlobalConfig.AlreadyRender)
                     {
@@ -104,37 +105,40 @@ public class ImageRecognition_CatExample : MonoBehaviour
                         //GlobalConfig.ITT_QuatRot = trackedImage.rotation;
 
                         // change ARSessionOrigin position to trackedImage origin
-                        Vector3 targetPos = -trackedImage.transform.position;
-                        Quaternion targetRot = Quaternion.Inverse(trackedImage.transform.rotation);
+                        //Vector3 targetPos = -trackedImage.transform.position;
+                        //Quaternion targetRot = Quaternion.Inverse(trackedImage.transform.rotation);
+
                         //m_ARSessionOrigin.transform.position = targetPos;
                         //m_ARSessionOrigin.transform.rotation = targetRot;
                         //m_ARSessionOrigin.MakeContentAppearAt(trackedImage.transform,
                         //                                        trackedImage.transform.position,
                         //                                        trackedImage.transform.localRotation);
 
-                        Debug.Log("trackedImage Rot before after:");
-                        Debug.Log(trackedImage.transform.rotation.ToString());
-                        Debug.Log(targetRot.ToString());
+                        //Debug.Log("trackedImage Rot before after:");
+                        //Debug.Log(trackedImage.transform.rotation.ToString());
+                        //Debug.Log(targetRot.ToString());
 
                         // I want to make a empty object with SAME ORIENTATION as trackedImage
+                        // THIS IS IMPORTANT DO NOT DELETE
                         GameObject origin = new GameObject("tempOrigin");
                         GlobalConfig.TempOriginGO = origin;
                         origin.transform.SetPositionAndRotation(trackedImage.transform.position, trackedImage.transform.rotation);
 
                         // This value will as same as our newly made origin
                         // RIGHT ?????
+                        // THIS IS IMPORTANT DO NOT DELETE
                         GlobalConfig.ITT_VtriPos = trackedImage.transform.position;
                         GlobalConfig.ITT_EAngleRot = trackedImage.transform.eulerAngles;
                         GlobalConfig.ITT_QuatRot = trackedImage.transform.rotation;
 
-                        Debug.Log("origin transform:");
-                        Debug.Log(origin.transform.position.ToString());
-                        Debug.Log(origin.transform.rotation.ToString());
+                        //Debug.Log("origin transform:");
+                        //Debug.Log(origin.transform.position.ToString());
+                        //Debug.Log(origin.transform.rotation.ToString());
 
-                        Debug.Log("Global confid transform:");
-                        Debug.Log(GlobalConfig.ITT_VtriPos);
-                        Debug.Log(GlobalConfig.ITT_EAngleRot);
-                        Debug.Log(GlobalConfig.ITT_QuatRot);
+                        //Debug.Log("Global confid transform:");
+                        //Debug.Log(GlobalConfig.ITT_VtriPos);
+                        //Debug.Log(GlobalConfig.ITT_EAngleRot);
+                        //Debug.Log(GlobalConfig.ITT_QuatRot);
 
                         // active the cat script on LoadObjectManager
                         LoadObjectManager
@@ -149,12 +153,6 @@ public class ImageRecognition_CatExample : MonoBehaviour
                         // deactive canvas
                         CanvasCat.SetActive(false);
 
-                        // render MyOrigin data
-                        //RenderMyOriginData(tImagePosition, tImageEulerRotation);
-
-                        // render MyObject data
-                        //RenderMyObjectData();
-
                         break;
                     }
                     else
@@ -164,9 +162,13 @@ public class ImageRecognition_CatExample : MonoBehaviour
                         GlobalConfig.ITT_EAngleRot = trackedImage.transform.eulerAngles;
                         GlobalConfig.ITT_QuatRot = trackedImage.transform.rotation;
 
-                        //UpdateWorldCoordinate(tImagePosition, tImageEulerRotation);
-                        //GlobalConfig.ITT_VtriPos = trackedImage.position;
-                        //GlobalConfig.ITT_EAngleRot = trackedImage.eulerAngles;
+                        GlobalConfig.TempOriginGO.transform.SetPositionAndRotation(
+                            GlobalConfig.ITT_VtriPos,
+                            GlobalConfig.ITT_QuatRot);
+
+                        Debug.Log(string.Format("In imageRecog\n\nPos: {0}\nRot: {1}",
+                            GlobalConfig.ITT_VtriPos,
+                            GlobalConfig.ITT_QuatRot));
 
                         break;
                     }
@@ -175,212 +177,8 @@ public class ImageRecognition_CatExample : MonoBehaviour
         }
     }
 
-    private void RenderMyOriginData(Vector3 markerPos, Vector3 markerRot)
+    IEnumerator CountDown()
     {
-        // import MyOrigin data from csv
-        List<MyOrigin> myOrigins = Import_FromOrigin.GetMyOriginsList();
-
-        // do foreach in csv data
-        foreach (var item in myOrigins)
-        {
-            // if it's the root
-            if (item.parent == "none")
-            {
-                GameObject gameObject = new(item.name);
-                gameObject.transform.localPosition = markerPos + item.position;
-                gameObject.transform.Rotate(markerRot + item.euler_rotation);
-
-                // insert into parents so assigning parent will likely easier
-                if (!CheckIfParentsExists(_parents, item.name)) { _parents.Add(gameObject); }
-
-                // add into global config --> MyObjectList
-                GlobalConfig.MyObjectList.Add(gameObject);
-
-                // put into GlobalConfig as root parent
-                GlobalConfig.PlaySpaceMyOrigin = item;
-                GlobalConfig.PlaySpaceOriginGO = gameObject;
-
-                // create anchor prefab
-                if (createAnchor) { CreateWorldAnchor(gameObject); }
-            }
-
-            // if it's under root
-            else
-            {
-                GameObject gameObject = new(item.name);
-
-                // assign to each parents
-                foreach (var parent in _parents)
-                {
-                    if (parent.name == item.parent)
-                    {
-                        gameObject.transform.parent = parent.transform;
-                        break;
-                    }
-                }
-
-                // assign the orientation
-                gameObject.transform.localPosition = item.position;
-                gameObject.transform.localRotation = Quaternion.identity;
-                gameObject.transform.Rotate(item.euler_rotation);
-
-                // insert into parents
-                if (!CheckIfParentsExists(_parents, item.name))
-                {
-                    _parents.Add(gameObject);
-                }
-
-                // add into global config --> thingslist
-                GlobalConfig.MyObjectList.Add(gameObject);
-
-                // create anchor prefab
-                if (createAnchor) { CreateWorldAnchor(gameObject); }
-            }
-        }
-    }
-
-    private void RenderMyObjectData()
-    {
-        // import MyObject data from csv
-        List<MyObject> myObjects = Import_FromObject.GetMyObjectsList();
-
-        // do foreach data in the csv
-        foreach (var item in myObjects)
-        {
-            // initialize gameobject
-            GameObject gameObject;
-            string prefabtype = item.prefab_type;
-
-            // choose gameobject type
-            if (prefabtype == MyObject.PrefabType.CUBE) { gameObject = GameObject.CreatePrimitive(PrimitiveType.Cube); }
-            else if (prefabtype == MyObject.PrefabType.SPHERE) { gameObject = GameObject.CreatePrimitive(PrimitiveType.Sphere); }
-            else if (prefabtype == MyObject.PrefabType.CYLINDER) { gameObject = GameObject.CreatePrimitive(PrimitiveType.Cylinder); }
-            else if (prefabtype == MyObject.PrefabType.SPECIAL) { gameObject = CreateSpecialPrefab(new GameObject(), item.prefab_special); }
-            else { gameObject = new GameObject(); }
-
-            // set gameobject name
-            gameObject.name = item.name;
-
-            // set gameobject parent
-            foreach (var parent in _parents)
-            {
-                if (parent.name == item.parent)
-                {
-                    gameObject.transform.parent = parent.transform;
-                    break;
-                }
-            }
-
-            // calculate myObject origin
-            MyObject.MyObject_LHW tempLHW = new MyObject.MyObject_LHW(item.length, item.height, item.width);
-            tempLHW = OriginCalculator.Calculate(tempLHW, item.origin_type, item.origin_descriptor);
-            Vector3 newOrigin = new(tempLHW.L, tempLHW.H, tempLHW.W);
-
-            // assign orientation using the csv data transformation
-            gameObject.transform.localPosition = newOrigin;
-            gameObject.transform.localRotation = Quaternion.identity;
-            gameObject.transform.localScale = new Vector3(item.length, item.height, item.width);
-
-            // insert into parents
-            if (!CheckIfParentsExists(_parents, item.name))
-            {
-                _parents.Add(gameObject);
-            }
-
-            // add into global config --> thingslist
-            GlobalConfig.MyObjectList.Add(gameObject);
-
-            // assign ColorManager
-            gameObject.AddComponent<ColorManager>();
-
-            // assign DataManager
-            gameObject.AddComponent<DataManager>();
-
-            // START PLAYING COLOR DATA
-            gameObject.GetComponent<DataManager>().testingOnly = true;
-            gameObject.GetComponent<DataManager>().Test_AssignHiLoValue();
-            StartCoroutine(Loop(gameObject));
-        }
-    }
-
-    private bool CheckIfParentsExists(List<GameObject> parentsList, string parentName)
-    {
-        foreach (var parent in parentsList)
-        {
-            if (parent.name == parentName)
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private void CreateWorldAnchor(GameObject parent)
-    {
-        if (originPrefabInstantiate != null)
-        {
-            GameObject gameObject = Instantiate(originPrefabInstantiate);
-            gameObject.transform.parent = parent.transform;
-            gameObject.name = parent.name + "_prefab";
-
-            gameObject.transform.localPosition = Vector3.zero;
-            gameObject.transform.localRotation = Quaternion.identity;
-            gameObject.transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
-
-            gameObject.SetActive(true);
-        }
-    }
-
-    private GameObject CreateSpecialPrefab(GameObject gameObject, string prefab_special_path)
-    {
-        return gameObject;
-    }
-
-    private void UpdateWorldCoordinate(Vector3 markerPos, Vector3 markerRot)
-    {
-        GlobalConfig.PlaySpaceOriginGO.transform.position = markerPos + GlobalConfig.PlaySpaceMyOrigin.position;
-        GlobalConfig.PlaySpaceOriginGO.transform.rotation = Quaternion.identity;
-        GlobalConfig.PlaySpaceOriginGO.transform.Rotate(markerRot + GlobalConfig.PlaySpaceMyOrigin.euler_rotation);
-        //GlobalConfig.OurWorldOrigin_MyOrigin_GameObject.transform.localScale = GlobalConfig.OurWorldOrigin_Things.scale.GetScale();
-    }
-
-    private void UpdatingColorManager(GameObject gameObject, float value)
-    {
-        if (gameObject.GetComponent<ColorManager>() == null) { return; }
-
-        // get range value
-        float hi = gameObject.GetComponent<DataManager>().GetHighestValue();
-        float lo = gameObject.GetComponent<DataManager>().GetLowestValue();
-
-        // apply color
-        gameObject.GetComponent<ColorManager>().AssignHighLowAlpha(hi, lo, _alpha);
-        gameObject.GetComponent<ColorManager>().UpdateColor(value);
-    }
-
-    private void UpdatingDataManager(GameObject gameObject)
-    {
-        if (gameObject.GetComponent<DataManager>() == null) { return; }
-
-        // get previous value
-        float previous_value = gameObject.GetComponent<DataManager>().GetCurrentValue();
-
-        // THIS IS PLAY ONLY, YOU CAN CHANGE THIS REPRESENTATION
-        if (previous_value == 0) { previous_value = 60.0f; }
-        float next_value = gameObject.GetComponent<DataManager>().Test_GetDataUpdate(previous_value);
-
-        // update color data
-        UpdatingColorManager(gameObject, next_value);
-    }
-
-    //////////////////////////////
-    // PLAYING COLOR DATA
-    IEnumerator Loop(GameObject gO)
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(1);
-            UpdatingDataManager(gO);
-        }
+        yield return new WaitForSeconds(3);
     }
 }

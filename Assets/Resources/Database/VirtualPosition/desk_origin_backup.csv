@@ -1,0 +1,28 @@
+﻿name,parent,pos_x,pos_y,pos_z,rot_x,rot_y,rot_z,comment
+root,none,-0.1075,0,0.116,0,90,0,Root of all object with X to right Y to up and Z to forward
+monitor_origin,root,-0.02,0.14,0.395,0,-21,0,Tip left bottom of monitor and not include the stand
+echodot_origin,root,0.525,0,0.54,0,0,0,Center of Amazon Echo Dot on the bottom
+cord_origin,root,1.265,0,0.62,0,0,0,Tip left bottom of power cord
+bulb_origin,root,0.9,0.52,0.62,0,0,0,Center of smart bulb house on the top
+echodot_btnLeft,echodot_origin,-0.025,0.04,0,0,0,0,Center down of left button
+echodot_btnUp,echodot_origin,0,0.04,0.025,0,0,0,Center down of up button
+echodot_btnRight,echodot_origin,0.025,0.04,0,0,0,0,Center down of right button
+echodot_btnDown,echodot_origin,0,0.04,-0.025,0,0,0,Center down of down button
+cord_input1,cord_origin,0.094,0.0325,0.01,0,0,0,Cord input on the most left
+cord_input2,cord_origin,0.134,0.0325,0.01,0,0,0,Cord input second on the left
+cord_input3,cord_origin,0.174,0.0325,0.01,0,0,0,Cord input on the center
+cord_input4,cord_origin,0.214,0.0325,0.01,0,0,0,Cord input second on the right
+cord_input5,cord_origin,0.254,0.0325,0.01,0,0,0,Cord input on the most right
+bulb_peekBulb,bulb_origin,0,-0.14,0,0,0,0,Light bulb on the center the most bottom part
+static_root,root,0,0,0,0,0,0,none
+static_box,static_root,0.795,0,0.455,0,0,0,none
+static_monitor,static_root,0.59,0.505,0.575,0,-21,0,none
+static_dolls,static_root,0.61,0,0.57,0,0,0,none
+static_doll_1,static_dolls,0,0,0,0,0,0,none
+static_doll_2,static_dolls,0.11,0,0,0,0,0,none
+static_doll_3,static_dolls,0.25,0.055,0,0,0,0,none
+static_doll_4,static_dolls,0.39,0,0,0,0,0,none
+static_doll_5,static_dolls,0.5,0,0,0,0,0,none
+static_bulbhouse,static_root,0.9,0.52,0.62,0,0,0,none
+static_box2,static_root,0.81,0,0.6,0,0,0,none
+static_macbook,static_root,0.455,0.005,0.035,0,0,0,none
