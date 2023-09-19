@@ -121,8 +121,8 @@ public class LoadObject_CatExample_2__NewARScene : MonoBehaviour
 
                     // ANOTHER MECHANIC THAT DOESN'T NEED ORIGIN
                     // 2023-08-27
-                    if (GlobalConfig.TempOriginGO.transform.position != Vector3.zero)
-                    {
+                    //if (GlobalConfig.TempOriginGO.transform.position != Vector3.zero)
+                    //{
 
                         // NEW MECHANIC: 2022-06-07
                         // See also: Test_InverseImageToOrigin.cs - MyMethod()
@@ -172,7 +172,7 @@ public class LoadObject_CatExample_2__NewARScene : MonoBehaviour
 
                         // destroy the dummy object
                         Destroy(dummy);
-                    }
+                    //}
 
                     // Instantiate the root to become origin child
                     originChild = Instantiate(root, GlobalConfig.TempOriginGO.transform, true);

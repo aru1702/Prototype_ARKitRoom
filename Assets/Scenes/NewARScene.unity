@@ -577,7 +577,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_LoadObjectManager: {fileID: 1048425736}
-  MAP: -1
+  MAP: 201
 --- !u!1 &106830607
 GameObject:
   m_ObjectHideFlags: 0
@@ -11925,7 +11925,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SaveMap: 0
   m_LoadMap: 11
-  m_UseCorretionFunction: 1
+  m_UseCorretionFunction: 0
   m_CorrectionVersion: 7
   m_LoadObjectManager: {fileID: 1048425736}
   m_PanelUIs:

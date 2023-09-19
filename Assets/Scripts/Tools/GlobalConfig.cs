@@ -134,6 +134,7 @@ public class GlobalConfig : MonoBehaviour
     public static float CTM_SCALAR = 1.0f;
     public static float UTD_SCALAR = 1.0f;
     public static float RA_ANGLE = 1.0f;
+    public static bool SH_RED = true;
 
 
     /// <summary>

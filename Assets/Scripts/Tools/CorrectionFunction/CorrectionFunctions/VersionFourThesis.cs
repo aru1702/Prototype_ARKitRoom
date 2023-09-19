@@ -96,12 +96,70 @@ public class VersionFourThesis : MonoBehaviour
 
     void MeanAverage()
     {
+        // put the weights
+        List<float[]> weightes = new List<float[]>();
+        for (int i = 0; i < m_Objects.Count; i++)
+        {
+            float[] ws = new float[m_Markers.Count];
+            for (int j = 0; j < m_Markers.Count; j++)
+            {
+                ws[j] = 1.0f / m_Markers.Count;
+            }
+            weightes.Add(ws);
+        }
 
+        // transformation
+        for (int i = 0; i < m_Objects.Count; i++)
+        {
+            Vector3 t_result = new Vector3();
+            for (int j = 0; j < m_Markers.Count; j++)
+            {
+                Vector3 changes = m_Markers[j].C_Position - m_MarkersInWorld[j].transform.position;
+                t_result += changes * weightes[i][j];
+            }
+            if (t_result.x != float.NaN) m_Objects[i].transform.position += t_result;
+        }
     }
 
     void NearestMarker()
     {
+        // put the weights
+        List<float[]> weightes = new List<float[]>();
+        for (int i = 0; i < m_Objects.Count; i++)
+        {
+            float nearest = float.MaxValue;
+            int prev_nearest = 0;
 
+            float[] ws = new float[m_Markers.Count];
+            for (int j = 0; j < m_Markers.Count; j++)
+            {
+                float dist = Vector3.Distance(m_Objects[i].transform.position, m_MarkersInWorld[j].transform.position);
+                if (dist < nearest)
+                {
+                    ws[prev_nearest] = 0;
+                    prev_nearest = j;
+                    nearest = dist;
+                    ws[j] = 1;
+                }
+                else
+                {
+                    ws[j] = 0;
+                }
+            }
+            weightes.Add(ws);
+        }
+
+        // transformation
+        for (int i = 0; i < m_Objects.Count; i++)
+        {
+            Vector3 t_result = new Vector3();
+            for (int j = 0; j < m_Markers.Count; j++)
+            {
+                Vector3 changes = m_Markers[j].C_Position - m_MarkersInWorld[j].transform.position;
+                t_result += changes * weightes[i][j];
+            }
+            if (t_result.x != float.NaN) m_Objects[i].transform.position += t_result;
+        }
     }
 
     void DistanceBasedWeightedAverage()
@@ -127,8 +185,11 @@ public class VersionFourThesis : MonoBehaviour
             for (int j = 0; j < m_Markers.Count; j++)
             {
                 float weight = Mathf.Exp(-dists[j] * avg);
-                ws[j] = weight;
-                sum += weight;
+
+                if (weight == float.NaN) ws[j] = 0;
+                else ws[j] = weight;
+
+                sum += ws[j];
             }
 
             // normalization
@@ -144,16 +205,21 @@ public class VersionFourThesis : MonoBehaviour
         // transformation
         for (int i = 0; i < m_Objects.Count; i++)
         {
+            Debug.Log("Before:  " + m_Objects[i].name + ": " + m_Objects[i].transform.position.ToString());
+
             Vector3 t_result = new Vector3();
             for (int j = 0; j < m_Markers.Count; j++)
             {
                 Vector3 changes = m_Markers[j].C_Position - m_MarkersInWorld[j].transform.position;
-                changes *= weightes[i][j];
-                t_result += changes;
+                Debug.Log(m_Markers[j].Marker_name + ": " + changes.ToString());
+
+                t_result += changes * weightes[i][j];
+                Debug.Log("Added! Result: " + t_result.ToString());
             }
 
             //Debug.Log(t_result.ToString());
             if (t_result.x != float.NaN) m_Objects[i].transform.position += t_result;
+            Debug.Log("After:  " + m_Objects[i].name + ": " + m_Objects[i].transform.position.ToString());
         }
     }
 
@@ -214,8 +280,8 @@ public class VersionFourThesis : MonoBehaviour
             GameObject marker = new GameObject();
             marker.name = name;
             marker.transform.SetParent(GlobalConfig.PlaySpaceOriginGO.transform);
-            marker.transform.localPosition = gt_pos;
-            marker.transform.localRotation = gt_rot;
+            marker.transform.position = gt_pos;
+            marker.transform.rotation = gt_rot;
             m_MarkersInWorld.Add(marker);
         }
     }

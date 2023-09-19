@@ -139,6 +139,9 @@ public class MappingScanner : MonoBehaviour
             planeManager.planesChanged += OnPlaneChanged;
         //}
 
+        showPointCloud = GlobalConfig.SH_RED;
+        m_RenderPointCloud = GlobalConfig.SH_RED;
+
         var pointCloudManager = m_Origin.GetComponent<ARPointCloudManager>();
         if (m_PointCloudParticleSystem && pointCloudManager)// && enablePointCloudPrefab)
         {
@@ -422,8 +425,8 @@ public class MappingScanner : MonoBehaviour
         //m_PlaneVisualizers.SetActive(true);
         //m_PointCloudParticleSystem.GetComponent<Renderer>().enabled = true;
 
-        SliderShowPlane();
-        SliderShowPointCloud();
+        //SliderShowPlane();
+        //SliderShowPointCloud();
 
         m_ARPointCloudManager = m_Origin.GetComponent<ARPointCloudManager>();
         m_ARPlaneManager = m_Origin.GetComponent<ARPlaneManager>();

@@ -86,6 +86,10 @@ public class LocalConfigHandler : MonoBehaviour
     [SerializeField]
     InputField m_RAScalarInputField;
 
+    [SerializeField]
+    Toggle m_ShowRedToggle;
+
+
     public void SetOTMScalarInputField(float value) { m_OTMScalarInputField.text = value.ToString(); }
     public float GetOTMScalarInputField() { return float.Parse(m_OTMScalarInputField.text); }
 
@@ -113,6 +117,9 @@ public class LocalConfigHandler : MonoBehaviour
     public void SetRAScalarInputField(float value) { m_RAScalarInputField.text = value.ToString(); }
     public float GetRAScalarInputField() { return float.Parse(m_RAScalarInputField.text); }
 
+    public void SetShowRedToggle(bool trigger) { m_ShowRedToggle.isOn = trigger; }
+    public bool GetShowRedToggle() { return m_ShowRedToggle.isOn; }
+
 
     public void ExportToCSV()
     {
@@ -134,7 +141,9 @@ public class LocalConfigHandler : MonoBehaviour
             GetCTMScalarInputField().ToString(),
             GetUTDScalarInputField().ToString(),
 
-            GetRAScalarInputField().ToString()
+            GetRAScalarInputField().ToString(),
+
+            GetShowRedToggle().ToString()
         };
 
         var path = Path.Combine(Application.persistentDataPath, "config");
@@ -168,6 +177,8 @@ public class LocalConfigHandler : MonoBehaviour
 
         SetRAScalarInputField(float.Parse(values[13]));
 
+        SetShowRedToggle(bool.Parse(values[14]));
+
         ApplyValueToGlobalConfig();
     }
 
@@ -179,5 +190,6 @@ public class LocalConfigHandler : MonoBehaviour
         GlobalConfig.CTTtime_PRIORITY = GetCTTtimePriorityInputField();
         GlobalConfig.CTM_SCALAR = GetCTMScalarInputField();
         GlobalConfig.RA_ANGLE = GetRAScalarInputField();
+        GlobalConfig.SH_RED = GetShowRedToggle();
     }
 }
